@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQCMS.Dashboard", "CQCMS.Dashboard\CQCMS.Dashboard.csproj", "{0270110A-CF45-43D9-AD53-AD7C2164F3B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQCMS.API", "CQCMS.API\CQCMS.API.csproj", "{045FD554-5660-4695-8ED1-3B41C97CBD86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0270110A-CF45-43D9-AD53-AD7C2164F3B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0270110A-CF45-43D9-AD53-AD7C2164F3B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0270110A-CF45-43D9-AD53-AD7C2164F3B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0270110A-CF45-43D9-AD53-AD7C2164F3B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{045FD554-5660-4695-8ED1-3B41C97CBD86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{045FD554-5660-4695-8ED1-3B41C97CBD86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{045FD554-5660-4695-8ED1-3B41C97CBD86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{045FD554-5660-4695-8ED1-3B41C97CBD86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B715334C-512A-409A-AF71-9B4772C79679}
+	EndGlobalSection
+EndGlobal
