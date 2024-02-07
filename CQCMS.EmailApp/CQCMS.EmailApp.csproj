@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -8,17 +9,17 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0270110A-CF45-43D9-AD53-AD7C2164F3B5}</ProjectGuid>
+    <ProjectGuid>{DBC27B5C-8D41-4A8B-8634-E3D429470BAE}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CQCMS.Dashboard</RootNamespace>
-    <AssemblyName>CQCMS.Dashboard</AssemblyName>
+    <RootNamespace>CQCMS.EmailApp</RootNamespace>
+    <AssemblyName>CQCMS.EmailApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44350</IISExpressSSLPort>
+    <IISExpressSSLPort>44381</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -45,10 +46,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -120,75 +129,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Data\CQCMSEmailAppContext.cs" />
+    <Compile Include="Models\EmailAttachment.cs" />
+    <Compile Include="Models\Email.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\assets\css\bootstrap.min.css" />
-    <Content Include="Content\assets\css\default-css.css" />
-    <Content Include="Content\assets\css\font-awesome.min.css" />
-    <Content Include="Content\assets\css\metisMenu.css" />
-    <Content Include="Content\assets\css\owl.carousel.min.css" />
-    <Content Include="Content\assets\css\responsive.css" />
-    <Content Include="Content\assets\css\slicknav.min.css" />
-    <Content Include="Content\assets\css\styles.css" />
-    <Content Include="Content\assets\css\themify-icons.css" />
-    <Content Include="Content\assets\css\typography.css" />
-    <Content Include="Content\assets\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\assets\fonts\themify.svg" />
-    <Content Include="Content\assets\images\author\author-img1.jpg" />
-    <Content Include="Content\assets\images\author\author-img2.jpg" />
-    <Content Include="Content\assets\images\author\author-img3.jpg" />
-    <Content Include="Content\assets\images\author\author-img4.jpg" />
-    <Content Include="Content\assets\images\author\avatar.png" />
-    <Content Include="Content\assets\images\bg\singin-bg.jpg" />
-    <Content Include="Content\assets\images\blog\post-thumb1.jpg" />
-    <Content Include="Content\assets\images\blog\post-thumb2.jpg" />
-    <Content Include="Content\assets\images\card\card-img1.jpg" />
-    <Content Include="Content\assets\images\card\card-img10.jpg" />
-    <Content Include="Content\assets\images\card\card-img2.jpg" />
-    <Content Include="Content\assets\images\card\card-img3.jpg" />
-    <Content Include="Content\assets\images\card\card-img4.jpg" />
-    <Content Include="Content\assets\images\card\card-img5.jpg" />
-    <Content Include="Content\assets\images\card\card-img6.jpg" />
-    <Content Include="Content\assets\images\card\card-img7.jpg" />
-    <Content Include="Content\assets\images\card\card-img8.jpg" />
-    <Content Include="Content\assets\images\card\card-img9.jpg" />
-    <Content Include="Content\assets\images\icon\loader.gif" />
-    <Content Include="Content\assets\images\icon\logo.png" />
-    <Content Include="Content\assets\images\icon\logo2.png" />
-    <Content Include="Content\assets\images\icon\market-value\icon1.png" />
-    <Content Include="Content\assets\images\icon\market-value\icon2.png" />
-    <Content Include="Content\assets\images\icon\market-value\icon3.png" />
-    <Content Include="Content\assets\images\icon\market-value\icon4.png" />
-    <Content Include="Content\assets\images\icon\market-value\trends-down-icon.png" />
-    <Content Include="Content\assets\images\icon\market-value\trends-up-icon.png" />
-    <Content Include="Content\assets\images\icon\market-value\triangle-down.png" />
-    <Content Include="Content\assets\images\icon\market-value\triangle-up.png" />
-    <Content Include="Content\assets\images\media\media1.jpg" />
-    <Content Include="Content\assets\images\media\media2.jpg" />
-    <Content Include="Content\assets\images\team\team-author1.jpg" />
-    <Content Include="Content\assets\images\team\team-author2.jpg" />
-    <Content Include="Content\assets\images\team\team-author3.jpg" />
-    <Content Include="Content\assets\images\team\team-author4.jpg" />
-    <Content Include="Content\assets\images\team\team-author5.jpg" />
-    <Content Include="Content\assets\js\bar-chart.js" />
-    <Content Include="Content\assets\js\bootstrap.min.js" />
-    <Content Include="Content\assets\js\jquery.slicknav.min.js" />
-    <Content Include="Content\assets\js\jquery.slimscroll.min.js" />
-    <Content Include="Content\assets\js\line-chart.js" />
-    <Content Include="Content\assets\js\maps.js" />
-    <Content Include="Content\assets\js\metisMenu.min.js" />
-    <Content Include="Content\assets\js\owl.carousel.min.js" />
-    <Content Include="Content\assets\js\pie-chart.js" />
-    <Content Include="Content\assets\js\plugins.js" />
-    <Content Include="Content\assets\js\popper.min.js" />
-    <Content Include="Content\assets\js\scripts.js" />
-    <Content Include="Content\assets\js\vendor\jquery-2.2.4.min.js" />
-    <Content Include="Content\assets\js\vendor\modernizr-2.8.3.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -214,16 +165,6 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\assets\fonts\FontAwesome.otf" />
-    <Content Include="Content\assets\fonts\themify.eot" />
-    <Content Include="Content\assets\fonts\themify.ttf" />
-    <Content Include="Content\assets\fonts\themify.woff" />
-    <Content Include="Content\assets\images\icon\market-value\Thumbs.db" />
-    <Content Include="Content\assets\images\icon\Thumbs.db" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -249,10 +190,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Emails\Create.cshtml" />
+    <Content Include="Views\Emails\Delete.cshtml" />
+    <Content Include="Views\Emails\Details.cshtml" />
+    <Content Include="Views\Emails\Edit.cshtml" />
+    <Content Include="Views\Emails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -297,9 +242,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>64748</DevelopmentServerPort>
+          <DevelopmentServerPort>57561</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44350/</IISUrl>
+          <IISUrl>https://localhost:44381/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -314,7 +259,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

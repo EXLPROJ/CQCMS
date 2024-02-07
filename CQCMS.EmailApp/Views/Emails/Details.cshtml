@@ -1,0 +1,282 @@
+﻿@model CQCMS.EmailApp.Email
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Email</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CaseID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CaseID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailTypeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailTypeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MailboxID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MailboxID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceivedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceivedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SentOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SentOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastActedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastActedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastActedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastActedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailSubject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailSubject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailCC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailCC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailBCC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailBCC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailFolder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailFolder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailSubFolder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailSubFolder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailDirection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailDirection)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EchoStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EchoStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EchoLockedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EchoLockedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EchoLockedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EchoLockedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EchoAttempts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EchoAttempts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsEchoLocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsEchoLocked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AwaitingReview)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AwaitingReview)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewerEdited)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewerEdited)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsEmailComplaintIntegrated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsEmailComplaintIntegrated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailTrimmedSubject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailTrimmedSubject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailHash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailHash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EchoAttemptsNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EchoAttemptsNum)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmailID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

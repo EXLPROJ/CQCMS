@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQCMS.Dashboard", "CQCMS.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQCMS.API", "CQCMS.API\CQCMS.API.csproj", "{045FD554-5660-4695-8ED1-3B41C97CBD86}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQCMS.Entities", "CQCMS.Entities\CQCMS.Entities.csproj", "{3F778634-80A2-4270-9E0B-131274BFB43E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQCMS.Providers", "CQCMS.Providers\CQCMS.Providers.csproj", "{9DA9DC9A-3773-405F-8A20-5756D4A58B21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQCMS.EmailApp", "CQCMS.EmailApp\CQCMS.EmailApp.csproj", "{DBC27B5C-8D41-4A8B-8634-E3D429470BAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQCMS.CommonHelpers", "CQCMS.CommonHelpers\CQCMS.CommonHelpers.csproj", "{1598A0F3-2EE0-4D58-97B5-7E6FD575F8D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +29,22 @@ Global
 		{045FD554-5660-4695-8ED1-3B41C97CBD86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{045FD554-5660-4695-8ED1-3B41C97CBD86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{045FD554-5660-4695-8ED1-3B41C97CBD86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F778634-80A2-4270-9E0B-131274BFB43E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F778634-80A2-4270-9E0B-131274BFB43E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F778634-80A2-4270-9E0B-131274BFB43E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F778634-80A2-4270-9E0B-131274BFB43E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA9DC9A-3773-405F-8A20-5756D4A58B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA9DC9A-3773-405F-8A20-5756D4A58B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA9DC9A-3773-405F-8A20-5756D4A58B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA9DC9A-3773-405F-8A20-5756D4A58B21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC27B5C-8D41-4A8B-8634-E3D429470BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC27B5C-8D41-4A8B-8634-E3D429470BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC27B5C-8D41-4A8B-8634-E3D429470BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC27B5C-8D41-4A8B-8634-E3D429470BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1598A0F3-2EE0-4D58-97B5-7E6FD575F8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1598A0F3-2EE0-4D58-97B5-7E6FD575F8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1598A0F3-2EE0-4D58-97B5-7E6FD575F8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1598A0F3-2EE0-4D58-97B5-7E6FD575F8D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
