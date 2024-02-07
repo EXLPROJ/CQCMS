@@ -17,8 +17,7 @@ namespace CQCMS.Entities.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214: DoNotCallOverridableMethodsInConstructors")]
         public Email()
         {
-
-            EmailAttachments = new HashSet<EmailAttachment>();
+            Emailattachments = new HashSet<EmailAttachment>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -74,7 +73,7 @@ namespace CQCMS.Entities.Models
         public virtual CaseDetail CaseDetail { get; set; }
 
         public virtual CaseStatusLookup CaseStatusLookup { get; set; }
-        public virtual Emailtype Emailtype { get; set; }
+        public virtual EmailType Emailtype { get; set; }
 
         public virtual Mailbox Mailbox { get; set; }
 

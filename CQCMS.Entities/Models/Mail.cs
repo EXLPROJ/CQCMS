@@ -22,7 +22,7 @@ namespace CQCMS.Entities.Models
         {
             get; set;
         }
-        public DateTime Receivedon { get; set; }
+        public DateTime ReceivedOn { get; set; }
         public DateTime SentOn
         {
             get; set;

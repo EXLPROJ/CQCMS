@@ -124,7 +124,7 @@ namespace CQCMS.Entities.Models
 
         public string CaseIdIdentifer { get; set; }
         public int LastViewedEmailID { get; set; }
-        public int NewEmaiicount { get; set; }
+        public int NewEmailcount { get; set; }
 
         public int EacalationRootCauseID { get; set; }
 
@@ -144,10 +144,10 @@ namespace CQCMS.Entities.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailVM> Emails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmailAttachmentVM> EnailAttachments { get; set; }
+        public virtual ICollection<EmailAttachmentVM> EmailAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SignerInformation> SignerInformation { get; set; }
-        public virtual SubCategoryWM SubCategory { get; set; }
+        public virtual SubCategoryVM SubCategory { get; set; }
 
         public string Country { get; set; }
 
@@ -171,28 +171,13 @@ namespace CQCMS.Entities.Models
 
         public string MultiAccountNumber { get; set; }
 
-        public ComplaintsUpdatelodel complaintaUpdateModel { get; set; }
+        public ComplaintsUpdateModel complaintsUpdateModel { get; set; }
         [StringLength(200)]
 
         public string EmployeeName { get; set; }
 
         public string NOQ_1 { get; set; }
-        public bool IsCFiComplaint { get; set; }
-
-        public bool IstiiClassified { get; set; }
-
-        public int MLClassifiedCategory { get; set; }
-        public int MLClassifiedSubCategoryID { get; set; }
-
-        public string ReClassificationTriggeredBy { get; set; }
-        public string ForceReclassificationBy { get; set; }
-        public int? MLReclassificationCounter { get; set; }
-        public bool? IsCaseAcknowledged { get; set; }
-        public DateTime? CaseAckDateTime { get; set; }
-        public int? AckMailId { get; set; }
-        [StringLength(100)]
-        public string AckSentBy {get;set;}
-
+        
     }
 
 

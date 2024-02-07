@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Http = System.Web.Http;
-using System.Ling;
+using System.Linq;
 using System.Data;
 using System.Configuration;
 using System.Data.Entity;
@@ -30,6 +30,7 @@ using System.Web;
 using System.Net;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Helpers;
+using CQCMS.Entities.Models;
 
 namespace CQCMS.API.Controllers
 {
@@ -60,13 +61,13 @@ namespace CQCMS.API.Controllers
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/SaveNewOutboundEmailAndCreateCase")]
 
-        public dynamic SaveNewOutboundEmailAndCreateCase(CaseAndEmailupdateDTO updateDTO)
+        public dynamic SaveNewOutboundEmailAndCreateCase(CaseAndEmailUpdateDTO updateDTO)
         {
 
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
 
-                CaseIEmailIdDTO CaseIEmailIdDTO;
+                CaseIdEmailIdDTO CaseIdEmailIdDTO;
                 Email email = null;
 
                 var currentUser = new UserData().GetUserInfoByEmployeeID(updateDTO.UpdateEmail.Country, updateDTO.CurrentUserId);
@@ -99,7 +100,7 @@ namespace CQCMS.API.Controllers
 
                         }
 
-                        updateDTO.UpdateCase.Country = updateDTO.UpdateCase.Country ?? updateDTO.UpdateEmail.Country;|
+                        updateDTO.UpdateCase.Country = updateDTO.UpdateCase.Country ?? updateDTO.UpdateEmail.Country;
                         updateDTO.UpdateCase.FirstEmailID = email.EmailID;
                         updateDTO.UpdateCase.LastEmailID = email.EmailID;
                         updateDTO.UpdateCase.MailboxID = updateDTO.UpdateEmail.MailboxID;
@@ -108,7 +109,7 @@ namespace CQCMS.API.Controllers
                         updateDTO.UpdateCase.CaseStatusID = (int)CaseStatus.CaseAssigned;
                         updateDTO.UpdateCase.LastActedBy = updateDTO.UpdateEmail.CurrentUserId;
                         updateDTO.UpdateCase.CreatedBy = updateDTO.UpdateEmail.CurrentUserId;
-                        updateDTO.UpdateCase.NewEmailCount = 0;
+                        updateDTO.UpdateCase.NewEmailcount = 0;
 
                         updateDTO.UpdateCase.KeepWithMe = true;
 
@@ -211,6 +212,7 @@ namespace CQCMS.API.Controllers
                             };
                         }
                     }
+                }
                 catch (Exception ex)
                 {
                     //throw ex;
@@ -226,11 +228,9 @@ namespace CQCMS.API.Controllers
                 {
                     Emailld = email.EmailID,
                     CaseIld = updateDTO.UpdateEmail.CaseID,
-                    CurrentlyAssignedTo
-                    updateDTO.UpdateCase.CurrentlyAssignedTo,
+                    CurrentlyAssignedTo = updateDTO.UpdateCase.CurrentlyAssignedTo,
                     EmployeeName = updateDTO.UpdateCase.EmployeeName,
-                    CaseStatusID
-                    lipdateDTO.UpdateCase.CaseStatusID,
+                    CaseStatusID = updateDTO.UpdateCase.CaseStatusID,
                     CaseIdIdentifier = updateDTO.UpdateCase.CaseIdIdentifer
                 };
 
@@ -286,7 +286,7 @@ namespace CQCMS.API.Controllers
                                                         updateDTO.UpdateEmail.EmailCC, updateDTO.UpdateEmail.Emailfrom, updateDTO.UpdateEmail.MailboxID,
                                                         updateDTO.UpdateEmail.Country);
 
-                                if (resultPartialMatch != null && resultPartialMatch.Count == 1 && resultPartialMatch[@].CaseID != null)
+                                if (resultPartialMatch != null && resultPartialMatch.Count == 1 && resultPartialMatch[0].CaseID != null)
                                 {
                                     //attach to existing case
                                     updateDTO.UpdateEmail.CaseID = (int)resultPartialMatch[0].CaseID;
@@ -352,7 +352,7 @@ namespace CQCMS.API.Controllers
                         //var mailboxId = updateDTO.UpdateEmail.MailboxID;
                         //var Mailboxdetails = db.Mailboxes.First(x => x.MailboxID == (int)mailboxId);
                         //var Country = Mailboxdetails.Country;
-                        using (BoltDbContext db = new BoltDbContext())
+                        using (CQCMSDbContext db = new CQCMSDbContext())
                         {
                             using (var transaction = db.Database.BeginTransaction())
                             {
