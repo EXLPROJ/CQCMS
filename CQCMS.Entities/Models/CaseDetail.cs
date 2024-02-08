@@ -41,7 +41,7 @@ namespace CQCMS.Entities.Models
         [StringLength(100)]
         public string CreatedBy { get; set; }
 
-        public DateTime LastActedon { get; set; }
+        public DateTime LastActedOn { get; set; }
 
         [StringLength(50)]
         public string LastActedBy { get; set; }
@@ -66,9 +66,6 @@ namespace CQCMS.Entities.Models
         public string ClientName { get; set; }
         [StringLength(500)]
 
-
-
-
         public string NOQ_1 { get; set; }
         public string NOQ_2 { get; set; }
         public string NOQ_3 { get; set; }
@@ -89,17 +86,7 @@ namespace CQCMS.Entities.Models
         
         [StringLength(100)]
 
-        public string BusinessLineCode { get; set; }
-
-        public DateTime? EchoLockedOn { get; set; }
-        
-        [StringLength(100)]
-
-        public string EchoLockedBy { get; set; }
-        
-        public int? EchoAttempts { get; set; }
-
-        public DateTime? EchoCaseClosedon { get; set; }
+        public string BusinessLineCode { get; set; }     
 
         [StringLength(200)]
 
@@ -197,12 +184,12 @@ namespace CQCMS.Entities.Models
         public virtual ICollection<Email> Emails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailAttachment> EmailAttachments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SignerInformation> SignerInformation { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseLiveSignSigner> CaseLiveSignSigner { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SignerGroup> SignerGroups { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<SignerInformation> SignerInformation { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<CaseLiveSignSigner> CaseLiveSignSigner { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<SignerGroup> SignerGroups { get; set; }
 
         public int NoOfQueries { get; set; }
         public int? CustomDataId { get; set; }

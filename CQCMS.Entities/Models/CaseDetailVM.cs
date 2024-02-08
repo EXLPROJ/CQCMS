@@ -21,9 +21,6 @@ namespace CQCMS.Entities.Models
         public int MailboxID { get; set; }
 
         [StringLength(100)]
-        public string EchoCaseNumber { get; set; }
-
-        [StringLength(100)]
         public string CurrentlyAssignedTo { get; set; }
 
         [StringLength(100)]
@@ -37,7 +34,7 @@ namespace CQCMS.Entities.Models
         [StringLength(100)]
         public string CreatedBy { get; set; }
 
-        public DateTime LastActedon { get; set; }
+        public DateTime LastActedOn { get; set; }
 
         [StringLength(50)]
         public string LastActedBy { get; set; }
@@ -69,12 +66,7 @@ namespace CQCMS.Entities.Models
         //{StxingLength (190) ]
 
         public string BusinessLineCode { get; set; }
-        public DateTime EchoLockedOn { get; set; }
-        [StringLength(100)]
-
-        public string EchoLockedBy { get; set; }
-        public int EchoAttempts { get; set; }
-        public DateTime EchoCaseClosedon { get; set; }
+       
         [StringLength(200)]
 
         public string PendingStatus { get; set; }
@@ -122,7 +114,7 @@ namespace CQCMS.Entities.Models
         public string CheckSumCaseID { get; }
         [StringLength(200)]
 
-        public string CaseIdIdentifer { get; set; }
+        public string CaseIdIdentifier { get; set; }
         public int LastViewedEmailID { get; set; }
         public int NewEmailcount { get; set; }
 
@@ -145,8 +137,8 @@ namespace CQCMS.Entities.Models
         public virtual ICollection<EmailVM> Emails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailAttachmentVM> EmailAttachments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SignerInformation> SignerInformation { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<SignerInformation> SignerInformation { get; set; }
         public virtual SubCategoryVM SubCategory { get; set; }
 
         public string Country { get; set; }

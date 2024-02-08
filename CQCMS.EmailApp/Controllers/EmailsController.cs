@@ -47,7 +47,7 @@ namespace CQCMS.EmailApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmailID,CaseID,EmailTypeID,MailboxID,ReceivedOn,SentOn,LastActedOn,LastActedBy,CreatedOn,CreatedBy,EmailSubject,EmailFrom,EmailTo,EmailCC,EmailBCC,EmailFolder,EmailSubFolder,EmailStatus,EmailDirection,EchoStatus,EchoLockedOn,EchoLockedBy,EchoAttempts,IsEchoLocked,Priority,AwaitingReview,ReviewedOn,ReviewedBy,ReviewerEdited,IsEmailComplaintIntegrated,EmailTrimmedSubject,Country,EmailHash,EchoAttemptsNum")] Email email,FormCollection form)
+        public ActionResult Create([Bind(Include = "EmailID,CaseID,EmailTypeID,MailboxID,ReceivedOn,SentOn,LastActedOn,LastActedBy,CreatedOn,CreatedBy,EmailSubject,EmailFrom,EmailTo,EmailCC,EmailBCC,EmailFolder,EmailSubFolder,EmailStatus,EmailDirection,Priority,AwaitingReview,ReviewedOn,ReviewedBy,ReviewerEdited,IsEmailComplaintIntegrated,EmailTrimmedSubject,Country,EmailHash")] Email email,FormCollection form)
         {
             if (ModelState.IsValid)
             {

@@ -93,7 +93,9 @@
                             @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
+                   
+                </td>
+                <td style="vertical-align: top; padding: 10px">
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmailSubject, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -109,8 +111,6 @@
                             @Html.ValidationMessageFor(model => model.EmailFrom, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </td>
-                <td style="vertical-align: top; padding: 10px">
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmailTo, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -167,51 +167,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EchoStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.EchoStatus)
-                                @Html.ValidationMessageFor(model => model.EchoStatus, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EchoLockedOn, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.EchoLockedOn, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.EchoLockedOn, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EchoLockedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.EchoLockedBy, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.EchoLockedBy, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EchoAttempts, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.EchoAttempts, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.EchoAttempts, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
                 </td>
                 <td style="vertical-align: top; padding: 10px">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IsEchoLocked, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.IsEchoLocked)
-                                @Html.ValidationMessageFor(model => model.IsEchoLocked, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
+                   
                     <div class="form-group">
                         @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -286,15 +245,7 @@
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.EmailHash, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.EmailHash, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EchoAttemptsNum, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.EchoAttemptsNum, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.EchoAttemptsNum, "", new { @class = "text-danger" })
-                        </div>
+                        </div>                                       
                     </div>
                     <div class="form-group">
                         @Html.Label("EmailBody", htmlAttributes: new { @class = "control-label col-md-2" })

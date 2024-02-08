@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
-
-namespace CQCMS.EmailApp
+namespace CQCMS.EmailApp.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("EmailBase")]
-    public partial class Email
+    public partial class EmailBase
     {
         [Key]
         public int EmailID { get; set; }
@@ -73,7 +73,5 @@ namespace CQCMS.EmailApp
 
         [StringLength(100)]
         public string EmailHash { get; set; }
-
-
     }
 }

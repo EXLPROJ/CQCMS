@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace CQCMS.Entities.Models
 {
 
-    public partial class UserDetail
+    public partial class UserDetailVM
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214;DoNotCallOverridableMethodsInConstructors")]
-        public UserDetail()
+        public UserDetailVM()
         {
-            MailboxAccesses = new HashSet<MailboxAccess>();
-            Signatures = new HashSet<Signature>();
-            UserClientProcessMaps = new HashSet<UserClientProcessMap>();
+            MailboxAccesses = new HashSet<MailboxAccessVM>();
+            Signatures = new HashSet<SignatureVM>();
+            UserClientProcessMaps = new HashSet<UserClientProcessMapVM>();
         }
 
         [Key]
@@ -54,10 +54,10 @@ namespace CQCMS.Entities.Models
         public string Country { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MailboxAccess> MailboxAccesses { get; set; }
+        public virtual ICollection<MailboxAccessVM> MailboxAccesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Signature> Signatures { get; set; }
+        public virtual ICollection<SignatureVM> Signatures { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserClientProcessMap> UserClientProcessMaps { get; set; }
+        public virtual ICollection<UserClientProcessMapVM> UserClientProcessMaps { get; set; }
     }
 }

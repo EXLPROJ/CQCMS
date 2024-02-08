@@ -7,6 +7,7 @@ using System.Web.Http;
 using Http = System.Web.Http;
 using System.Linq;
 using System.Data;
+using System.Data.Entity;
 using System.Configuration;
 using System.Data.Entity;
 //using .EmailProvider;
@@ -31,12 +32,15 @@ using System.Net;
 using System.Web.Http.ExceptionHandling;
 using System.Web.Helpers;
 using CQCMS.Entities.Models;
+using CQCMS.Providers.DataAccess;
+using CQCMS.EmailApp.Models;
+using System.Security.Policy;
 
 namespace CQCMS.API.Controllers
 {
     public class EmailAPIController : Controller
     {
-        private static Logger logger = LoggerManager.GetLogger("EmailTransformation");
+        private static Logger logger = LogManager.GetLogger("EmailTransformation");
         // GET: EmailAPI
         public ActionResult Index()
         {
@@ -48,12 +52,12 @@ namespace CQCMS.API.Controllers
         [System.Web.Http.Route("api/SaveNewEmailAndCreateCase")]
         public dynamic SaveNewEmailAndCreateCase(CaseAndEmailUpdateDTO updateDTO)
         {
-            CaseIEmailIdDTO CaseIEmailIdDTO;
+            CaseIdEmailIdDTO CaseIEmailIdDTO;
             if (updateDTO.UpdateEmail.Direction == "Incoming")
                 CaseIEmailIdDTO = SaveNewInboundEmailAndCreateCase(updateDTO);
             else
                 CaseIEmailIdDTO = SaveNewOutboundEmailAndCreateCase(updateDTO);
-            return CaseIEmailldDTO;
+            return CaseIEmailIdDTO;
 
         }
 
@@ -86,7 +90,7 @@ namespace CQCMS.API.Controllers
                     {
                         if (string.IsNullOrEmpty(updateDTO.UpdateCase.AccountNumber))
                         {
-                            var coroClientDetail = CoRoHelper.GetClientDetailFromCoRoByEmail(updateDTO.UpdateEmail.Emailfrom, updateDTO.UpdateEmail.Country);
+                            var coroClientDetail = CoRoHelper.GetClientDetailFromCoRoByEmail(updateDTO.UpdateEmail.EmailFrom, updateDTO.UpdateEmail.Country);
 
                             if (coroClientDetail != null)
 
@@ -113,7 +117,7 @@ namespace CQCMS.API.Controllers
 
                         updateDTO.UpdateCase.KeepWithMe = true;
 
-                        updateDTO = new CaseAPIController().SaveCaseDetails(updateDTO);
+                        //updateDTO = new CaseAPIController().SaveCaseDetails(updateDTO);
                     }
                     else
                     {
@@ -151,7 +155,6 @@ namespace CQCMS.API.Controllers
                                 logger.Info(ex.StackTrace);
                                 throw ex;
                             }
-
                         }
 
                         Tuple<List<string>, List<string>, string> Attachments = SaveAttachmentsToFolderAndDb(updateDTO.UpdateEmail.AttachmentTempFolder, updateDTO.UpdateEmail.ReceivedOn.Value, updateDTO.UpdateEmail.CaseID.Value, updateDTO.UpdateEmail.AttachmentPath,
@@ -161,7 +164,7 @@ namespace CQCMS.API.Controllers
                         List<string> inlineImagePaths = Attachments.Item1;
                         List<string> fileAttachmentsPath = Attachments.Item2;
 
-                        if (updateDTO.Updatetmail.SaveAsDraft == false && !String.IsNullOrWhiteSpace(updateDTO.UpdateEmail.EmailTo))
+                        if (updateDTO.UpdateEmail.SaveAsDraft == false && !String.IsNullOrWhiteSpace(updateDTO.UpdateEmail.EmailTo))
                         {
 
                             SendEmail(email.EmailID, OutgoingEmailBody, updateDTO.UpdateEmail.CurrentUserId,
@@ -178,7 +181,7 @@ namespace CQCMS.API.Controllers
 
                         if (updateDTO.UpdateCase.CurrentlyAssignedTo == null)
                             updateDTO.UpdateCase = new CaseAllData().GetCaseByCaseID(updateDTO.UpdateCase.Country, updateDTO.UpdateCase.CaseID);
-                        if (string.IsNull0rEmpty(Convert.ToString(updateDTO.UpdateCase.CurrentlyAssignedTo)))
+                        if (string.IsNullOrEmpty(Convert.ToString(updateDTO.UpdateCase.CurrentlyAssignedTo)))
                         {
                             updateDTO.UpdateCase.EmployeeName = null;
                         }
@@ -197,9 +200,9 @@ namespace CQCMS.API.Controllers
                         if (updateDTO.UpdateCase.ParentCaseID != null && updateDTO.UpdateCase.ParentCaseID != 0 && updateDTO.UpdateCase.CaseIdIdentifer.Contains('#') == true)
                         {
                             CaseDetailVM ParentCase = new CaseAllData().GetCaseByCaseID(updateDTO.UpdateCase.Country, updateDTO.UpdateCase.ParentCaseID);
-                            return new CaselEmailIdDTO
+                            return new CaseIdEmailIdDTO
                             {
-                                EmailId = email.EmaillD,
+                                EmailId = email.EmailID,
                                 CaseId = updateDTO.UpdateEmail.CaseID,
                                 CurrentlyAssignedTo = updateDTO.UpdateCase.CurrentlyAssignedTo,
                                 EmployeeName = updateDTO.UpdateCase.EmployeeName,
@@ -208,7 +211,7 @@ namespace CQCMS.API.Controllers
 
                                 CaseIdIdentifier = updateDTO.UpdateCase.CaseIdIdentifer,
                                 ParentCaseAssignedTo = ParentCase.CurrentlyAssignedTo,
-                                ParentCaseLastEmailld = (int)ParentCase.LastEmailID
+                                ParentCaseLastEmailId = (int)ParentCase.LastEmailID
                             };
                         }
                     }
@@ -222,19 +225,17 @@ namespace CQCMS.API.Controllers
                     logger.Error(ex.InnerException);
                     logger.Error("Stack Trace:");
                     logger.Error(ex.StackTrace);
-                    return new CaseIlEmailIdDTO { ErrorMessage = ex.Message };
+                    return new CaseIdEmailIdDTO { ErrorMessage = ex.Message };
                 }
-                return new CaselEmailldDTO
+                return new CaseIdEmailIdDTO
                 {
-                    Emailld = email.EmailID,
-                    CaseIld = updateDTO.UpdateEmail.CaseID,
+                    EmailId = email.EmailID,
+                    CaseId = updateDTO.UpdateEmail.CaseID,
                     CurrentlyAssignedTo = updateDTO.UpdateCase.CurrentlyAssignedTo,
                     EmployeeName = updateDTO.UpdateCase.EmployeeName,
                     CaseStatusID = updateDTO.UpdateCase.CaseStatusID,
                     CaseIdIdentifier = updateDTO.UpdateCase.CaseIdIdentifer
                 };
-
-
 
             }
         }
@@ -275,7 +276,7 @@ namespace CQCMS.API.Controllers
                         {
                             if (updateDTO.UpdateCase != null && updateDTO.UpdateCase.LastEmailID != null)
                             {
-                                updateDTO.UpdateEmail.CaseID = Task.Run(() => new CaseAllData().GetCaseByLastEmailld(updateDTO.UpdateCase.Country, updateDTO.UpdateCase.LastEmailID)).Result?.CaseID;
+                                updateDTO.UpdateEmail.CaseID = Task.Run(() => new CaseAllData().GetCaseByLastEmailId(updateDTO.UpdateCase.Country, updateDTO.UpdateCase.LastEmailID)).Result?.CaseID;
                             }
                             if (updateDTO.UpdateEmail.CaseID == null)
                             {
@@ -283,7 +284,7 @@ namespace CQCMS.API.Controllers
                                 logger.Info("Partial match logic started");
                                 var resultPartialMatch = EmailData.FindPartiallyMatchingCases(updateDTO.UpdateEmail.EmailSubject,
                                                         updateDTO.UpdateEmail.SentOn, updateDTO.UpdateEmail.ReceivedOn, email.TextBody, updateDTO.UpdateEmail.EmailTo,
-                                                        updateDTO.UpdateEmail.EmailCC, updateDTO.UpdateEmail.Emailfrom, updateDTO.UpdateEmail.MailboxID,
+                                                        updateDTO.UpdateEmail.EmailCC, updateDTO.UpdateEmail.EmailFrom, updateDTO.UpdateEmail.MailboxID,
                                                         updateDTO.UpdateEmail.Country);
 
                                 if (resultPartialMatch != null && resultPartialMatch.Count == 1 && resultPartialMatch[0].CaseID != null)
@@ -358,7 +359,7 @@ namespace CQCMS.API.Controllers
                             {
                                 try
                                 {
-                                    CasedetailsUpdate = db.CaseDetails.First(x => x.CaseID == (int)updateDTO.UpdateEmail.CaseID);
+                                    CasedetailsUpdate = db.CaseDetail.First(x => x.CaseID == (int)updateDTO.UpdateEmail.CaseID);
                                     CasedetailsUpdate.NewEmailCount = CasedetailsUpdate.NewEmailCount + 1;
                                     if (!CasedetailsUpdate.IsCaseEscalated)
                                     {
@@ -408,19 +409,211 @@ namespace CQCMS.API.Controllers
                 if (ex.Message == "Email with same hash is present")
                 {
                     logger.Error("Inside email with same hash throwing to Email bot");
-                    return new CaseIEmailIdDTO { EmailId = 0, CaseId = 0 };
+                    return new CaseIdEmailIdDTO { EmailId = 0, CaseId = 0 };
                     //return Request.CreateResponse<string>(HttpStatusCode.NotAcceptable, "Email with same hash is present");// Default message if exception occured
                 }
                 CleanupEmailTraces(email.EmailID);
                 throw ex;
             }
-            return new CaseIEmailIdDTO
+            return new CaseIdEmailIdDTO
             {
-                Emailld = email.EmailID,
+                EmailId = email.EmailID,
                 CaseId = updateDTO.UpdateEmail.CaseID,
-                CaseIdIdentifier = updateDTO.UpdateCase.CaseIdIdentifer
+                CaseIdIdentifier = updateDTO.UpdateCase.CaseIdIdentifier
             };
 
         }
+
+
+
+
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("api/SaveEmail")]
+        public dynamic SaveEmail(EmailVM UpdateEmail)
+        {
+            var mailHash = "";
+            Email email = new Email();
+
+            using (CQCMSDbContext db = new CQCMSDbContext())
+            {
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (UpdateEmail.EmailSubject == null)
+                        {
+                            logger.Info("Email subject is empty");
+                            throw new Exception("Email subject is empty");
+                        }
+                        else
+                        {
+                            logger.Info(UpdateEmail.EmailSubject);
+                        }
+
+                        Regex tagSingleRegex = new Regex("<([*>]+)>");
+                        if (tagSingleRegex.IsMatch(UpdateEmail.EmailSubject))
+                        {
+                            UpdateEmail.EmailSubject = tagSingleRegex.Replace(UpdateEmail.EmailSubject, "[$1]");
+                        }
+                        if (UpdateEmail.EmailBody == null)
+                        {
+                            logger.Info("Email body was null, will be saved as blank");
+                            UpdateEmail.EmailBody = "";
+                        }
+                        else
+                        {
+                            try
+                            {
+                                UpdateEmail.TextBody = ExchangeEngine.ConvertHtm1BodyToTextBody(UpdateEmail.EmailBody);
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.Info("Error in converting email body to text body" + ex.Message);
+                                throw ex;
+                            }
+                        }
+                        if (UpdateEmail.Direction.ToLower() == "incoming")
+                        {
+
+                            mailHash = GetMailHash(UpdateEmail.EmailFrom, UpdateEmail.EmailTo, UpdateEmail.EmailSubject, UpdateEmail.TextBody,
+                                        UpdateEmail.SentOn.HasValue ? UpdateEmail.SentOn.Value.ToString("dd-MMM-yyyy HH:mm:ss") : "");
+                            int hashMatchResult = EmailData.IsEmailPresentWithHash(UpdateEmail.CaseID.HasValue ? UpdateEmail.CaseID.Value.ToString() : "0",
+                                        mailHash, UpdateEmail.SentOn.HasValue ? UpdateEmail.SentOn.Value.ToString("dd-MMM-yyyy HH:mm:ss") : "", UpdateEmail.Country);
+                            if (hashMatchResult != 0)
+                            {
+
+                                try
+                                {
+                                    logger.Info("Email with same hash is present");
+                                    throw new Exception("Email with same hash is present");
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw new Exception("Email with same hash is present");
+                                    logger.Error("Exception gccured moving duplicate mail with hash " + mailHash + " to processed. Error message " +
+                                    ex.Message + Environment.NewLine + ex.StackTrace);
+                                }
+                            }
+                        }
+
+                        if ((UpdateEmail.SaveAsDraft || UpdateEmail.Direction == "Outgoing") && !UpdateEmail.EmailSubject.ToLower().Contains("draft"))
+                        {
+                            UpdateEmail.EmailSubject = "DRAFT: " + UpdateEmail.EmailSubject;
+                        }
+                        logger.Info("Creating Email");
+
+                        email = new Email
+                        {
+                            EmailID = UpdateEmail.orginalEmailid,
+                            CaseID = UpdateEmail.CaseID,
+                            MailboxID = UpdateEmail.MailboxID, //remove this field from case table
+                            Emailstatus = UpdateEmail.EmailStatus,
+                            Emailto = UpdateEmail.EmailTo,
+                            Emailcc = UpdateEmail.EmailCC != null ? UpdateEmail.EmailCC : "",
+                            EmailBcc = UpdateEmail.BccReceipients != null ? UpdateEmail.BccReceipients : "",
+                            EmailBody = UpdateEmail.EmailBody,
+                            EmailFolder = UpdateEmail.EmailFolder,
+                            EmailFrom = UpdateEmail.EmailFrom,
+                            ReceivedOn = UpdateEmail.ReceivedOn,
+                            Emailsubject = UpdateEmail.EmailSubject,
+                            TextBody = UpdateEmail.TextBody,
+                            LastActedon = DateTime.Now,
+                            Createdon = DateTime.Now,
+                            CreatedBy = UpdateEmail.CurrentUserId,
+                            LastActedBy = UpdateEmail.CurrentUserId,
+                            EmailDirection = UpdateEmail.Direction,
+                            Priority = UpdateEmail.Priority,
+                            Country = UpdateEmail.Country,
+                            EmailTrimmedSubject = new EmailData().CleanEmailSubject(UpdateEmail.EmailSubject.Replace("'", "''")),
+                            EmailHash = mailHash
+                        };
+                        if (UpdateEmail.EmailBody != "" && UpdateEmail.EmailBody.Contains("BEGIN VOLTAGE SECURE BLOCK") && UpdateEmail.EmailBody.Contains("END VOLTAGE SECURE BLOCK"))
+                        {
+                            int indexofvoltageSecureStart = UpdateEmail.EmailBody.IndexOf("BEGIN VOLTAGE SECURE BLOCK");
+                            int indexofvoltageSecureEnd = UpdateEmail.EmailBody.LastIndexOf("END VOLTAGE SECURE BLOCK");
+
+                            string strippedBodyText = UpdateEmail.EmailBody.Remove((indexofvoltageSecureStart - 35), ((indexofvoltageSecureEnd - 38)
+                                    - (indexofvoltageSecureStart - 38)));
+
+                            //Microsoft.Exchange.WebServices.Data.MessageBody strippedBody = (Microsoft.Exchange.WebServices.Data.MessageBody)strippedBodyText;
+                            email.EmailBody = strippedBodyText;
+
+                            if (UpdateEmail.CaseID == null)
+                                email.EmailtypeID = 1; //initial email
+                            else
+                                email.EmailtypeID = 2; //incoming email, but not first email, typeid 2 is email reply
+                            try
+                            {
+                                db.Emails.Add(email);
+                                db.SaveChanges();
+                                transaction.Commit();
+                                logger.Info("Email Created, Emailid:" + email.EmailID);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.Info("Exception occured saving new email to DB: " + ex.StackTrace);
+                                throw new Exception("Error saving email to db");
+                            }
+                            Console.WriteLine(Environment.NewLine + "Email with subject:" + email.Emailsubject + " saved" + Environment.NewLine);
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("Exception occured: " + ex);
+                        transaction.Rollback();
+                    }
+                }
+            }
+
+            return email;
+        }
+
+        public static string GetMailHash(string From, string ToRecipients, string Subject, string TextBody, string SentOn)
+        {
+            // xemove name from recipients (only use email id)
+            // remove fy: and re: and [e] from subject and trim
+            // txim everything and make everything lower
+
+            string content = String.Join(";", PrepareReceipients(From)) + "|" +
+                String.Join(";", PrepareReceipients(ToRecipients)) + "|" +
+        String.Join("", Subject.ToLower().Split(new string[] { "re:", "fw:", "[e]" }, StringSplitOptions.RemoveEmptyEntries)).Trim() + "|" +
+        String.Join("", TextBody.ToLower().Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
+
+
+            StringBuilder Sb = new StringBuilder();
+            //logger.Debug ("Content pre-hash: " + content);
+            using (SHA256 hash = SHA256Managed.Create())
+
+            {
+                Encoding enc = Encoding.UTF8;
+                Byte[] result = hash.ComputeHash(enc.GetBytes(content));
+                foreach (Byte b in result)
+                    Sb.Append(b.ToString("x2"));
+            }
+            return Sb.ToString();
+        }
+
+        public static List<string> PrepareReceipients(string Receipient)
+        {
+            List<string> allReceipients = new List<string>();
+            try
+            {
+                allReceipients = Receipient.Split(new char[] { ',', ';', ';' }, StringSplitOptions.RemoveEmptyEntries).Where(email =>
+                            email.Contains("@")).ToList();
+                allReceipients = allReceipients.Select(email => (email.IndexOf("<") == -1 ? email.Replace('{', '<').Replace(')', '>').Replace('}', '>') : email)).ToList();
+                allReceipients = allReceipients.Select(email => (email.Contains("<") ? email.Split(new char[] { '<', '>' })[1] : email).Trim().ToLower())
+                                    .AsQueryable<string>().Select(m => m.Trim()).ToList();
+                if (allReceipients.Any(e => e.Count(x => x == '@') > 1))
+                    throw new Exception("Invalid recipients");
+            }
+            catch (Exception ex)
+            {
+                logger.Debug("Error cleaning up recipients");
+            }
+            return allReceipients;
+        }
     }
 }
+

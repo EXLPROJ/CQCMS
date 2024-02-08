@@ -17,7 +17,7 @@ namespace CQCMS.Entities.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214: DoNotCallOverridableMethodsInConstructors")]
         public Email()
         {
-            Emailattachments = new HashSet<EmailAttachment>();
+            EmailAttachments = new HashSet<EmailAttachment>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -51,21 +51,7 @@ namespace CQCMS.Entities.Models
         [StringLength(25)]
 
         public string EmailDirection { get; set; }
-
-        public bool? EchoStatus { get; set; }
-
-        public DateTime? EchoLockedon { get; set; }
-
-        [StringLength(100)]
-
-        public string EchoLockedBy { get; set; }
-
-        [StringLength(20)]
-
-        public string EchoAttempts { get; set; }
-
-        public bool? IsEchoLocked { get; set; }
-
+     
         [StringLength(20)]
 
         public string Priority { get; set; }
@@ -78,7 +64,7 @@ namespace CQCMS.Entities.Models
         public virtual Mailbox Mailbox { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227: CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmailAttachment> Emailattachments { get; set; }
+        public virtual ICollection<EmailAttachment> EmailAttachments { get; set; }
         public bool AwaitingReview { get; set; }
 
         public DateTime? ReviewedOn { get; set; }
@@ -94,7 +80,5 @@ namespace CQCMS.Entities.Models
         public string Country { get; set; }
 
         public string EmailHash { get; set; }
-
-        public int? EchoAttemptsNum { get; set; }
     }
 }

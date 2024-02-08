@@ -65,21 +65,7 @@
         <th>
             @Html.DisplayNameFor(model => model.EmailDirection)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EchoStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EchoLockedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EchoLockedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EchoAttempts)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsEchoLocked)
-        </th>
+      
         <th>
             @Html.DisplayNameFor(model => model.Priority)
         </th>
@@ -107,9 +93,7 @@
         <th>
             @Html.DisplayNameFor(model => model.EmailHash)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EchoAttemptsNum)
-        </th>
+     
         <th></th>
     </tr>
 
@@ -169,21 +153,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.EmailDirection)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EchoStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EchoLockedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EchoLockedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EchoAttempts)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsEchoLocked)
-        </td>
+      
         <td>
             @Html.DisplayFor(modelItem => item.Priority)
         </td>
@@ -211,9 +181,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.EmailHash)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EchoAttemptsNum)
-        </td>
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EmailID }) |
             @Html.ActionLink("Details", "Details", new { id=item.EmailID }) |

@@ -132,11 +132,28 @@
     <Compile Include="Controllers\EmailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\CQCMSEmailAppContext.cs" />
+    <Compile Include="Models\AppConfiguration.cs" />
+    <Compile Include="Models\AuditTrail.cs" />
+    <Compile Include="Models\BackupUserDetail.cs" />
+    <Compile Include="Models\CaseAuditTrail.cs" />
+    <Compile Include="Models\CaseDetail.cs" />
+    <Compile Include="Models\CaseIdentifierMaxCount.cs" />
+    <Compile Include="Models\CaseStatusLookup.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CategoryLookup.cs" />
     <Compile Include="Models\EmailAttachment.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailBase.cs" />
+    <Compile Include="Models\EmailHTMLBody.cs" />
+    <Compile Include="Models\EmailTextBody.cs" />
+    <Compile Include="Models\EmailType.cs" />
+    <Compile Include="Models\HolidayList.cs" />
+    <Compile Include="Models\SubCategory.cs" />
+    <Compile Include="Models\UserDetail.cs" />
+    <Compile Include="Models\UserToManagerMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +242,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,13 +9,10 @@ using System.Threading.Tasks;
 namespace CQCMS.Entities.Models
 {
 
-    [Table("MailboxAccess")]
-
-    public partial class MailboxAccess
+    public partial class MailboxAccessVM
     {
-
+        [Key]
         public int MailboxAccessID { get; set; }
-
 
         public int UserID { get; set; }
 
@@ -32,6 +29,6 @@ namespace CQCMS.Entities.Models
         public virtual Mailbox Mailbox1 { get; set; }
         public virtual Mailbox Mailbox2 { get; set; }
         public virtual UserDetail UserDetail { get; set; }
-
+        public string Country {  get; set; }
     }
 }

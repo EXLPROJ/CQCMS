@@ -1,5 +1,6 @@
 namespace CQCMS.Entities
 {
+    using CQCMS.Entities.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -31,6 +32,10 @@ namespace CQCMS.Entities
 
         [StringLength(250)]
         public string Country { get; set; }
+
+        public CaseDetail CaseDetail { get; set; }
+
+        public virtual Email Email { get; set; }
 
         [StringLength(250)]
         public string LastActedBy { get; set; }

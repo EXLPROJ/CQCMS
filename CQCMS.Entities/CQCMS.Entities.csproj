@@ -51,26 +51,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaseStatus.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DTOs\CaseAndEmailUpdateDTO.cs" />
     <Compile Include="DTOs\CaseChangeDTO.cs" />
     <Compile Include="DTOs\CaseIdEmailIdDTO.cs" />
     <Compile Include="DTOs\MailboxEmailSearchDTO.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\BackupUserDetailVM.cs" />
+    <Compile Include="Models\BackupUserDetail.cs" />
     <Compile Include="Models\CaseDetailVM.cs" />
     <Compile Include="Models\CaseDetail.cs" />
     <Compile Include="Models\CaseStatusLookup.cs" />
+    <Compile Include="Models\MailboxAccessVM.cs" />
+    <Compile Include="Models\PartialCaseMatch.cs" />
+    <Compile Include="Models\SubCategory.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryVM.cs" />
     <Compile Include="Models\ComplaintsUpdateModel.cs" />
+    <Compile Include="Models\DbContext.cs" />
+    <Compile Include="Models\CQCMSDbContext-backup.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\EmailAttachment.cs" />
     <Compile Include="Models\EmailAttachmentVM.cs" />
     <Compile Include="Models\EmailType.cs" />
     <Compile Include="Models\EmailVM.cs" />
+    <Compile Include="Models\Holiday.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MailboxAccess.cs" />
     <Compile Include="Models\Mailbox.cs" />
     <Compile Include="Models\MailboxVM.cs" />
     <Compile Include="Models\SubCategoryVM.cs" />
+    <Compile Include="Models\UserDetailVM.cs" />
     <Compile Include="Models\UserDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
