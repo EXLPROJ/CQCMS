@@ -54,7 +54,12 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DataAccess\CaseAllData.cs" />
+    <Compile Include="DataAccess\CategoryData.cs" />
+    <Compile Include="DataAccess\CommonData.cs" />
+    <Compile Include="DataAccess\ConfigData.cs" />
     <Compile Include="DataAccess\EmailData.cs" />
+    <Compile Include="DataAccess\MailboxData.cs" />
+    <Compile Include="HelperFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

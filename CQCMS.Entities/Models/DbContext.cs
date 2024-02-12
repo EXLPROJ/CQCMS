@@ -17,66 +17,66 @@ namespace CQCMS.EmailApp.Models
         }
 
         public virtual DbSet<BackupUserDetail> BackupUserDetails { get; set; }
-        public virtual DbSet<Rule> Rules { get; set; }
+       // public virtual DbSet<Rule> Rules { get; set; }
 
-        public virtual DbSet<InformationSchemaColumn> InformationSchemaColumn { get; set; }
+        //public virtual DbSet<InformationSchemaColumn> InformationSchemaColumn { get; set; }
         public virtual DbSet<CaseDetail> CaseDetails { get; set; }
         public virtual DbSet<CaseStatusLookup> CaseStatusLookups { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<ClientInfo> ClientInfoes { get; set; }
+       // public virtual DbSet<ClientInfo> ClientInfoes { get; set; }
         public virtual DbSet<Email> Emails { get; set; }
         public virtual DbSet<EmailAttachment> Emailattachments { get; set; }
-        public virtual DbSet<EmailClassificationRule> EmailClassificationRules { get; set; }
+        //public virtual DbSet<EmailClassificationRule> EmailClassificationRules { get; set; }
         public virtual DbSet<EmailType> Emailtypes { get; set; }
         public virtual DbSet<Mailbox> Mailboxes { get; set; }
         public virtual DbSet<MailboxAccess> MailboxAccesses { get; set; }
-        public virtual DbSet<MailboxClientProcessMap> MailboxClientProcessMaps { get; set; }
-        public virtual DbSet<ProcessInfo> ProcessInfoes { get; set; }
-        public virtual DbSet<Signature> Signatures { get; set; }
+        //public virtual DbSet<MailboxClientProcessMap> MailboxClientProcessMaps { get; set; }
+       // public virtual DbSet<ProcessInfo> ProcessInfoes { get; set; }
+        //public virtual DbSet<Signature> Signatures { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
-        public virtual DbSet<SubProcessInfo> SubProcessInfoes { get; set; }
-        public virtual DbSet<Template> Templates { get; set; }
-        public virtual DbSet<TemplateVM> TemplatesVM { get; set; }
-        public virtual DbSet<UserClientProcessMap> UserClientProcessMaps { get; set; }
+       // public virtual DbSet<SubProcessInfo> SubProcessInfoes { get; set; }
+        //public virtual DbSet<Template> Templates { get; set; }
+       // public virtual DbSet<TemplateVM> TemplatesVM { get; set; }
+        //public virtual DbSet<UserClientProcessMap> UserClientProcessMaps { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<TimeZones> TimeZones { get; set; }
+        //public virtual DbSet<TimeZones> TimeZones { get; set; }
         //public virtual DbSet<QNLockup> QNLookups { get; set; }
-        public virtual DbSet<FileDetails> FileDetails { get; set; }
-        public virtual DbSet<MassContacts> MassContacts { get; set; }
-        public virtual DbSet<SignerInformation> SignerInformations { get; set; }
-        public virtual DbSet<SignerAddress> SignerAddresses { get; set; }
-        public virtual DbSet<SignerUpdateCaseDetails> SignerUpdateCaseDetails { get; set; }
-        public virtual DbSet<SignerUpdateLLCMember> SignerUpdateLLCMembers { get; set; }
-        public virtual DbSet<LegalDocuments> LegalDocuments { get; set; }
+       // public virtual DbSet<FileDetails> FileDetails { get; set; }
+        //public virtual DbSet<MassContacts> MassContacts { get; set; }
+        //public virtual DbSet<SignerInformation> SignerInformations { get; set; }
+        //public virtual DbSet<SignerAddress> SignerAddresses { get; set; }
+        //public virtual DbSet<SignerUpdateCaseDetails> SignerUpdateCaseDetails { get; set; }
+        //public virtual DbSet<SignerUpdateLLCMember> SignerUpdateLLCMembers { get; set; }
+        //public virtual DbSet<LegalDocuments> LegalDocuments { get; set; }
         public virtual DbSet<BackupUserDetailVM> BackupUserDetailsvM { get; set; }
         public virtual DbSet<CategoryVM> CategoriesVM { get; set; }
-        public virtual DbSet<ClientInfoVM> ClientInfoesVM { get; set; }
+        //public virtual DbSet<ClientInfoVM> ClientInfoesVM { get; set; }
         public virtual DbSet<MailboxVM> MailboxesVM { get; set; }
         public virtual DbSet<MailboxAccessVM> MailboxAccessesVM { get; set; }
-        public virtual DbSet<MailboxClientProcessMapVM> MailboxClientProcessMapsvM { get; set; }
-        public virtual DbSet<ProcessInfoVM> ProcessInfoesVM { get; set; }
-        public virtual DbSet<SignatureVM> SignaturesVM { get; set; }
+        //public virtual DbSet<MailboxClientProcessMapVM> MailboxClientProcessMapsvM { get; set; }
+        //public virtual DbSet<ProcessInfoVM> ProcessInfoesVM { get; set; }
+        //public virtual DbSet<SignatureVM> SignaturesVM { get; set; }
         public virtual DbSet<SubCategoryVM> SubCategoriesvM { get; set; }
-        public virtual DbSet<SubProcessInfoVM> SubProcessInfoesvM { get; set; }
-        public virtual DbSet<UserClientProcessMapVM> UserClientProcessMapsvM { get; set; }
+        //public virtual DbSet<SubProcessInfoVM> SubProcessInfoesvM { get; set; }
+        //public virtual DbSet<UserClientProcessMapVM> UserClientProcessMapsvM { get; set; }
         public virtual DbSet<UserDetailVM> UserDetailsVM { get; set; }
-        public virtual DbSet<QNLockupVM> QNLookupsvM { get; set; }
-        public virtual DbSet<FileTranslationRules> FileTranslationRules { get; set; }
-        public virtual DbSet<CaseLiveSignSigner> CaseLiveSignSigner { get; set; }
-        public virtual DbSet<SignerGroup> SignerGroups { get; set; }
-        public virtual DbSet<RemoveSigners> RemoveSigners { get; set; }
+        //public virtual DbSet<QNLockupVM> QNLookupsvM { get; set; }
+        //public virtual DbSet<FileTranslationRules> FileTranslationRules { get; set; }
+        //public virtual DbSet<CaseLiveSignSigner> CaseLiveSignSigner { get; set; }
+        //public virtual DbSet<SignerGroup> SignerGroups { get; set; }
+        //public virtual DbSet<RemoveSigners> RemoveSigners { get; set; }
         //public virtual DbSet<HashFamily> HashFamilyvM { get; set; }
         //public virtual DbSet<HashFamilyDepend> HashFamilyDepend { get; set; }
         //public virtual DbSet<HashTag> HashTag { get; set; }
         public virtual DbSet<Country> Country { get; set; }
-        public virtual DbSet<SignerReportStatus> SignerReportStatus { get; set; }
-        public virtual DbSet<ReportStatusWithCaseID> ReportStatusWithCaseID { get; set; }
-        public virtual DbSet<CaseCustomAttribute> CaseCustomAttribute { get; set; }
-        public virtual DbSet<AdditionalActionConfig> AdditionalActionConfig { get; set; }
-        public virtual DbSet<PreProcessRuleActions> PreProcessRuleActions { get; set; }
-        public virtual DbSet<Ruleoption> RuleOption { get; set; }
-        public virtual DbSet<AdditionalAction> AdditionalAction { get; set; }
-        public virtual DbSet<TemplateToken> TemplateToken { get; set; }
+        //public virtual DbSet<SignerReportStatus> SignerReportStatus { get; set; }
+        //public virtual DbSet<ReportStatusWithCaseID> ReportStatusWithCaseID { get; set; }
+        //public virtual DbSet<CaseCustomAttribute> CaseCustomAttribute { get; set; }
+        //public virtual DbSet<AdditionalActionConfig> AdditionalActionConfig { get; set; }
+        //public virtual DbSet<PreProcessRuleActions> PreProcessRuleActions { get; set; }
+        //public virtual DbSet<Ruleoption> RuleOption { get; set; }
+        //public virtual DbSet<AdditionalAction> AdditionalAction { get; set; }
+        //public virtual DbSet<TemplateToken> TemplateToken { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -133,17 +133,17 @@ namespace CQCMS.EmailApp.Models
             .WithRequired(e => e.Category)
             .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<ClientInfo>()
-            .Property(e => e.CIN)
-            .IsUnicode(false);
+            //modelBuilder.Entity<ClientInfo>()
+            //.Property(e => e.CIN)
+            //.IsUnicode(false);
 
-            modelBuilder.Entity<ClientInfo>()
-            .Property(e => e.AccountNumber)
-            .IsUnicode(false);
+            //modelBuilder.Entity<ClientInfo>()
+            //.Property(e => e.AccountNumber)
+            //.IsUnicode(false);
 
-            modelBuilder.Entity<ClientInfo>()
-            .Property(e => e.MasterGroupName)
-            .IsUnicode(false);
+            //modelBuilder.Entity<ClientInfo>()
+            //.Property(e => e.MasterGroupName)
+            //.IsUnicode(false);
 
             modelBuilder.Entity<Email>()
             .Property(e => e.Emailsubject)
@@ -174,7 +174,7 @@ namespace CQCMS.EmailApp.Models
             .IsUnicode(false);
 
             modelBuilder.Entity<Email>()
-            .HasMany(e => e.Emailattachments)
+            .HasMany(e => e.EmailAttachments)
             .WithRequired(e => e.Email)
             .WillCascadeOnDelete(false);
 
@@ -190,13 +190,13 @@ namespace CQCMS.EmailApp.Models
             .Property(e => e.EmailFilePath)
             .IsUnicode(true);
 
-            modelBuilder.Entity<EmailClassificationRule>()
-            .Property(e => e.InputVariable)
-            .IsFixedLength();
+            //modelBuilder.Entity<EmailClassificationRule>()
+            //.Property(e => e.InputVariable)
+            //.IsFixedLength();
 
-            modelBuilder.Entity<EmailClassificationRule>()
-            .Property(e => e.Additionalattribute)
-            .IsFixedLength();
+            //modelBuilder.Entity<EmailClassificationRule>()
+            //.Property(e => e.Additionalattribute)
+            //.IsFixedLength();
 
             modelBuilder.Entity<EmailType>()
             .Property(e => e.EmailType1)
@@ -237,10 +237,10 @@ namespace CQCMS.EmailApp.Models
             .WithOptional(e => e.Mailbox)
             .HasForeignKey(e => e.AllowedMailboxID);
 
-            modelBuilder.Entity<Mailbox>()
-            .HasMany(e => e.Signatures)
-            .WithRequired(e => e.Mailbox)
-            .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Mailbox>()
+            //.HasMany(e => e.Signatures)
+            //.WithRequired(e => e.Mailbox)
+            //.WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Mailbox>()
             .HasMany(e => e.MailboxAccesses1)
@@ -252,13 +252,13 @@ namespace CQCMS.EmailApp.Models
             .WithOptional(e => e.Mailbox2)
             .HasForeignKey(e => e.RestrictedMailboxID);
 
-            modelBuilder.Entity<ProcessInfo>()
-            .Property(e => e.ProcessName)
-            .IsUnicode(false);
+            //modelBuilder.Entity<ProcessInfo>()
+            //.Property(e => e.ProcessName)
+            //.IsUnicode(false);
 
-            modelBuilder.Entity<ProcessInfo>()
-            .Property(e => e.ProcessShortCode)
-            .IsUnicode(false);
+            //modelBuilder.Entity<ProcessInfo>()
+            //.Property(e => e.ProcessShortCode)
+            //.IsUnicode(false);
 
             modelBuilder.Entity<SubCategory>()
             .Property(e => e.SubCategoryName)
@@ -268,17 +268,17 @@ namespace CQCMS.EmailApp.Models
             .Property(e => e.SubCategoryKeywords)
             .IsUnicode(false);
 
-            modelBuilder.Entity<SubProcessInfo>()
-            .Property(e => e.SubProcessName)
-            .IsUnicode(false);
+            //modelBuilder.Entity<SubProcessInfo>()
+            //.Property(e => e.SubProcessName)
+            //.IsUnicode(false);
 
-            modelBuilder.Entity<SubProcessInfo>()
-            .Property(e => e.SubProcessShortCode)
-            .IsUnicode(false);
+            //modelBuilder.Entity<SubProcessInfo>()
+            //.Property(e => e.SubProcessShortCode)
+            //.IsUnicode(false);
 
-            modelBuilder.Entity<UserClientProcessMap>()
-            .Property(e => e.RuleType)
-            .IsUnicode(false);
+            //modelBuilder.Entity<UserClientProcessMap>()
+            //.Property(e => e.RuleType)
+            //.IsUnicode(false);
 
             modelBuilder.Entity<UserDetail>()
             .Property(e => e.EmployeeEmailID)
@@ -289,10 +289,10 @@ namespace CQCMS.EmailApp.Models
             .WithRequired(e => e.UserDetail)
             .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<UserDetail>()
-            .HasMany(e => e.Signatures)
-            .WithRequired(e => e.UserDetail)
-            .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<UserDetail>()
+            //.HasMany(e => e.Signatures)
+            //.WithRequired(e => e.UserDetail)
+            //.WillCascadeOnDelete(false);
         }
 
     }

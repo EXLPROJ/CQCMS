@@ -41,6 +41,9 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +56,7 @@
   <ItemGroup>
     <Compile Include="CaseStatus.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DTOs\AppConfigurationDTO.cs" />
     <Compile Include="DTOs\CaseAndEmailUpdateDTO.cs" />
     <Compile Include="DTOs\CaseChangeDTO.cs" />
     <Compile Include="DTOs\CaseIdEmailIdDTO.cs" />
@@ -63,7 +67,10 @@
     <Compile Include="Models\CaseDetailVM.cs" />
     <Compile Include="Models\CaseDetail.cs" />
     <Compile Include="Models\CaseStatusLookup.cs" />
+    <Compile Include="Models\EmailAttachmentInsert.cs" />
+    <Compile Include="Models\LookupValues.cs" />
     <Compile Include="Models\MailboxAccessVM.cs" />
+    <Compile Include="Models\ManagedLookup.cs" />
     <Compile Include="Models\PartialCaseMatch.cs" />
     <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Models\Category.cs" />

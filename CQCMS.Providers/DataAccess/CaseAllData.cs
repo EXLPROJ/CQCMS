@@ -1,4 +1,5 @@
-﻿using CQCMS.Entities.Models;
+﻿using CQCMS.EmailApp.Models;
+using CQCMS.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -78,8 +79,7 @@ namespace CQCMS.Providers.DataAccess
                 {
                     sqlCaseID.Value = DBNull.Value;
                 }
-                return await db.Database.SqlQuery<CaseDetailVM>("exec [dbg].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country",
-                userCountry), sqlCaseID).FirstOrDefault();
+                return db.Database.SqlQuery<CaseDetailVM>("exec [dbg].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).FirstOrDefault();
             }
         }
         public CaseDetailVM GetCaseByCaseIDEmpty(string userCountry, int? CaseID)
@@ -92,7 +92,7 @@ namespace CQCMS.Providers.DataAccess
 
                     sqlCaseID.Value = DBNull.Value;
                 }
-                return db.Database.SqlQuery<CaseDetailVM>("exec [gyg].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).FirstorDefault();
+                return db.Database.SqlQuery<CaseDetailVM>("exec [gyg].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).FirstOrDefault();
             }
         }
         public static string GenerateCaseldIdentifier(string userCountry, int? CaseID)
@@ -142,27 +142,27 @@ namespace CQCMS.Providers.DataAccess
                 {
                     sqlEmailld.Value = DBNull.Value;
                 }
-                return await db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByLastEmailId] @country, @Lastimailid", new SqlParameter("@country", userCountry), sqlEmailld).FirstOrDefault();
+                return db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByLastEmailId] @country, @Lastimailid", new SqlParameter("@country", userCountry), sqlEmailld).FirstOrDefault();
 
             }
         }
-        public async Task<CaseDataVM> GetCaseDataByCaseID(string userCountry, int? CaseID)
-        {
+        //public async Task<CaseDataVM> GetCaseDataByCaseID(string userCountry, int? CaseID)
+        //{
 
-            using (CQCMSDbContext db = new CQCMSDbContext())
-            {
+        //    using (CQCMSDbContext db = new CQCMSDbContext())
+        //    {
 
-                SqlParameter sqlCaseID = new SqlParameter("@CaseID", CaseID);
+        //        SqlParameter sqlCaseID = new SqlParameter("@CaseID", CaseID);
 
-                if (CaseID == null)
-                {
-                    sqlCaseID.Value = DBNull.Value;
-                }
-                var currentCase = await db.Database.SqlQuery<CaseDataVM>("exec [dbo].[getCaseDataByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).SingleOrDefaultAsync();
-                return currentCase;
+        //        if (CaseID == null)
+        //        {
+        //            sqlCaseID.Value = DBNull.Value;
+        //        }
+        //        var currentCase = await db.Database.SqlQuery<CaseDataVM>("exec [dbo].[getCaseDataByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).SingleOrDefaultAsync();
+        //        return currentCase;
 
-            }
-        }
+        //    }
+        //}
         public async Task PopulateCaseVirtualFieldsAsync(List<CaseDetailVM> caseDetails)
         {
             CategoryData catData = new CategoryData();
@@ -176,37 +176,55 @@ namespace CQCMS.Providers.DataAccess
                     caseDetail.Category = await catData.GetCategorybyCategoryIDAsync(caseDetail.Country, caseDetail.CategoryID);
                     caseDetail.Mailbox = mailboxData.GetMailboxbyID(caseDetail.Country, caseDetail.MailboxID);
                     //caseDetail.fmails = await EmailData.GetEmailByCaseIDForVirtualAsync(caseDetail.country, caseDetail.CaseID)
-                    caseDetail.EmailAttachments = await emailData.GetemailattachemntByEmailIdAsync(caseDetail.Country, caseDetail.LastEmailID);
+                    caseDetail.EmailAttachments = await emailData.GetEmailAttachemntByEmailIdAsync(caseDetail.Country, caseDetail.LastEmailID);
                     caseDetail.SubCategory = await catData.GetSubCategorybySubCategoryIDAsync(caseDetail.Country, caseDetail.SubCategoryID);
                 }
             }
         }
+
+
+
         public static void PopulateCaseVirtualFields(ref List<CaseDetailVM> caseDetails)
+
         {
             foreach (CaseDetailVM caseDetail in caseDetails)
             {
                 if (caseDetail != null && caseDetail.CaseID != 0)
                 {
-
-                    caseDetail.CaseStatusLookup = GetCaseStatusLockUpByIDBabyCase(caseDetail.Country, caseDetail.CaseStatusID);
+                    caseDetail.CaseStatusLookup = GetCaseStatusLookUpByIDBabyCase(caseDetail.Country, caseDetail.CaseStatusID);
                     caseDetail.Category = CategoryData.GetCategorybyCategoryIDBabyCase(caseDetail.Country, caseDetail.CategoryID);
                     caseDetail.Mailbox = new MailboxData().GetMailboxbyID(caseDetail.Country, caseDetail.MailboxID);
-
                     caseDetail.Emails = EmailData.GetEmailByCaseIDForVirtualBabyCase(caseDetail.Country, caseDetail.CaseID);
-                    caseDetail.EmailAttachments = EmailData.GetEmailattachemntByfmailIdBabyCase(caseDetail.Country, caseDetail.LastEmailID);
+                    caseDetail.EmailAttachments = EmailData.GetEmailAttachemntByEmailIdBabyCase(caseDetail.Country, caseDetail.LastEmailID);
                     caseDetail.SubCategory = CategoryData.GetSubCategorybySubCategoryIDBabyCase(caseDetail.Country, caseDetail.SubCategoryID);
                 }
             }
         }
-        public async Task<CaseStatusLookup> GetCaseStatusLookUpByID(string userCountry, int casestatusid)
+        //public static void PopulateCaseVirtualFields(ref List<CaseDetailVM> caseDetails)
+        //{
+        //    foreach (CaseDetailVM caseDetail in caseDetails)
+        //    {
+        //        if (caseDetail != null && caseDetail.CaseID != 0)
+        //        {
 
+                    //            caseDetail.CaseStatusLookup = GetCaseStatusLockUpByIDBabyCase(caseDetail.Country, caseDetail.CaseStatusID);
+                    //            caseDetail.Category = CategoryData.GetCategorybyCategoryIDBabyCase(caseDetail.Country, caseDetail.CategoryID);
+                    //            caseDetail.Mailbox = new MailboxData().GetMailboxbyID(caseDetail.Country, caseDetail.MailboxID);
+
+                    //            caseDetail.Emails = EmailData.GetEmailByCaseIDForVirtualBabyCase(caseDetail.Country, caseDetail.CaseID);
+                    //            caseDetail.EmailAttachments = EmailData.GetEmailattachemntByfmailIdBabyCase(caseDetail.Country, caseDetail.LastEmailID);
+                    //            caseDetail.SubCategory = CategoryData.GetSubCategorybySubCategoryIDBabyCase(caseDetail.Country, caseDetail.SubCategoryID);
+                    //        }
+                    //    }
+                    //}
+        public async Task<CaseStatusLookup> GetCaseStatusLookUpByID(string userCountry, int casestatusid)
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
                 if (HttpContext.Current == null)
                 {
                     return await db.Database.SqlQuery<CaseStatusLookup>("exec [gg]. [GetCaseStatushookUpByID] @CaseStatusTD, @country",
-                    new SqlParameter("@CaseStatusID", casestatusid), new SqlParameter("@country", userCountry)).SingleOrDefaultasync();
+                    new SqlParameter("@CaseStatusID", casestatusid), new SqlParameter("@country", userCountry)).SingleOrDefaultAsync();
                 }
                 else
                     return GetAllCaseStatusLookup().FirstOrDefault(l => l.CaseStatusID == casestatusid);
@@ -237,12 +255,12 @@ namespace CQCMS.Providers.DataAccess
                     return (List<CaseStatusLookup>)HttpContext.Current.Cache["CaseStatusLookup"];
                 if (HttpContext.Current == null || HttpContext.Current.Cache["CaseStatusLookup"] == null)
                 {
-                    caseStatus = db.Database.Sqlquery<CaseStatusLookup>("exec [dbo].[GetAllCaseStatusLookUp]").ToList();
+                    caseStatus = db.Database.SqlQuery<CaseStatusLookup>("exec [dbo].[GetAllCaseStatusLookUp]").ToList();
                     if (HttpContext.Current != null)
                     {
                         HttpContext.Current.Cache.Add("CaseStatusLockup", caseStatus, null, DateTime.Now.AddMinutes(60),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
-                    }                    
+                    }
                 }
                 return caseStatus;
             }

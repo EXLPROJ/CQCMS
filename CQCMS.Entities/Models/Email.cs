@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CQCMS.Entities.Models
 {
 
-    [Table("Email")]
+    [Table("EmailBase")]
     public partial class Email
     {
 

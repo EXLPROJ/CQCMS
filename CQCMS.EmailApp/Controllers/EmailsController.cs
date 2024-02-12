@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CQCMS.CommonHelpers;
 using CQCMS.EmailApp;
 using CQCMS.EmailApp.Data;
+using CQCMS.Entities;
+using CQCMS.Entities.DTOs;
+using CQCMS.Entities.Models;
+using CQCMS.Providers.DataAccess;
+using NLog;
 
 namespace CQCMS.EmailApp.Controllers
 {
     public class EmailsController : Controller
     {
         private CQCMSEmailAppContext db = new CQCMSEmailAppContext();
-
+        private static Logger logger = LogManager.GetLogger("EmailTransformation");
         // GET: Emails
         public ActionResult Index()
         {
@@ -53,13 +61,58 @@ namespace CQCMS.EmailApp.Controllers
             {
                 email.ReceivedOn = DateTime.Now;
                 string emailbody = form["EmailBody"];
-                db.Emails.Add(email);
-                db.SaveChanges();
+                //db.Emails.Add(email);
+                //db.SaveChanges();
                 int EmailID = email.EmailID;
-                
+
+                CaseIdEmailIdDTO SavedEmailDetails;
+
+                List<SavedAttachment> attachments;
+                try
+                {
+                    // if (mail.attachments.count() > 0)
+                    attachments = mailEngine.SaveAttachments(mail, AttachmentTempFolder, tempAttachmentPath);
+                    attachmentPath = attachments != null ? string.Join(";", attachments.Select(x => x.SavedFilePath).ToArray()) : "";
+                    // Save email
+
+                    ApplicationHelper ApplicationHelper = new ApplicationHelper();
+                SavedEmailDetails = ApplicationHelper.SaveNewEmailAndCreateNewCase(CaseId, currmailbox.MailboxID, "US", CaseId == null ?
+                    (int)CaseStatus.FirstEmail : (int)CaseStatus.NewEmail, email.EmailSubject, emailbody
+                , mail.Folder, mail.Receivedon, mail.Senton, attachmentPath, email.EmailFrom, null, null, email.EmailTo, email.EmailCC,
+                AttachmentTempFolder, false, false, email.Priority, "Incoming", false, AutoReplyInfo, attachments);
+
+                    System.IO.Directory.Delete(Path.Combine(tempAttachmentPath, AttachmentTempFolder), true);
+
+                }
+
+                catch (ApplicationException ex)
+                {
+                    Logger.Error("Exception gcgured in saving email to database, " + ex.Message);
+                    //logger.Info ("Saved email details have emailid: " + SavedEmailDetails.Emailid + " and gaseid " + SavedEmailDetails.CaselId);
+                    System.IO.Directory.Delete(Path.Combine(tempAttachmentPath, AttachmentTempFolder), true);
+
+                    logger.Error("Moving to the next email after deleting temporary attachments");                    
+                }
+
+
+
+
+
+                EmailAttachmentInsert emailAttachmentUI = new EmailAttachmentInsert();//Change from UI to Insert
+                emailAttachmentUI.EmailID = newFile.EmailID;
+                emailAttachmentUI.CaseID = newFile.CaseID;
+                emailAttachmentUI.EmailFileName = newFile.EmailFileName;
+                emailAttachmentUI.EmailFilePath = newFile.EmailFilepath;
+                emailAttachmentUI.Isactive = newFile.IsActive;
+                emailAttachmentUI.Createdon = newFile.Createdon;
+                emailAttachmentUI.Country = userCountry;
+                emailAttachmentUI.LastActedon = DateTime.Now;
+                emailAttachmentUI.LastActedBy = Environment.UserName;
+                await new EmailData().InsertIntoEmailAttachmentTable(emailAttachmentUI);
+                logger.Info("File attachment saved successfully");
 
                 return RedirectToAction("Index");
-            }
+                }
 
             return View(email);
         }
