@@ -33,7 +33,6 @@ using System.Web.Http.ExceptionHandling;
 using System.Web.Helpers;
 using CQCMS.Entities.Models;
 using CQCMS.Providers.DataAccess;
-using CQCMS.EmailApp.Models;
 using System.Security.Policy;
 
 namespace CQCMS.API.Controllers

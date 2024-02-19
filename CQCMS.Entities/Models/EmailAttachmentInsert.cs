@@ -23,7 +23,7 @@ namespace CQCMS.Entities.Models
         public string EmailFileName { get; set; }
 
         [StringLength(500)]
-        public string EmailoriginalFileName
+        public string EmailOriginalFileName
         {
             get; set;
         }
@@ -36,7 +36,7 @@ namespace CQCMS.Entities.Models
         public string Country { get; set; }
         public string LastActedBy { get; set; }
 
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
         public bool IsInline { get; set; }
 
     }

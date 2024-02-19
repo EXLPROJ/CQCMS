@@ -9,17 +9,10 @@ using CQCMS.Entities.Models;
 
 namespace CQCMS.Entities.Models
 {
-
-
-
     public class ManagedLookup
-
     {
-
         [Key]
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         public int LookupID { get; set; }
         public string LookupName { get; set; }
         public bool IsUserDefined { get; set; }

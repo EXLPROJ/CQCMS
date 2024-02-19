@@ -45,9 +45,7 @@ namespace CQCMS.Entities.Models
         public DateTime? OOOFrom { get; set; }
         public DateTime? OOOTill { get; set; }
         public string ShortCode { get; set; }
-        public DateTime? LastActedon { get; set; }
-
-        [StringLength(50)]
+        public DateTime? LastActedOn { get; set; }
 
         public string LastActedBy { get; set; }
 

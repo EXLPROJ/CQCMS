@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CQCMS.Entities
+namespace CQCMS.Entities.Models
 {
     public class EmailVM
 
@@ -27,16 +28,17 @@ namespace CQCMS.Entities
         public int MailboxID { get; set; }
         public DateTime? ReceivedOn { get; set; }
         public DateTime? SentOn { get; set; }
+        [NotMapped]
         public DateTime? LastActedOn { get; set; }
-        [StringLength(50)]
-
+        
         public string LastActedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        [StringLength(50)]
+        
 
         public string CreatedBy { get; set; }
         [Required]
 
+        [StringLength(200)]
         public string EmailSubject { get; set; }
 
         [Required]

@@ -55,6 +55,9 @@
       <HintPath>..\packages\HtmlAgilityPack.1.11.58\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.5.2.8\lib\net46\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -164,8 +167,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AssignmentAPIController.cs" />
+    <Compile Include="Controllers\CaseAPIController.cs" />
     <Compile Include="Controllers\CategoriesAPIController.cs" />
+    <Compile Include="Controllers\EmailAPIController.cs" />
+    <Compile Include="Controllers\HomeAPIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsersAPIController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

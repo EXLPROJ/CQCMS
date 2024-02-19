@@ -49,10 +49,8 @@ namespace CQCMS.Entities.Models
 
         public bool? IsExternalClient { get; set; }
         
-        [StringLength(50)]
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
-        [StringLength(50)]
         public string LastActedBy { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft .Usage", "CA2227:CollectionPropertiesShouldBeReadonly")]

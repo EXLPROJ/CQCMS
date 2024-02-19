@@ -17,7 +17,6 @@ using System.Security.Principal;
 using CQCMS.Entities.Models;
 using System.IO;
 using System.Net.Mail;
-using CQCMS.EmailApp.Models;
 using NLog;
 using CQCMS.Providers.DataAccess;
 
@@ -131,70 +130,69 @@ namespace CQCMS.CommonHelpers
 
         public void Test()
         {
-            var attachmentPath = "";
-            attachmentPath = ConfigData.GetConfigvalue("AttachmentPathMassComm");
-            //attachmentPath = "//USW20025487 -hnah-adrogt-hsh¢/THOR/BOLT/DEV/Attachments";
+            //var attachmentPath = "";
+            //attachmentPath = ConfigData.GetConfigvalue("AttachmentPathMassComm");
+            ////attachmentPath = "//USW20025487 -hnah-adrogt-hsh¢/THOR/BOLT/DEV/Attachments";
 
-            if (!System.IO.Directory.Exists(attachmentPath))
-            {
-                Directory.CreateDirectory(attachmentPath);
-                logger.Info("Attachment directory created: " + attachmentPath);
+            //if (!System.IO.Directory.Exists(attachmentPath))
+            //{
+            //    Directory.CreateDirectory(attachmentPath);
+            //    logger.Info("Attachment directory created: " + attachmentPath);
 
-            }
-            logger.Info("Path of the attachment: " + attachmentPath);
-            attachmentFolderPath = Path.Combine(attachmentPath, file.FileID.Tostring());
-            if (System.IO.Directory.Exists(attachmentFolderPath))
-            {
+            //}
+            //logger.Info("Path of the attachment: " + attachmentPath);
+            //attachmentFolderPath = Path.Combine(attachmentPath, file.FileID.Tostring());
+            //if (System.IO.Directory.Exists(attachmentFolderPath))
+            //{
 
-                DirectoryInfo d2 = new DirectoryInfo(attachmentFolderPath);
-                FileInfo[] MultipleFiles2 = d2.GetFiles();
-                var newAttachmentPath = "";
-                newAttachmentPath = ConfigData.GetConfigvalue("AttachmentPath");
-                if (MultipleFiles2.Length != 0)
-                {
-                    for (int i = 0; i < MultipleFiles2.Length; i++)
-                    {
+            //    DirectoryInfo d2 = new DirectoryInfo(attachmentFolderPath);
+            //    FileInfo[] MultipleFiles2 = d2.GetFiles();
+            //    var newAttachmentPath = "";
+            //    newAttachmentPath = ConfigData.GetConfigvalue("AttachmentPath");
+            //    if (MultipleFiles2.Length != 0)
+            //    {
+            //        for (int i = 0; i < MultipleFiles2.Length; i++)
+            //        {
 
-                        FileInfo FileUpload = MultipleFiles2[i];
-                        db = new CQCMSDbContext();
-                        if (FileUpload.Length > 0)
-                        {
-                            string _FileName = Path.GetFileName(FileUpload.Name);
-                            string _path = null;
-                            if (!System.IO.Directory.Exists(newAttachmentPath))
-                            {
-                                if (System.IO.Directory.Exists(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) + "/"))
-                                {
-                                    _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);
-                                    FileUpload.CopyTo(_path);
-                                }
-                                else
-                                {
-                                    Directory.CreateDirectory(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) +
-                                    _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName) ;
-                                    FileUpload.CopyTo(_path);
-                                }
-                            }
-                            else
-                            {
-                                Directory.CreateDirectory(newAttachmentPath);
-                                if (System.IO.Directory.Exists(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) + "/"))
-                                {
-                                    _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);
-                                    FileUpload.CopyTo(_path);
-                                }
-                                else
-                                {
-                                    Directory.CreateDirectory(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) +
-                                    _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName) ;
-                                    FileUpload.CopyTo(_path);
-                                }
-                            }
-                            allattachedFiles.Add(_path); //Path of the Email attachments
-                        }
-                    }
-                }
-            }
+            //            FileInfo FileUpload = MultipleFiles2[i];
+            //            db = new CQCMSDbContext();
+            //            if (FileUpload.Length > 0)
+            //            {
+            //                string _FileName = Path.GetFileName(FileUpload.Name);
+            //                string _path = null;
+            //                if (!System.IO.Directory.Exists(newAttachmentPath))
+            //                {
+            //                    if (System.IO.Directory.Exists(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) + "/"))
+            //                    {
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);
+            //                        FileUpload.CopyTo(_path);
+            //                    }
+            //                    else
+            //                    {
+            //                        Directory.CreateDirectory(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) +
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName) ;
+            //                        FileUpload.CopyTo(_path);
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    Directory.CreateDirectory(newAttachmentPath);
+            //                    if (System.IO.Directory.Exists(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) + "/"))
+            //                    {
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);
+            //                        FileUpload.CopyTo(_path);
+            //                    }
+            //                    else
+            //                    {
+            //                        Directory.CreateDirectory(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) +
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);                                    FileUpload.CopyTo(_path);
+            //                    }
+            //                }
+            //                allattachedFiles.Add(_path); //Path of the Email attachments
+            //            }
+            //        }
+            //    }
+            //}
         }
 
     }

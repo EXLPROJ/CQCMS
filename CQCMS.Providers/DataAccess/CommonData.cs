@@ -1,5 +1,4 @@
-﻿using CQCMS.EmailApp.Models;
-using CQCMS.Entities.DTOs;
+﻿using CQCMS.Entities.DTOs;
 using CQCMS.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -13,9 +12,8 @@ namespace CQCMS.Providers.DataAccess
 {
     public class CommonData
     {
-        public static List<AppConfigurationDTO> GetaAllconfigurations()
+        public static List<AppConfigurationDTO> GetAllConfigurations()
         {
-
             List<AppConfigurationDTO> allConfig = new List<AppConfigurationDTO>();
             if (HttpContext.Current != null && HttpContext.Current.Cache["AllConfigurations"] != null)
                 return (List<AppConfigurationDTO>)HttpContext.Current.Cache["AllConfigurations"];
@@ -23,8 +21,7 @@ namespace CQCMS.Providers.DataAccess
             {
                 using (CQCMSDbContext db = new CQCMSDbContext())
                 {
-                    allConfig =  db.Database.SqlQuery<AppConfigurationDTO>("exec [dbo].[GetAllConfigurations]").ToList();
-
+                    allConfig = db.Database.SqlQuery<AppConfigurationDTO>("exec [dbo].[GetAllConfigurations]").ToList();
                 }
                 SetDataToCache(allConfig);
             }
@@ -37,21 +34,25 @@ namespace CQCMS.Providers.DataAccess
                 System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
 
         }
-        public List<LookupValues> GetLookupValuesByLookupName(string ManagedLookupName, string Country)
+        public List<LookupValuesCQCMS> GetLookupValuesByLookupNameCQCMS(string ManagedLookupName, string Country)
         {
-            List<LookupValues> lookupValues = new List<LookupValues>();
+            List<LookupValuesCQCMS> lookupValues = new List<LookupValuesCQCMS>();
             if (ManagedLookupName != null)
-            {
                 try
                 {
                     using (CQCMSDbContext db = new CQCMSDbContext())
                     {
-                        lookupValues = db.Database.SqlQuery<LookupValues>("exec [dbo].[GetAllLookupValuesByLookupName] @ManagedLookupName, @Country",new SqlParameter("@ManagedLookupName", ManagedLookupName),new SqlParameter("@Country", Country)).ToList();
+                        lookupValues = db.Database.SqlQuery<LookupValuesCQCMS>
+                            ("exec [dbo].[GetAllCQCMSLookupValuesByLookupName] @ManagedLookupName, @Country",
+                            new SqlParameter("@ManagedLookupName", ManagedLookupName), new SqlParameter("@Country", Country)).ToList();
                     }
                 }
+
                 catch (Exception ex)
-                { }
-            }
+                {
+
+                }
+
             return lookupValues;
         }
     }

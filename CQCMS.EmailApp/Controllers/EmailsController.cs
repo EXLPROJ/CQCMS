@@ -45,77 +45,38 @@ namespace CQCMS.EmailApp.Controllers
         }
 
         // GET: Emails/Create
-        public ActionResult Create()
+        public ActionResult Create(int LastEmailID = 0,int currCaseID = 0)
         {
+            ViewData["ViewMailEmailID"] = LastEmailID;
+            ViewData["ViewMailCaseID"] = currCaseID;
+
             return View();
         }
 
         // POST: Emails/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmailID,CaseID,EmailTypeID,MailboxID,ReceivedOn,SentOn,LastActedOn,LastActedBy,CreatedOn,CreatedBy,EmailSubject,EmailFrom,EmailTo,EmailCC,EmailBCC,EmailFolder,EmailSubFolder,EmailStatus,EmailDirection,Priority,AwaitingReview,ReviewedOn,ReviewedBy,ReviewerEdited,IsEmailComplaintIntegrated,EmailTrimmedSubject,Country,EmailHash")] Email email,FormCollection form)
-        {
-            if (ModelState.IsValid)
-            {
-                email.ReceivedOn = DateTime.Now;
-                string emailbody = form["EmailBody"];
-                //db.Emails.Add(email);
-                //db.SaveChanges();
-                int EmailID = email.EmailID;
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "EmailID,CaseID,EmailTypeID,MailboxID,ReceivedOn,SentOn,LastActedOn,LastActedBy,CreatedOn,CreatedBy,EmailSubject,EmailFrom,EmailTo,EmailCC,EmailBCC,EmailFolder,EmailSubFolder,EmailStatus,EmailDirection,Priority,AwaitingReview,ReviewedOn,ReviewedBy,ReviewerEdited,IsEmailComplaintIntegrated,EmailTrimmedSubject,Country,EmailHash")] Email email,FormCollection form)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        email.ReceivedOn = DateTime.Now;
+        //        string emailbody = form["EmailBody"];
+        //        //db.Emails.Add(email);
+        //        //db.SaveChanges();
+        //        int EmailID = email.EmailID;
 
-                CaseIdEmailIdDTO SavedEmailDetails;
+        //        CaseIdEmailIdDTO SavedEmailDetails;
 
-                List<SavedAttachment> attachments;
-                try
-                {
-                    // if (mail.attachments.count() > 0)
-                    attachments = mailEngine.SaveAttachments(mail, AttachmentTempFolder, tempAttachmentPath);
-                    attachmentPath = attachments != null ? string.Join(";", attachments.Select(x => x.SavedFilePath).ToArray()) : "";
-                    // Save email
+        //        List<SavedAttachment> attachments;
+                              
 
-                    ApplicationHelper ApplicationHelper = new ApplicationHelper();
-                SavedEmailDetails = ApplicationHelper.SaveNewEmailAndCreateNewCase(CaseId, currmailbox.MailboxID, "US", CaseId == null ?
-                    (int)CaseStatus.FirstEmail : (int)CaseStatus.NewEmail, email.EmailSubject, emailbody
-                , mail.Folder, mail.Receivedon, mail.Senton, attachmentPath, email.EmailFrom, null, null, email.EmailTo, email.EmailCC,
-                AttachmentTempFolder, false, false, email.Priority, "Incoming", false, AutoReplyInfo, attachments);
-
-                    System.IO.Directory.Delete(Path.Combine(tempAttachmentPath, AttachmentTempFolder), true);
-
-                }
-
-                catch (ApplicationException ex)
-                {
-                    Logger.Error("Exception gcgured in saving email to database, " + ex.Message);
-                    //logger.Info ("Saved email details have emailid: " + SavedEmailDetails.Emailid + " and gaseid " + SavedEmailDetails.CaselId);
-                    System.IO.Directory.Delete(Path.Combine(tempAttachmentPath, AttachmentTempFolder), true);
-
-                    logger.Error("Moving to the next email after deleting temporary attachments");                    
-                }
-
-
-
-
-
-                EmailAttachmentInsert emailAttachmentUI = new EmailAttachmentInsert();//Change from UI to Insert
-                emailAttachmentUI.EmailID = newFile.EmailID;
-                emailAttachmentUI.CaseID = newFile.CaseID;
-                emailAttachmentUI.EmailFileName = newFile.EmailFileName;
-                emailAttachmentUI.EmailFilePath = newFile.EmailFilepath;
-                emailAttachmentUI.Isactive = newFile.IsActive;
-                emailAttachmentUI.Createdon = newFile.Createdon;
-                emailAttachmentUI.Country = userCountry;
-                emailAttachmentUI.LastActedon = DateTime.Now;
-                emailAttachmentUI.LastActedBy = Environment.UserName;
-                await new EmailData().InsertIntoEmailAttachmentTable(emailAttachmentUI);
-                logger.Info("File attachment saved successfully");
-
-                return RedirectToAction("Index");
-                }
-
-            return View(email);
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(email);
+        //}
 
         // GET: Emails/Edit/5
         public ActionResult Edit(int? id)

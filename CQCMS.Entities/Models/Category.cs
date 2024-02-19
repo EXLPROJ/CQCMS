@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CQCMS.Entities.Models
 {
     [Table("Category")]
-    public class Category
+    public partial class Category
     {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214;DoNotCallOverridableMethodsInConstructors")]
@@ -50,11 +50,13 @@ namespace CQCMS.Entities.Models
         [StringLength(50)]
         public string ProcessingTime { get; set; }
 
-
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
         [StringLength(50)]
         public string LastActedBy { get; set; }
+
+        [StringLength(50)]
+        public string MLThreshold { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft .Usage", "CA2227:CollectionPropertiesShouldBeReadonly")]
 

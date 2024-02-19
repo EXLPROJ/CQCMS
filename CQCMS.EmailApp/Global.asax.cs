@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,10 @@ namespace CQCMS.EmailApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+        protected void Session_Start()
+        {
+            Session["APIUrl"] = ConfigurationManager.AppSettings["APIUrl"];
         }
     }
 }

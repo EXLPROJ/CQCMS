@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CQCMS.Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,7 +13,7 @@ namespace CQCMS.EmailApp.Controllers
     {
         public ActionResult Index()
         {
-           
+
             return View();
         }
 
@@ -34,5 +36,7 @@ namespace CQCMS.EmailApp.Controllers
 
             return View();
         }
+
+        
     }
 }

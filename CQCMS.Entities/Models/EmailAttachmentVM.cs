@@ -11,8 +11,8 @@ namespace CQCMS.Entities.Models
     public class EmailAttachmentVM
     {
         [Key]
-        public int EmailFilerp { get; set; }
-        public int EmailmD { get; set; }
+        public int EmailFileID { get; set; }
+        public int EmailID { get; set; }
 
         public int? CaseID { get; set; }
 
@@ -20,7 +20,7 @@ namespace CQCMS.Entities.Models
         public string EmailFileName { get; set; }
 
         [StringLength(500)]
-        public string EmailoriginalFileName { get; set; }
+        public string EmailOriginalFileName { get; set; }
 
         [Required]
         public string EmailFilePath { get; set; }

@@ -7,7 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Reflection.Emit;
 
-namespace CQCMS.EmailApp.Models
+namespace CQCMS.Entities.Models
 {
     public partial class CQCMSDbContext : DbContext
     {
@@ -146,7 +146,7 @@ namespace CQCMS.EmailApp.Models
             //.IsUnicode(false);
 
             modelBuilder.Entity<Email>()
-            .Property(e => e.Emailsubject)
+            .Property(e => e.EmailSubject)
             .IsUnicode(true);
 
             modelBuilder.Entity<Email>()

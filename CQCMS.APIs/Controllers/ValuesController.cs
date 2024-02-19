@@ -47,18 +47,6 @@ namespace CQCMS.APIs.Controllers
         {
             return "Hello Amit from API" + Name;
         }
-
-        [HttpGet]
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.Route("api/GetCategoryDataForCountry/{UserCountry}")]
-        public dynamic GetCategoryDataForCountry(string userCountry)
-        {
-            using (CQCMSDbContext db = new CQCMSDbContext())
-            {
-                List<CategoryVM> categoriesDropDown = new List<CategoryVM>();
-                categoriesDropDown = Task.Run(() => new CategoryData().GetAllCategoryAsync(userCountry)).Result;
-                return categoriesDropDown.OrderBy(x => x.CategoryName).ToList();
-            }
-        }
+        
     }
 }

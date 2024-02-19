@@ -49,10 +49,9 @@ namespace CQCMS.Entities.Models
 
         public virtual string[] Countrys { get; set; }
 
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
-        [StringLength(50)]
-
+        
         public string LastActedBy { get; set; }
 
         public DateTime? BotLockedon { get; set; }

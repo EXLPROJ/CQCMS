@@ -197,6 +197,14 @@ namespace CQCMS.Entities.Models
         [NotMapped]
         public string TagName{ get; set; }
 
+        public bool? IsCaseAcknowledged { get; set; }
+
+        public DateTime? CaseAckDateTime { get; set; }
+        public int? AckMailId { get; set; }
+
+        [StringLength(100)]
+        public string AckSentBy { get; set; }
+
     }
 
 

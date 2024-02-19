@@ -9,10 +9,12 @@ namespace CQCMS.Providers.DataAccess
 {
     public class ConfigData
     {
+
         public static Dictionary<string, string> DBAppSettings = new Dictionary<string, string>();
-        public static Dictionary<string, string> InitializeappSettings()
+        public static Dictionary<string, string> InitializeAppSettings()
+
         {
-            var list = CommonData.GetaAllconfigurations();
+            var list = CommonData.GetAllConfigurations();
             foreach (var item in list)
             {
                 if (DBAppSettings.ContainsKey(item.Key))
@@ -22,22 +24,25 @@ namespace CQCMS.Providers.DataAccess
                 else
                 {
                     DBAppSettings.Add(item.Key, item.Value);
+
                 }
             }
             return DBAppSettings;
         }
-        public static string GetConfigvalue(string key, string Country = "")
-        {
+
+        public static string GetConfigValue(string key, string Country="")
+                {
             if ((HttpContext.Current == null || HttpContext.Current.Cache["AllConfigurations"] == null))
-                InitializeappSettings();
+                InitializeAppSettings();
             if (Country != "" && Country != null && !Country.Contains(';'))
             {
                 var keycountry = key + '_' + Country;
                 if (DBAppSettings.ContainsKey(keycountry))
                     return DBAppSettings[keycountry];
-            }
-            return DBAppSettings.ContainsKey(key) == false ? null : DBAppSettings[key];
 
+            }
+            return DBAppSettings.ContainsKey(key) == false ?
+            null : DBAppSettings[key];
         }
     }
 }

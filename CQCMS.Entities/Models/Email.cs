@@ -27,14 +27,14 @@ namespace CQCMS.Entities.Models
         public int MailboxID { get; set; }
         public DateTime? ReceivedOn { get; set; }
         public DateTime? SentOn { get; set; }
-        public DateTime? LastActedon { get; set; }
-        [StringLength(50)]
+        public DateTime? LastActedOn { get; set; }        
         public string LastActedBy { get; set; }
         public DateTime Createdon { get; set; }
         [StringLength(50)]
         public string CreatedBy { get; set; }
         [Required]
-        public string Emailsubject { get; set; }
+        [StringLength(200)]
+        public string EmailSubject { get; set; }
         [Required]
         public string EmailFrom { get; set; }
         public string Emailto { get; set; }

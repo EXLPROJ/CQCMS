@@ -49,8 +49,8 @@ namespace CQCMS.Entities.Models
 
         public bool IsComplaint { get; set; }
         public bool IsPhoneCall { get; set; }
-        public int CategoryID { get; set; }
-        public int SubCategoryID { get; set; }
+        public int? CategoryID { get; set; }
+        public int? SubCategoryID { get; set; }
         [StringLength(50)]
 
         public string CIN { get; set; }
@@ -73,9 +73,9 @@ namespace CQCMS.Entities.Models
 
         public string CaseAdditionalDetail { get; set; }
 
-        public int LastEmailID { get; set; }
+        public int? LastEmailID { get; set; }
 
-        public int FirstEmailID { get; set; }
+        public int? FirstEmailID { get; set; }
 
         public bool IsFlagged { get; set; }
 
@@ -86,15 +86,15 @@ namespace CQCMS.Entities.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0;yyyy-MM-dd}")]
         public DateTime FollowUpDate { get; set; }
 
-        public DateTime SLADueDate { get; set; }
+        public DateTime? SLADueDate { get; set; }
 
-        public DateTime TouchDueDate { get; set; }
+        public DateTime? TouchDueDate { get; set; }
 
-        public DateTime CaseReOpenedOn { get; set; }
+        public DateTime ?CaseReOpenedOn { get; set; }
 
-        public DateTime ComplaintOn { get; set; }
+        public DateTime? ComplaintOn { get; set; }
 
-        public bool IsFeeReversal { get; set; }
+        public bool? IsFeeReversal { get; set; }
 
         // {RegularExpression (@"*-;\d+\ .\d{0,25")]
 
@@ -102,11 +102,11 @@ namespace CQCMS.Entities.Models
 
         public string FeeReversalReason { get; set; }
 
-        public int CaseAssignAttempts { get; set; }
+        public int? CaseAssignAttempts { get; set; }
 
-        public bool DoesPartialSubjectMatch { get; set; }
+        public bool? DoesPartialSubjectMatch { get; set; }
 
-        public bool IsCaseComplaintintegrated { get; set; }
+        public bool? IsCaseComplaintintegrated { get; set; }
 
         public string MatchedPartialCases { get; set; }
 
@@ -147,7 +147,7 @@ namespace CQCMS.Entities.Models
 
         public bool IsParentCase { get; set; }
 
-        public int ParentCaseID { get; set; }
+        public int ? ParentCaseID { get; set; }
 
         public bool HasCloneCases { get; set; }
 
@@ -169,7 +169,9 @@ namespace CQCMS.Entities.Models
         public string EmployeeName { get; set; }
 
         public string NOQ_1 { get; set; }
-        
+
+        public bool? IsCaseAcknowledged { get; set; }
+
     }
 
 
