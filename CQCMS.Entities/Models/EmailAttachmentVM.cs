@@ -12,7 +12,7 @@ namespace CQCMS.Entities.Models
     {
         [Key]
         public int EmailFilerp { get; set; }
-        public int EmailmD { get; set; }
+        public int EmailID { get; set; }
 
         public int? CaseID { get; set; }
 
@@ -24,14 +24,14 @@ namespace CQCMS.Entities.Models
 
         [Required]
         public string EmailFilePath { get; set; }
-
+        public bool IsInline { get; set; }
         public bool IsActive { get; set; }
         public DateTime? CreatedOn { get; set; }
 
-        virtual CaseDetailVM CaseDetail { get; set; }
-        virtual EmailVM Email { get; set; }
+        public virtual CaseDetailVM CaseDetail { get; set; }
+        public virtual EmailVM Email { get; set; }
         string Country { get; set; }
-        bool IsInline { get; set; }
+       
     }
 }
 

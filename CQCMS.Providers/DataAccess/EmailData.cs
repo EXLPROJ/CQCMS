@@ -1,7 +1,9 @@
 ﻿using CQCMS.EmailApp.Models;
+using CQCMS.Entities;
 using CQCMS.Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -57,6 +59,31 @@ namespace CQCMS.Providers.DataAccess
 
 
 
+
+        public void CleanupEmailTraces(int? Emailld)
+
+        {
+            try
+            {
+                using (CQCMSDbContext db = new CQCMSDbContext())
+                {
+                    SqlParameter sqlEmailId = new SqlParameter("@Emailld", Emailld);
+                    if (Emailld == null || Emailld == 0)
+                    {
+                        return;
+
+                    }
+                    string execQuery = "exec[dbo].[CleanupEmailTraces] @Emailld";
+                    db.Database.ExecuteSqlCommand(execQuery, sqlEmailId);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public String CleanEmailSubject(string EmailSubject = "")
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
@@ -65,7 +92,160 @@ namespace CQCMS.Providers.DataAccess
                 return data;
             }
         }
-        public async Task<String> CleanEmailSubjectAsync(string Emailsubject = "")
+
+        public async Task<List<EmailAttachmentVM>> GetEmailAttachementByEmailId(string userCountry, int? Emailld, bool SkipInlineAttachments = false)
+        {
+
+            using (CQCMSDbContext db = new CQCMSDbContext())
+            {
+                SqlParameter sqlEmailId = new SqlParameter("@Emailld", Emailld);
+
+                if (Emailld == null)
+                {
+
+                    sqlEmailId.Value = DBNull.Value;
+                }
+
+                var allAttachments = await db.Database.SqlQuery<EmailAttachmentVM>("exec [dbo].[GetEmailAttachemntByEmailId] @Country, @EmailId", new SqlParameter("@Country", userCountry), sqlEmailId).ToListAsync();
+                if (SkipInlineAttachments)
+                    return allAttachments.Where(a => a.IsInline == false).ToList();
+                else
+                    return allAttachments;
+            }
+        }
+
+
+        public async Task<EmailAttachmentVM> InsertIntoEmailAttachmentTable(EmailAttachmentInsert emailAttachmentUI)
+        {
+
+            using (CQCMSDbContext db = new CQCMSDbContext())
+            {
+
+                var param = HelperFunctions.CreateParameterListfromModelWithoutIdout(emailAttachmentUI);
+                param.Add(new SqlParameter("Id", DbType.Int32)
+                {
+
+                    Direction = ParameterDirection.Output
+                });
+                string execQuery = "exec [dbo].[InsertIntoEmailAttachmentTableWithIsInline] @EmailFileID, @EmailID, @CaseID,@EmailFileName, @EmailOriginalFileName, @EmailFilePath, @IsActive, @Createdon, @Country, @LastActedBy, @LastActedOn,@IsInline, @Id out";
+
+                return await db.Database.SqlQuery<EmailAttachmentVM>(execQuery, param.ToArray()).FirstOrDefaultAsync();
+            }
+        }
+
+
+        public async Task<EmailVM> GetEmailbyEmailIdAsync(string userCountry, int? EmailId)
+
+        {
+            using (CQCMSDbContext db = new CQCMSDbContext())
+            {
+
+                SqlParameter sqlEmailld = new SqlParameter("@Emailld", EmailId);
+
+                if (EmailId == null)
+                {
+
+                    sqlEmailld.Value = DBNull.Value;
+                }
+
+                var email = await db.Database.SqlQuery<EmailVM>("exec [dbo]. [GetEmailbyEmailId] @Country,@EmailId", new SqlParameter("@Country", userCountry), sqlEmailld).FirstOrDefaultAsync();
+
+
+                await PopulateEmailVirtualFields(userCountry, new List<EmailVM> { email });
+
+                return email;
+            }
+        }
+
+        public async Task PopulateEmailVirtualFields(string userCountry, List<EmailVM> emails)
+        {
+            var caseData = new CaseAllData();
+            var mailboxData = new MailboxData();
+
+            foreach (var email in emails)
+
+            {
+                if (email != null)
+                {
+
+                    email.CaseDetail = await caseData.GetCaseByCaseIDForVirtual(userCountry, email.CaseID);
+                    email.EmailType = await GetEmailTypeByEmailTypeIdAsync(userCountry, email.EmailTypeID);
+                    email.Mailbox = mailboxData.GetMailboxbyID(userCountry, email.MailboxID);
+                    email.EmailAttachments = await GetEmailAttachemntByEmailIdAsync(userCountry, email.EmailID);
+                    if (email.CaseDetail != null)
+                    {
+
+                        email.CaseStatusLookup = await caseData.GetCaseStatusLookUpByID(userCountry, email.CaseDetail.CaseStatusID);
+
+                    }
+                }
+            }
+        }
+
+
+
+
+
+        public async Task<List<EmailAttachmentVM>> GetEmailAttachemntByEmailIdAsync(string userCountry, int? EmailId, bool SkipInlineAttachments = false)
+
+        {
+            using (CQCMSDbContext db = new CQCMSDbContext())
+
+            {
+                SqlParameter sqlEmailId = new SqlParameter("@Emailld", EmailId);
+
+                if (EmailId == null)
+                {
+                    sqlEmailId.Value = DBNull.Value;
+                }
+
+                var allAttachments = await db.Database.SqlQuery<EmailAttachmentVM>("exec [dbo].[GetEmailAttachemntByEmailId] @Country, @Emailld", new SqlParameter("@Country", userCountry), sqlEmailId).ToListAsync();
+                if (SkipInlineAttachments)
+                    return allAttachments.Where(a => a.IsInline == false).ToList();
+                else
+                    return allAttachments;
+            }
+        }
+
+                   
+
+                   
+
+
+
+ public async Task<EmailType> GetEmailTypeByEmailTypeIdAsync(string userCountry, int? EmailTypeID)
+        {
+            using (CQCMSDbContext db = new CQCMSDbContext())
+                {
+                    SqlParameter sqlEmailTypeID = new SqlParameter("@EmailTypeID", EmailTypeID);
+
+                    if (EmailTypeID == null)
+                    {
+
+                        sqlEmailTypeID.Value = DBNull.Value;
+                    }
+
+                    var emailType = await db.Database.SqlQuery<EmailTypeVM>("exec [dbo] . [GetEmailTypeByEmailTypeId] @country,@EmailTypeID", new SqlParameter("@country", userCountry), sqlEmailTypeID).FirstOrDefaultAsync();
+
+                    EmailType emailTypeReturn = new EmailType();
+
+                ConvertEmailTypeVMToEmailType(emailType, ref emailTypeReturn);
+
+                    return emailTypeReturn;
+                }
+            }
+
+        public void ConvertEmailTypeVMToEmailType(EmailTypeVM emailTypeVM,ref EmailType emailType )
+        {
+            emailType.EmailTypeID= emailTypeVM.EmailTypeID;
+            emailType.EmailType1 = emailTypeVM.EmailType1;
+            emailType.IsActive = emailTypeVM.IsActive;
+            emailType.LastActedon = emailTypeVM.LastActedon;
+            emailType.LastActedBy = emailTypeVM.LastActedBy;
+        }
+
+
+           public async Task<String> CleanEmailSubjectAsync(string Emailsubject = "")
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
