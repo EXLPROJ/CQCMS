@@ -1,5 +1,4 @@
-﻿using CQCMS.EmailApp.Models;
-using CQCMS.Entities.Models;
+﻿using CQCMS.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -30,7 +29,7 @@ namespace CQCMS.Providers.DataAccess
                         mailbox = db.Database.SqlQuery<MailboxVM>("exec [dbo].[getAllActiveMailboxByCountry] @country", country).ToList();
                     SetMailboxDataToCache(userCountry, mailbox);
                 }
-               
+
             }
             return mailbox;
         }
@@ -39,7 +38,7 @@ namespace CQCMS.Providers.DataAccess
         private static void SetMailboxDataToCache(string userCountry, List<MailboxVM> mailboxes)
         {
             if (HttpContext.Current != null)
-                HttpContext.Current.Cache.Add("AllMailboxes_" + userCountry, mailboxes, null, DateTime.Now.AddMinutes(60),System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+                HttpContext.Current.Cache.Add("AllMailboxes_" + userCountry, mailboxes, null, DateTime.Now.AddMinutes(60), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
         }
 
         public MailboxVM GetMailboxbyID(string userCountry, int? mailboxID)

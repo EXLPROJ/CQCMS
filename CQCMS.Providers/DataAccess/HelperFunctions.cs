@@ -7,8 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 using HtmlAgilityPack;
-using CQCMS.EmailApp.Models;
-
+using CQCMS.Entities.Models;
 
 
 namespace CQCMS.Providers.DataAccess
@@ -81,7 +80,7 @@ public static class Extensions
                 SLAhours = Convert.ToDouble(hours);
             }
 
-           int days= Convert.ToInt32(Math.Ceiling(SLAhours / 24.0));
+            int days = Convert.ToInt32(Math.Ceiling(SLAhours / 24.0));
             var sign = Math.Sign(days);
             var unsignedDays = Math.Abs(days);
             for (var i = 0; i < unsignedDays; i++)
@@ -108,7 +107,6 @@ public static class Extensions
 
 
     public static bool IsHoliday(this DateTime originalDate, string Country = null)
-
     {
         // string userCountry = (string)System.Web.HttpContext.Current.Session["UserCountry”];
 

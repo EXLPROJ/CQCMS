@@ -1,5 +1,5 @@
 ﻿using CQCMS.Entities;
-using System.Diagnostics.Metrics;
+//using System.Diagnostics.Metrics;
 using System.Diagnostics;
 using System.Text;
 using CQCMS.Entities.DTOs;
@@ -15,15 +15,19 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Security.Principal;
 using CQCMS.Entities.Models;
+using System.IO;
+using System.Net.Mail;
+using NLog;
+using CQCMS.Providers.DataAccess;
 
 namespace CQCMS.CommonHelpers
 
 {
 
     public class ApplicationHelper
-
     {
-
+        public CQCMSDbContext db = new CQCMSDbContext();
+        private static Logger logger = LogManager.GetLogger("EmailTransformation");
         //private static APIUtility<MailboxIdDT0> apiMailboxIdUtility = null;
         private static APIUtility<CaseIdEmailIdDTO> apiEmailAndCaseInsertDTOUtility = null;
         //private static APIUtility<MailboxIdDT0> apiEmailSearchUtility = null;
@@ -103,10 +107,93 @@ namespace CQCMS.CommonHelpers
             };
 
             caseAndEmailUpateDTO.UpdateEmail = updatetmail;
-            string url = ConfigurationManager.AppSettings["APIUr1"] + "api/SaveNewEmailAndCreateCase";
+            string url = ConfigurationManager.AppSettings["APIUrl"] + "api/SaveNewEmailAndCreateCase";
             var result = apiEmailAndCaseInsertDTOUtility.GetResponseFromSaveNewEmailAndCreateCase(url, HttpMethod.Post, JsonConvert.SerializeObject(caseAndEmailUpateDTO)).GetAwaiter().GetResult();
 
             return result;
         }
+        //public List<SavedAttachment> SaveAttachments(Mail MailiInstance, string FolderName, string AttachmentPath)
+        //{
+        //    List<SavedAttachment> attachments = new List<SavedAttachment>();
+        //    var emailitem = Item.Bind(service, Mailinstance.MailID);
+        //    string attachmentFolderPath = Path.Combine(AttachmentPath, FoldexName);
+        //    //stxing folderName = Gyid.NewGuid() .ToString();
+
+        //    if (!Directory.Exists(attachmentFolderPath))
+        //        Directory.CreateDirectory(attachmentFolderPath);
+
+        //    attachment s = SaveAttachmentsInFolder(FolderName, emailItem.Attachments.ToList(), attachmentFolderPath);
+        //    //Getting the attachment details in list to store into gb.
+
+        //    return attachments;
+        //}
+
+        public void Test()
+        {
+            //var attachmentPath = "";
+            //attachmentPath = ConfigData.GetConfigvalue("AttachmentPathMassComm");
+            ////attachmentPath = "//USW20025487 -hnah-adrogt-hsh¢/THOR/BOLT/DEV/Attachments";
+
+            //if (!System.IO.Directory.Exists(attachmentPath))
+            //{
+            //    Directory.CreateDirectory(attachmentPath);
+            //    logger.Info("Attachment directory created: " + attachmentPath);
+
+            //}
+            //logger.Info("Path of the attachment: " + attachmentPath);
+            //attachmentFolderPath = Path.Combine(attachmentPath, file.FileID.Tostring());
+            //if (System.IO.Directory.Exists(attachmentFolderPath))
+            //{
+
+            //    DirectoryInfo d2 = new DirectoryInfo(attachmentFolderPath);
+            //    FileInfo[] MultipleFiles2 = d2.GetFiles();
+            //    var newAttachmentPath = "";
+            //    newAttachmentPath = ConfigData.GetConfigvalue("AttachmentPath");
+            //    if (MultipleFiles2.Length != 0)
+            //    {
+            //        for (int i = 0; i < MultipleFiles2.Length; i++)
+            //        {
+
+            //            FileInfo FileUpload = MultipleFiles2[i];
+            //            db = new CQCMSDbContext();
+            //            if (FileUpload.Length > 0)
+            //            {
+            //                string _FileName = Path.GetFileName(FileUpload.Name);
+            //                string _path = null;
+            //                if (!System.IO.Directory.Exists(newAttachmentPath))
+            //                {
+            //                    if (System.IO.Directory.Exists(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) + "/"))
+            //                    {
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);
+            //                        FileUpload.CopyTo(_path);
+            //                    }
+            //                    else
+            //                    {
+            //                        Directory.CreateDirectory(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) +
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName) ;
+            //                        FileUpload.CopyTo(_path);
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    Directory.CreateDirectory(newAttachmentPath);
+            //                    if (System.IO.Directory.Exists(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) + "/"))
+            //                    {
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);
+            //                        FileUpload.CopyTo(_path);
+            //                    }
+            //                    else
+            //                    {
+            //                        Directory.CreateDirectory(Path.Combine(newAttachmentPath, addedEmail.EmailID.ToString()) +
+            //                        _path = Path.Combine(newAttachmentPath, addedEmail.EmailID.Tostring(), _FileName);                                    FileUpload.CopyTo(_path);
+            //                    }
+            //                }
+            //                allattachedFiles.Add(_path); //Path of the Email attachments
+            //            }
+            //        }
+            //    }
+            //}
+        }
+
     }
 }

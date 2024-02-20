@@ -57,8 +57,8 @@ namespace CQCMS.Entities.Models
         [StringLength(200)]
 
         public string ExternalEmailID { get; set; }
-        public DateTime? LastActedon { get; set; }
-        [StringLength(50)]
+        public DateTime? LastActedOn { get; set; }
+        
         public string LastActedBy { get; set; }
         public virtual CategoryVM Category { get; set; }
         public string Country { get; set; }

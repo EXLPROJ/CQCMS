@@ -11,7 +11,6 @@ namespace CQCMS.Providers.DataAccess
     {
 
         public static Dictionary<string, string> DBAppSettings = new Dictionary<string, string>();
-
         public static Dictionary<string, string> InitializeAppSettings()
 
         {

@@ -1,5 +1,4 @@
-﻿using CQCMS.EmailApp.Models;
-using CQCMS.Entities;
+﻿using CQCMS.Entities;
 using CQCMS.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -40,7 +39,7 @@ namespace CQCMS.Providers.DataAccess
                     sqlCaseID.Value = DBNull.Value;
                 }
 
-                var currentCase = db.Database.SqlQuery<CaseDetailVM>("exec [db0].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country",
+                var currentCase = db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country",
                     userCountry), sqlCaseID).ToList();
 
                 var returnCase = new List<CaseDetailVM>() { currentCase.FirstOrDefault() };
@@ -65,8 +64,8 @@ namespace CQCMS.Providers.DataAccess
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
-                SqlParameter sqlCaseID = new SqlParameter("@parsntcaseid", CaseID);
-                string execQuery = "exec [dbo]. [GetAllBabyCases] @country, @parsnicassid";
+                SqlParameter sqlCaseID = new SqlParameter("@parentCaseId", CaseID);
+                string execQuery = "exec [dbo].[GetAllBabyCases] @country, @parentCaseId";
                 var allBabyCases = db.Database.SqlQuery<CaseDetailVM>(execQuery, new SqlParameter("@country", userCountry), sqlCaseID).ToList();
                 return allBabyCases;
 
@@ -95,7 +94,7 @@ namespace CQCMS.Providers.DataAccess
                 {
                     sqlCaseID.Value = DBNull.Value;
                 }
-                return db.Database.SqlQuery<CaseDetailVM>("exec [dbg].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country",
+                return db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country",
                 userCountry), sqlCaseID).FirstOrDefault();
             }
         }
@@ -137,7 +136,7 @@ namespace CQCMS.Providers.DataAccess
             {
                 try
                 {
-                    return await db.Database.SqlQuery<bool>("exec [dbo] . [UpdateSubmittedAttributeByCaseld] @Caseld,@CustomAttribute", new SqlParameter("@Caseld", caseld), new SqlParameter("@CustomAttribute", customattribute)).SingleOrDefaultAsync();
+                    return await db.Database.SqlQuery<bool>("exec [dbo].[UpdateSubmittedAttributeByCaseld] @Caseld,@CustomAttribute", new SqlParameter("@Caseld", caseld), new SqlParameter("@CustomAttribute", customattribute)).SingleOrDefaultAsync();
                 }
                 catch (Exception ex) { return false; }
             }
@@ -156,7 +155,7 @@ namespace CQCMS.Providers.DataAccess
                 }
 
 
-                return await db.Database.SqlQuery<CaseDetailVM>("exec [dbo]. [getCaseByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).SingleOrDefaultAsync();
+                return await db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).SingleOrDefaultAsync();
                 //return currentCase;
             }
         }
@@ -196,7 +195,7 @@ namespace CQCMS.Providers.DataAccess
             }
         }
 
-        public static string GenerateCaseIdIdentifier(string usercountry, int? CaseID)
+        public static string GenerateCaseIdIdentifier(string userCountry, int? CaseID)
 
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
@@ -208,7 +207,7 @@ namespace CQCMS.Providers.DataAccess
                     sqlCaseID.Value = DBNull.Value;
                 }
 
-                var result = db.Database.SqlQuery<string>("exec [dbo] .[GenerateCaseIdIdentifier] @CaseId,@Country", sqlCaseID, new SqlParameter("@country", userCountry)).ToList();
+                var result = db.Database.SqlQuery<string>("exec [dbo].[GenerateCaseIdIdentifier] @CaseId,@Country", sqlCaseID, new SqlParameter("@country", userCountry)).ToList();
                 return result.FirstOrDefault();
 
 
@@ -226,7 +225,7 @@ namespace CQCMS.Providers.DataAccess
 
                     sqlCaseID.Value = DBNull.Value;
                 }
-                return db.Database.SqlQuery<CaseDetailVM>("exec [gyg].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).FirstorDefault();
+                return db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByCaseID] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID).FirstOrDefault();
             }
         }
         public static string GenerateCaseldIdentifier(string userCountry, int? CaseID)
@@ -271,12 +270,12 @@ namespace CQCMS.Providers.DataAccess
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
-                SqlParameter sqlEmailld = new SqlParameter("@Lastimailia", lastEmailid);
+                SqlParameter sqlEmailld = new SqlParameter("@LastEmailId", lastEmailid);
                 if (lastEmailid == null)
                 {
                     sqlEmailld.Value = DBNull.Value;
                 }
-                return await db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByLastEmailId] @country, @Lastimailid", new SqlParameter("@country", userCountry), sqlEmailld).FirstOrDefault();
+                return await db.Database.SqlQuery<CaseDetailVM>("exec [dbo].[getCaseByLastEmailId] @country, @LastEmailId", new SqlParameter("@country", userCountry), sqlEmailld).FirstOrDefaultAsync();
 
             }
         }
@@ -310,7 +309,7 @@ namespace CQCMS.Providers.DataAccess
                     caseDetail.Category = await catData.GetCategorybyCategoryIDAsync(caseDetail.Country, caseDetail.CategoryID);
                     caseDetail.Mailbox = mailboxData.GetMailboxbyID(caseDetail.Country, caseDetail.MailboxID);
                     //caseDetail.fmails = await EmailData.GetEmailByCaseIDForVirtualAsync(caseDetail.country, caseDetail.CaseID)
-                    caseDetail.EmailAttachments = await emailData.GetemailattachemntByEmailIdAsync(caseDetail.Country, caseDetail.LastEmailID);
+                    caseDetail.EmailAttachments = await emailData.GetEmailAttachemntByEmailIdAsync(caseDetail.Country, caseDetail.LastEmailID);
                     caseDetail.SubCategory = await catData.GetSubCategorybySubCategoryIDAsync(caseDetail.Country, caseDetail.SubCategoryID);
                 }
             }
@@ -322,12 +321,12 @@ namespace CQCMS.Providers.DataAccess
                 if (caseDetail != null && caseDetail.CaseID != 0)
                 {
 
-                    caseDetail.CaseStatusLookup = GetCaseStatusLockUpByIDBabyCase(caseDetail.Country, caseDetail.CaseStatusID);
+                    caseDetail.CaseStatusLookup = GetCaseStatusLookUpByIDBabyCase(caseDetail.Country, caseDetail.CaseStatusID);
                     caseDetail.Category = CategoryData.GetCategorybyCategoryIDBabyCase(caseDetail.Country, caseDetail.CategoryID);
                     caseDetail.Mailbox = new MailboxData().GetMailboxbyID(caseDetail.Country, caseDetail.MailboxID);
 
                     caseDetail.Emails = EmailData.GetEmailByCaseIDForVirtualBabyCase(caseDetail.Country, caseDetail.CaseID);
-                    caseDetail.EmailAttachments = EmailData.GetEmailattachemntByfmailIdBabyCase(caseDetail.Country, caseDetail.LastEmailID);
+                    caseDetail.EmailAttachments = EmailData.GetEmailAttachementByEmailIdBabyCase(caseDetail.Country, caseDetail.LastEmailID);
                     caseDetail.SubCategory = CategoryData.GetSubCategorybySubCategoryIDBabyCase(caseDetail.Country, caseDetail.SubCategoryID);
                 }
             }
@@ -339,8 +338,8 @@ namespace CQCMS.Providers.DataAccess
             {
                 if (HttpContext.Current == null)
                 {
-                    return await db.Database.SqlQuery<CaseStatusLookup>("exec [gg]. [GetCaseStatushookUpByID] @CaseStatusTD, @country",
-                    new SqlParameter("@CaseStatusID", casestatusid), new SqlParameter("@country", userCountry)).SingleOrDefaultasync();
+                    return await db.Database.SqlQuery<CaseStatusLookup>("exec [dbo].[GetCaseStatushookUpByID] @CaseStatusTD, @country",
+                    new SqlParameter("@CaseStatusID", casestatusid), new SqlParameter("@country", userCountry)).SingleOrDefaultAsync();
                 }
                 else
                     return GetAllCaseStatusLookup().FirstOrDefault(l => l.CaseStatusID == casestatusid);
@@ -353,7 +352,7 @@ namespace CQCMS.Providers.DataAccess
                 if (HttpContext.Current == null)
                 {
 
-                    var caseStatusLookup = db.Database.SqlQuery<CaseStatusLookup>("exec [gag] - [GetCaseStatushookUpByID] @CaseStatusID, @country",
+                    var caseStatusLookup = db.Database.SqlQuery<CaseStatusLookup>("exec [dbo] - [GetCaseStatushookUpByID] @CaseStatusID, @country",
                     new SqlParameter("@CaseStatusID", casestatusid), new SqlParameter("@country", userCountry)).FirstOrDefault();
                     return caseStatusLookup;
 
@@ -371,7 +370,7 @@ namespace CQCMS.Providers.DataAccess
                     return (List<CaseStatusLookup>)HttpContext.Current.Cache["CaseStatusLookup"];
                 if (HttpContext.Current == null || HttpContext.Current.Cache["CaseStatusLookup"] == null)
                 {
-                    caseStatus = db.Database.Sqlquery<CaseStatusLookup>("exec [dbo].[GetAllCaseStatusLookUp]").ToList();
+                    caseStatus = db.Database.SqlQuery<CaseStatusLookup>("exec [dbo].[GetAllCaseStatusLookUp]").ToList();
                     if (HttpContext.Current != null)
                     {
                         HttpContext.Current.Cache.Add("CaseStatusLockup", caseStatus, null, DateTime.Now.AddMinutes(60),
@@ -472,7 +471,7 @@ namespace CQCMS.Providers.DataAccess
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
                 CaseDetailVM updatedCase = new CaseDetailVM();
-                string execQuery = "exec [dbo]. [UpdateCaseAssignedTime] @CaseID, @PreviouslyAssignedTo, @CurrentlyAssignedTo,@AssignedTime, @LastActedOn, @lastActedBy, @IsAssigned, @country";
+                string execQuery = "exec [dbo].[UpdateCaseAssignedTime] @CaseID, @PreviouslyAssignedTo, @CurrentlyAssignedTo,@AssignedTime, @LastActedOn, @lastActedBy, @IsAssigned, @country";
                 var param = HelperFunctions.CreateParameterListfromModelWithoutIdout(caseAssignedTime);
                 updatedCase = await db.Database.SqlQuery<CaseDetailVM>(execQuery, param.ToArray()).SingleOrDefaultAsync();
                 var returnUpdatedCase = new List<CaseDetailVM>() { updatedCase };
@@ -487,7 +486,7 @@ namespace CQCMS.Providers.DataAccess
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
                 CaseDetailVM updatedCase = new CaseDetailVM();
-                string execQuery = "exec [dbo]. [UpdateCaseAssignAttempts] @CaseID, @LastActedOn, @LastActedBy, @CaseAssignAttempts, @country";
+                string execQuery = "exec [dbo].[UpdateCaseAssignAttempts] @CaseID, @LastActedOn, @LastActedBy, @CaseAssignAttempts, @country";
                 updatedCase = await db.Database.SqlQuery<CaseDetailVM>(execQuery, new SqlParameter("@CaseID", caseID), new SqlParameter("@LastActed0n", lastActedOn), new SqlParameter("@LastActedBy", lastActedBy), new SqlParameter("@CaseAssignAttempts", assignAttemptValue), new SqlParameter("@country", userCountry)).FirstOrDefaultAsync();
                 var returnUpdatedCase = new List<CaseDetailVM>() { updatedCase };
                 await PopulateCaseVirtualFieldsAsync(returnUpdatedCase);
@@ -514,16 +513,14 @@ namespace CQCMS.Providers.DataAccess
         {
 
             using (CQCMSDbContext db = new CQCMSDbContext())
-
             {
                 SqlParameter sqlCaseID = new SqlParameter("@CaseID", CaseID);
                 if (CaseID == null)
                 {
-
                     sqlCaseID.Value = DBNull.Value;
                 }
 
-                return await db.Database.ExecuteSqlCommandAsync("exec [dbo] . [UpdateCaseNewEmailCount] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID);
+                return await db.Database.ExecuteSqlCommandAsync("exec [dbo].[UpdateCaseNewEmailCount] @country, @CaseID", new SqlParameter("@country", userCountry), sqlCaseID);
 
             }
         }

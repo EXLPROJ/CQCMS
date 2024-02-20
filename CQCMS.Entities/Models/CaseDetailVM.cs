@@ -169,7 +169,9 @@ namespace CQCMS.Entities.Models
         public string EmployeeName { get; set; }
 
         public string NOQ_1 { get; set; }
-        
+
+        public bool? IsCaseAcknowledged { get; set; }
+
     }
 
 

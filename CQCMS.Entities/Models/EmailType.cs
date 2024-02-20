@@ -28,7 +28,7 @@ namespace CQCMS.Entities.Models
         public string EmailType1 { get; set; }
 
         public bool IsActive { get; set; }
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
         [StringLength(50)]
         public string LastActedBy { get; set; }

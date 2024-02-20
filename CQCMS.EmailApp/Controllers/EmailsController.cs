@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CQCMS.CommonHelpers;
 using CQCMS.EmailApp;
 using CQCMS.EmailApp.Data;
+using CQCMS.Entities;
+using CQCMS.Entities.DTOs;
+using CQCMS.Entities.Models;
+using CQCMS.Providers.DataAccess;
+using NLog;
 
 namespace CQCMS.EmailApp.Controllers
 {
     public class EmailsController : Controller
     {
         private CQCMSEmailAppContext db = new CQCMSEmailAppContext();
-
+        private static Logger logger = LogManager.GetLogger("EmailTransformation");
         // GET: Emails
         public ActionResult Index()
         {
@@ -37,32 +45,38 @@ namespace CQCMS.EmailApp.Controllers
         }
 
         // GET: Emails/Create
-        public ActionResult Create()
+        public ActionResult Create(int LastEmailID = 0,int currCaseID = 0)
         {
+            ViewData["ViewMailEmailID"] = LastEmailID;
+            ViewData["ViewMailCaseID"] = currCaseID;
+
             return View();
         }
 
         // POST: Emails/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmailID,CaseID,EmailTypeID,MailboxID,ReceivedOn,SentOn,LastActedOn,LastActedBy,CreatedOn,CreatedBy,EmailSubject,EmailFrom,EmailTo,EmailCC,EmailBCC,EmailFolder,EmailSubFolder,EmailStatus,EmailDirection,Priority,AwaitingReview,ReviewedOn,ReviewedBy,ReviewerEdited,IsEmailComplaintIntegrated,EmailTrimmedSubject,Country,EmailHash")] Email email,FormCollection form)
-        {
-            if (ModelState.IsValid)
-            {
-                email.ReceivedOn = DateTime.Now;
-                string emailbody = form["EmailBody"];
-                db.Emails.Add(email);
-                db.SaveChanges();
-                int EmailID = email.EmailID;
-                
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "EmailID,CaseID,EmailTypeID,MailboxID,ReceivedOn,SentOn,LastActedOn,LastActedBy,CreatedOn,CreatedBy,EmailSubject,EmailFrom,EmailTo,EmailCC,EmailBCC,EmailFolder,EmailSubFolder,EmailStatus,EmailDirection,Priority,AwaitingReview,ReviewedOn,ReviewedBy,ReviewerEdited,IsEmailComplaintIntegrated,EmailTrimmedSubject,Country,EmailHash")] Email email,FormCollection form)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        email.ReceivedOn = DateTime.Now;
+        //        string emailbody = form["EmailBody"];
+        //        //db.Emails.Add(email);
+        //        //db.SaveChanges();
+        //        int EmailID = email.EmailID;
 
-                return RedirectToAction("Index");
-            }
+        //        CaseIdEmailIdDTO SavedEmailDetails;
 
-            return View(email);
-        }
+        //        List<SavedAttachment> attachments;
+                              
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(email);
+        //}
 
         // GET: Emails/Edit/5
         public ActionResult Edit(int? id)

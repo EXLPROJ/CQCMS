@@ -15,8 +15,8 @@ namespace CQCMS.Entities.Models
         public UserDetail()
         {
             MailboxAccesses = new HashSet<MailboxAccess>();
-            Signatures = new HashSet<Signature>();
-            UserClientProcessMaps = new HashSet<UserClientProcessMap>();
+            //Signatures = new HashSet<Signature>();
+            //UserClientProcessMaps = new HashSet<UserClientProcessMap>();
         }
 
         [Key]
@@ -45,9 +45,8 @@ namespace CQCMS.Entities.Models
         public DateTime? OOOFrom { get; set; }
         public DateTime? OOOTill { get; set; }
         public string ShortCode { get; set; }
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
-        [StringLength(50)]
 
         public string LastActedBy { get; set; }
 
@@ -55,9 +54,9 @@ namespace CQCMS.Entities.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MailboxAccess> MailboxAccesses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Signature> Signatures { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserClientProcessMap> UserClientProcessMaps { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<Signature> Signatures { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<UserClientProcessMap> UserClientProcessMaps { get; set; }
     }
 }

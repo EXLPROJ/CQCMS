@@ -1,0 +1,927 @@
+﻿
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CaseData</h2>
+<div id="caseDIV" style="float:left; width:99%;">
+
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "CaseDataForm" }))
+    {
+        @Html.Hidden("CaseID", "", new { @class = "allcaseIDs" })
+        @Html.Hidden("CaseIdIdentifer")
+
+        @Html.Hidden("Country", "", new { @id = "hdCaseCountry" })
+
+        @Html.Hidden("BusinessSegmentcoro", "", new { @id = "BusinessSegmentcoro" })
+
+        @Html.Hidden("triggerofcustomattr", 0)
+
+        @Html.Hidden("MultiAccountnumber", "", new { @id = "MultiAccountNumber" })
+
+        @Html.Hidden("hdnMailbox1D")
+
+        @Html.Hidden("CustomData")
+
+        @Html.Hidden("isCcustomattribute")
+
+        @Html.Hidden("is_Customattributeclose")
+
+        @Html.Hidden("is_Customattribute")
+
+        @Html.Hidden("Isexternalclient")
+
+        @Html.Hidden("IsMLRecommended")
+
+        //@Html.Hidden("ServerRegion", CQCMS.Providers.ConfigData.GetConfigValue("CurrentServerRegion"))
+
+
+        <div id="CaseDataAccordion">
+            <h3 id="CaseDataAccordionHeader">
+                <b style="padding-left:24%">
+                    <label id="CaseDetails">
+                    </label>
+                </b>
+            </h3>
+
+            <div>
+                <table id="CaseData" class="table table-bordered" style="table-layout:fixed">
+                    <tr>
+                        <td>
+                            <div style="width: 100%">
+                                <h3 style="padding-left:16%"></h3>
+                                <input type="hidden" id="removeSplit" name="removeSplit" value="x" class="btn btn - danger"
+                                       onclick="return removeDropDownList()" />
+                                <input type="hidden" id="attachToCase" name="attachToCase" value="Attach" class="btn btn-info"
+                                       onclick="return attachToExistingCase()" />
+                                <div style="float:right; width:60%; text-align: right; padding-right: 10px">
+                                    <input type="hidden" id="save" name="save" value="Save" class="btn btn-info" style="display:inline-block"
+                                           onclick="savebuttonclicked(); return false;" />
+                                    <input type="button" id="edit" name="edit" value="Edit" class="btn btn-warning" style="float:left" />
+                                    <input type="hidden" id="cancel" name="cancel" value="Cancel" class="btn btn-default" style="display:inline-block" />
+                                </div>
+                                <div style="float:left; width:60%; text-align: left; padding-left:10px;color:green; font-weight:bold;"
+                                     id="successmsgcase" class="field-validation-error"> </div>
+                                <div style="float:left; width:60%; text-align: left; padding-left:19px;color:red; font-weight:bold;"
+                                     id="errormsgcase" class="field-validation-error"> </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @*<tr>
+                            <td id="CountrySection">
+                                <b> Country:</b><br />
+                                @Html.DropDownList("Country", Enumerable.Empty<SelectListItem>(), "--Select Country--", new { @class = "form-control sidepanel",  = "disabled", @id = "Country", @style = "max-width:98%; display:none" })
+                            </td>
+                        </tr>*@
+                    <tr>
+                        <td>
+                            <b>Account Numbers:@*<i>(Press Tab for manual Add)</i>*@ </b><br />
+                            <input id="NewAccountNumber" class="form-control sidepanel" disabled="disabled" style="max-width:87%; line-height: 2" list=AccountDropdown><datalist id="AccountDropdown">
+                            </datalist>
+                            <div id="otherCountryClient" style="color:red"></div>
+                            <label id="lblError"></label>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:hidden">
+                        <td>
+                            <b style="word-spacing:135px"> CIN: LOB:</b><br />
+                            @Html.TextBox("CIN", "",
+                                new
+                                {
+                                    @class = "form-control sidepanel",
+                                    @style = "max-width:44%; height: 30px",
+                                    @placeholder = "Search for...",
+                                    @disabled = "disabled",
+name = "CIN"
+})
+                            <span id="btnSearchCIN" class="form-control sidepanel btn btn-info" data - toggle="tooltip" data-placement="top" title="Search CIN!" disabled="disabled" style="max-width:10%;margin-bottom:3px;"><i class="fa fa-search"></i></span>
+                            @Html.TextBox("BusinessLineCodetxt", "",
+                                new
+                                {
+                                    @class = "form-control sidepanel",
+                                    @style = "max-width:37 %; margin-left:20px; height: 30px",
+                                    @disabled = "disabled",
+name = "LOB"
+})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>
+                                Client Name:
+                            </b><br />
+                            @Html.TextBox("ClientName", "",
+                            new
+                                 {
+                                     @class = "form-control sidepanel",
+                                     @style = "max-width:87 %; height: 30px",
+                                     @placeholder = "search for...",
+                                     @disabled = "disabled",
+name = "clientname"
+})
+                            <span id="btnSearchClient" class="form-control sidepanel btn btn-info" data - toggle="tooltip" data-placement="top" title="Search Client!" disabled="disabled" style="max-width:10%;margin-bottom: 3px;"><i class="fa fa-search"></i></span>
+                        </td>
+                    </tr>
+                    @*<tr id="rowCaseAttachTodrp" style="">
+                            <td>
+                                <b>Attach to Existing Case:</b><br />
+                                @Html.DropDownList("caseAttachTodrp", Enumerable.Empty<SelectListItem>(), "--Select Existing Case--", new { @class = "form-control InputElement sidepanel", @disabled = "disabled", @style = "max-width:98%" })
+                            </td>
+                        </tr>*@
+                    @*<tr>
+                            <td>
+                                <b>
+                                    Number of Queries:
+                                </b><br />
+                                @Html.TextBox("Noofgueries", "", new { @class = "form-control sidepanel", @style = "max-width:98 % ", @disabled = "disabled", name = "NoOfQueries", Value = "1" })
+                            </td>
+                        </tr>*@
+
+                    <tr style="border-bottom: hidden; ">
+                        <td>
+                            <label class="control-label" style="padding-right:20px">Is Complaint:</label>
+                            <label class="control-label">yes</label>
+                            @Html.RadioButton("IsComplaint", "True", new
+                                {
+                                    @class = "sidepanel radio-inline",
+                                @disabled = "disabled",
+                                onchange = "UpdateComplainDiv()",
+id = "Complaintyesradio"
+})
+                            <label class="control-label">No</label>
+                            @Html.RadioButton("IsComplaint", "False", new
+                            {
+                                @class = "sidepanel radio-inline",
+                                @disabled = "disabled"
+})
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:hidden; ">
+                        <td>
+                            <div id="ComplaintsValidationFailed" style="color:red"></div>
+                            <div id="UpdateCaseDropdowns"></div>
+                        </td>
+                    </tr>
+                    <tr style="display:inline-block;border-right :hidden;" id="Flag">
+                        <td>
+                            <b style="padding-right:20px">
+                                Flag:
+                            </b>
+
+                            <a id="caseflagselected" class="glyphicon glyphicon-flag" style="color:redj;margin-right:120px;"
+                               onclick="toggleCaseFlag(1)">
+                            </a>
+                            <a id="caseflagnotselected" class="glyphicon glyphicon-flag" style="margin-right:120px;"
+                               onclick="toggleCaseFlag(0)">
+                            </a>
+                            <input type="hidden" id="usercaseflagselectiontoupdate" name="usercaseflagselectiontoupdate" />
+                        </td>
+                        <td>
+                            <label>
+                                KeepWithMe
+                            </label>
+                            @Html.CheckBox("KeepWithMe", new { @style = "margin-left: 40px;margin-right: 85px; height:20px; width:20px;", @disabled = "disabled" })
+
+                        </td>
+                    </tr>
+                    <tr id="emptyRow" style="display: inline-block;border-right:hidden;">
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a onclick="EchoDetails()" href="javascript:void(0);" style="color:blue">
+                                <b>
+                                    <u>
+                                        Echo Details <i class="fa fa-angle-up fa-lg" id="EchoArrow">
+                                        </i>
+                                    </u>
+                                </b>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr id="catList1" style="">
+                        <td>
+                            <b>
+                                Case Type:
+                            </b><br />
+                            @Html.DropDownList("CategoryID", Enumerable.Empty<SelectListItem>(), "--Select Case Type--",
+                                new
+                                {
+                                    @class = "form-control InputElement sidepanel",
+                                    @disabled = "disabled",
+                                    @style = "max-width:98 % "
+                                    //onchange = "updateIscomplaintradio()"
+                                })
+                            <br /><br />
+                            <b>
+                                Case Sub-Type:
+                            </b><br />
+                            @Html.DropDownList("SubCategoryID", Enumerable.Empty<SelectListItem>(), "--Select Case Sub-Type--",
+                              new
+                              {
+                                  @class = "form-control InputElement sidepanel",
+                                  @disabled = "disabled",
+                                  @style = "max-width:98 % "
+                              })
+                        </td>
+                    </tr>
+                    <tr id="escRow" style="border-bottom:hidden; display:none; ">
+                        <td>
+                            <b>
+                                Escalation Root Cause:
+                            </b><br />
+                            @Html.DropDownList("EscalationRootCauseID", Enumerable.Empty<SelectListItem>(), "--Select Esclation Root Cause--",
+                              new
+                              {
+                                  @class = "form-control InputElement sidepanel",
+                                  @disabled = "disabled",
+                                  @style = "max-width:98 % "
+                              })
+                            <br /><br />
+                            <b>
+                                Escalation Originator:
+                            </b><br />
+                            @Html.DropDownList("EscalationOriginatorID", Enumerable.Empty<SelectListItem>(), "--Select Esclation Originator--",
+                              new
+                              {
+                                  @class = "form-control InputElement sidepanel",
+                                  @disabled = "disabled",
+                                  @style = "max-width:98 % "
+                              })
+                            <br /><br />
+                            <b>
+                                Escalation Originator Name:
+                            </b><br />
+                            @Html.TextBox("EscalationoriginatorName", "", new
+                               {
+                                   @value = "Please Enter Escalation Originator Name",
+                                   @id = "escoriginatorName",
+                                   @class = "form-control sidepanel",
+                                   @style = "max-width:98%",
+                                   @disabled = "disabled"
+                               })
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:hidden">
+                        <td>
+                            <b>
+                                Follow - Up Date:
+                            </b><br />
+                            @Html.TextBox("FollowUpDate", "",
+                               new
+                               {
+                                   @placeholder = "DD/MMM/YYYY",
+                                   @id = "caseFollowUpDate",
+                                   @class = "form-control sidepanel datepicker",
+                                   @disabled = "disabled",
+                                   @style = "max-width:39%"
+                               })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>
+                                Pending Status:
+                            </b><br />
+                            @Html.DropDownList("PendingStatus", Enumerable.Empty<SelectListItem>(), new
+                            {
+                                @class = "form-control InputElement sidepanel",
+                                @disabled = "disabled",
+                                @style = "max-width:98%"
+})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="7%">
+                            <b>
+                                Comments(BOLT) :
+                            </b> <input type="button" disabled="disabled" id="casecommentbox" name="casecommentbox"
+                                        class="form-control btn btn-info" style="max-width:20px;padding: 1px 0px;height: 20px;" value="+" onclick="event.preventDefault();OpenPopupComment()" /><br />
+                            @*Html.Textarea("Comments", "", new { @class = "form-control sidepanel",
+                                @style = "max-width:98%", @disabled = "disabled" })*@
+                            <div id="divcomment" style="width:100%; height:108px; overflow-y:scroll;">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <tr>
+                    <td align="center">
+                        <div class="row">
+                            <input type="hidden" id="save2" name="save" value="Save" class="btn btn-info" style="display:inline-block;max-width:150px; margin: 1% " onclick="savebuttonclicked(); return false; " />
+                            <input type="hidden" id="create" name="create" value="Create New Case" class="form-control btn btn-warning" style="margin:1%; max-width:150px" onclick="location.href='@Url.Action("ViewMailDetailsNew", "Email", new { LastemailID = 0 })'" /><br />
+                            <input type="button" id="close" name="close" value="Close Current Case" class="form-control btn btn-danger" style="max-width:150px" />
+                            <input type="button" id="echocommentbox" name="echocommentbox" value="Comment (Echo)" class="form-control btn btn-info" style="max-width:150px;margin:0.4%" />
+                            <br /><br /><br />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    }
+</div>
+
+@*Comment Pop Up for Case comment Dashboard*@
+<div class='modal container-fluid' id="modalCaseComment" data-keyboard="true" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"> Add Case Comment</h4>
+            </div>
+            <div class="modal-body" style="margin-top:0px; padding-top:0px;">
+                <form>
+                    <input type="hidden" id="UserCommentCaseID" />
+                    <textarea class="form-control" style="width: 250px;height:150px;" cols="15" row="15" name="CaseCommentbox" id="CaseCommentbox"> </textarea>
+                    <br><button class="form-control btn btn-info" style="width:120px" onclick="event.preventDefault(); SubmitCommentform()"> Save </button>
+                    <button class="form-control btn btn-info" id="btnCloseCommentBox" onclick="event.preventDefault(); CloseCommentform()" data-dismiss="modal" style="width:120px">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class='modal' id="clientDetail" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="true" aria-hidden="true">
+    <div class="modal-dialog modal-1g">
+        <div class="modal-content" style="display:table">
+            <div class="modal-header" style="padding: 15px 15px 3px 15px;">
+                <button type="button" id="btnCloseDailog" class="close" data-dismiss="modal">&times</button>
+                <h4 class="modal-title">Client Details</h4>
+                <h6>Please select any row to continue.</h6>
+            </div>
+            <div class="modal-body" style="padding: 5px 35px 35px 15px;">
+                <table id="tblclientDetail" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="sortable">#</th>
+                            <th class="sortable">AccountNumber</th>
+                            <th class="sortable">CIN</th>
+                            <th class="sortable">ClientName</th>
+                            <th class="sortable">GlobalBusiness</th>
+                            <th class="sortable">country</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='modal container-fluid' id="modalCustomAttribute" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="true" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 15px 15px 3px 15px;">
+                <button type="button" id="btnCloseDailogbox" class="close" data-dismiss="modal">&times</button>
+                <h6>Please Fill the details</h6>
+            </div>
+            <div class="modal-body" style="padding: 5px 15px 15px 15px;">
+                <lable id="errormsgCustimAttribute">No Form present</lable>
+                <lable id="customAttributeForm">
+            </div>
+        </div>
+        <div class='modal' id="AuditDetails" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="true" style="position:fixed">
+            <div class="modal-dialog modal-1g">
+                <div class="modal-content" style="display:table">
+                    <div class="modal-header" style="padding: 15px 15px 3px 15px;">
+                        <button type="button" id="btnAuditCloseDailog" class="close" data-dismiss="modal">&times</button>
+                        <h4 class="modal-title" style="justify-content:center;align-items: center;" id="ModalcaseIdIdentifier">Audit Trail</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 5px 35px 35px 15px;width: 931px">
+                        <table id="tblcaseAuditDetails" class=" table table-bordered table-striped table-hover display compact" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="sortable">comment</th>
+                                    <th class="sortable">Acted By</th>
+                                    <th class="sortable">Acted On</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyCaseAuditDetails"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='modal container-fluid' id="modalGPIDetails" tabindex="-1" scroll;role="dialog" data-backdrop="static" data-keyboard="true" aria-hidden="true" style="width: 100%;overflow-y: scroll;">
+            <div class="modal-dialog modal-1g" style="width: 100%;">
+                <div class="modal-content" style="width:100%; ">
+                    <div class="modal-header" style="padding: 15px 15px 3px 15px;width:100%;">
+                        <button type="button" id=" btnGPICloseDailog" class="close" data-dismiss=" modal">&times</button>
+                    </div>
+                    <div class="modal-body" style="padding: 5px 35px 35px 15px; width:100%;" id="GPIPopup">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Signer Update*@
+
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+
+<script type="text/javascript">
+
+    //Global Variables
+    var caseid = 0;
+    var userCountry = 'US';
+    var country = 'US';
+    $("#hdCaseCountry").val('US');
+
+    function UpdateCaseData() {
+        ShowLoading();
+        debugger;
+
+        var CurrentUserId = "@Session["EmployeeId"]";
+        var caseCountry = $("#hdCaseCountry").val();
+
+        var updateCase = {
+            CaseID: parseInt(caseid),
+            EchoCaseNumber: $('#EchoCaseNumber').val(),
+            LastActedBy: CurrentUserId,
+            Comments: $("#Comments").val(),
+            AdditionalClientInfo: null,
+            IsComplaint: Boolean($("input[name=IsComplaint]:checked").val() == 'True'),            
+            CategoryID: parseInt($("#CategoryID").val()),
+            SubCategoryID: parseInt($("#SubCategoryID").val()),
+            CIN: $("#CIN").val(),
+            ClientName: $("#ClientName").val(),
+            AccountNumber: $("#NewAccountNumber").val(),
+            BusinessSegmentCoro: $("#BusinessSegmentCoro").val(),
+            BusinessLineCode: $("#BusinessLineCodetxt").val(),
+            PendingStatus: $("#PendingStatus").val(),
+            //CaseAdditionalbetail: $("#CaseAdditionalDetail").val(),
+            LastemailID: parseInt(lastEmailid),
+            FirstemailID: null,
+            IsFlagged: ($('#usercaseflagselectiontoupdate').val() == 'Yes' ? true : false),
+            Priority: null,//"Normal",
+            FollowUpDate: $("#caseFollowUpDate").val(),
+            Country: parseInt(caseid) == 0 ? $("#Country").val() : caseCountry,
+            SelectedCaseCountry: $("#Country").val(),
+            KeepWithMe: $('#KeepWithMe').is(":checked"),
+            //NoOfQueries: parseInt($("#NoOfQueries").val()),
+            //EscalationRootCauseID: parseInt($("#EscalationRootCauseID").val()),
+            //EscalationOriginatorID: parseInt($("#EscalationoriginatorID").val()),
+            //EscalationOriginatorName: $("#escOriginatorName").val()
+        };
+
+        @* var HashTagDTO = {
+            PrevTags: $("#PrevTagIds").val(),
+            Finaltags: $("#FinalTagIds").val(),
+            HashtagsAndsources: $("#selHashtagidswithSource").val(),
+            IsHashTagEnabled: '@Session["IsHashTagEnabled"]',
+            UserId: '@Session["BoltUserID"]'
+        } *@
+
+        var CustomData = $("#CustomData").val();
+
+        //if (Boolean(updateCase.IsComplaint) == true) {
+
+        //    var updatedClassifiermodel = {
+        //        BusinessLineCode: $("#BusinessLineCode").val(),
+        //        Segment: $("#Segment").val(),
+        //        Impact: $("#Impact").val(),
+        //        Errorcode: $("#ErrorCcode").val(),
+        //        ContactChannel: $("#ContactChannel").val(),
+        //        Category: $("#Category").val(),
+        //        Summary: $("#Summary").val(),
+        //        AmountOfLossToHSBC: $("#AmountOfLossToHSBC").val(),
+        //        Classifier: $("#Classifier1").val(),
+        //        Classifier2: $("#Classifier2").val(),
+        //        Classifier3: $("#Classifier3").val(),
+
+
+        //        Classifiera: $("#Classifiera").val(),
+        //        Classifiers: $("#Classifiers").val(),
+        //        Classifier: $("#Classifier6é").val(),
+        //        Classifier7: $("#Classifier7").val(),
+        //        AccountNumber: $("#NewAccountNumber").val(),
+        //        CaseNumber: parseInt(caseid),
+
+        //        ReferenceID: $("#CaseIdIdentifer").val()
+        //    };
+        //}
+        //else {
+        //    var updatedClassifiermodel = {};
+        //}
+
+        var caseUpdateDTO = {
+            "updateCase": updateCase,
+            "updatedClassifierModel": updatedClassifiermodel,
+            CurrentUserId: CurrentUserId,
+            "HashTagDTO": HashTagDTO,
+            CustomData: CustomData,
+            "GPIDataList": GPIDataList
+        }
+        debugger;
+        console.log($.param(caseUpdateDTO));
+
+        $.ajax({
+            method: "POST",
+            url: "@Session["APIUr1" ]api/SaveCaseDetails/",
+            data: $.param(caseUpdateDTO),
+            async: false,
+            success: function (data) {
+                debugger;
+
+                $('#successmsgcase').html('<p>Case saved Successfully!</p>');
+                var employeeid = "@Session["Employeetd"]";
+
+                var isExternalClient = $("#IsexternalClient").val();
+
+                //Do it everytime as when tab do not closed automatically with window.top.close()5
+                if ($("#SubCategoryID").val() != 0 && ($("#errormsg").text().trim() == 'Manual categorization !!!')) {
+                    $('#errormsg').empty();
+                    $("#Proceed").removeAttr("disabled");
+                    $("#ProceedClose").removeAttr("disabled");
+                    $("#ProceedFile").removeAttr("disabled");
+
+                }
+
+                $("#cancel").click();
+                $('#Mailboxdrp').hide();
+
+                if (data.UpdateCase.ParentcaseId == null && data.UpdateCase.CaseIdIdentifer.indexof('#') <= 0) {
+
+                    debugger;
+
+                    if ((isExternalClient != null && isExternalClient != undefined && isExternalClient == "true")) {
+                        //$(#successmsgcase') .html('<p>This is a Pass Through case !</p>');
+                        alert('This is an external case, email has been sent and case is closed!');
+                        window.top.close();
+                    }
+                    else if (data.UpdateCase.CurrentlyAssignedTo != null && data.UpdateCase.CurrentlyAssignedTo != "") {
+
+
+                        if (data.UpdateCase.CurrentlyAssignedTo != employeeid) {
+                            alert('Case is assigned to user [' + data.UpdateCase.EmployeeName + '], this tab will close now .\n if not please close it manually .');
+                            //HideLoading();
+                            window.top.close();
+                            //window.location.href = "/Home/Index" ;
+                        }
+                        else if ($("#hdcaseCountry").val() == "global" || $("#hdcasecountry").val().includes(';') == true) {
+                            window.location.reload();
+
+                        }
+                    }
+                    else {
+                        alert('Assignee not found, case moved to Unassigned, this tab will close now. \n if not please close it manually .');
+                        //HideLoading();
+                        window.top.close()
+                        //window.location.reload() ;
+                    }
+                }
+                else {
+                    if ((isExternalClient != null && isExternalClient != undefined && isExternalClient == "true")) {
+                        //$(#successmsgcase') .html('<p>This is a Pass Through case !</p>');
+                        alert('This is an external case, email has been sent and case is closed!');
+                        // window.top.close();
+                        window.location.reload();
+                    }
+                }
+                var acktagNum = "";
+
+                //alert($(_x('//*[id="hashtagview" ]/span[3]/span[1]/span/ul')).text())5
+
+                $("#ddlfamilyandTags option").each(function () {
+                    var thisOptionValue = $(this).text();
+
+                    if (thisOptionValue.includes('#ForceAcknowledgement')) {
+                        acktagum = $(this).val();
+                    }
+                });
+
+                //const select = document. getelementById('ddlfamilyandTags' ) ;
+                //alert(select.options) ;
+                //if the case is in CaseAcknowledgement status as true. Then refresh the entire page after clicking on save - Bharath
+                if (($("#CaseAcknowledgementStatus").val() != 'False') && ($("#PrevTagIds").val().includes(acktagNum) || $("#FinalTagIds").val().includes(acktagNum))) {
+                    window.location.reload();
+                }
+
+                window.scrollTo(0, 0);
+
+                setTimeout(function () {
+                    //in between i have a huge code that takes time to run
+                    //HideLoading();
+                }, 10);
+
+            },
+            error: function (data) {
+                console.log('error in UpdateCase' + data);
+                $('#errormsgcase').html('<p> Error in Updating Case ' + result + '</p>');
+            }
+        });
+    }
+
+
+    function OpenPopupComment() {
+        debugger;
+        var caseid = 0;// $.urlParam("CaseID");
+        //alert(caseid) ;
+        if (caseid == null)
+            caseid = 0;//caseid = $("#CaseID").val();
+
+        $("#UserCommentCaseID").val(caseid);
+        $("#CaseCommentbox").val("");
+        $("#modalCaseComment").show();
+    }
+
+    function CloseCommentform() {
+        $("#modalCaseComment").hide();
+        $("#CaseCommentbox").val("");
+    }
+
+    function savebuttonclicked() {
+
+        debugger;
+        var result = CheckValidAccountNumber();//Added to validate if account number contains space and special character
+
+        if (result) {
+            //savetags();
+            if ($('#CategoryID').val() == 0 || $('#SubCategoryID').val() == 0) {
+                alert("Please select Category/Sub-Category.");
+                return false; //won't submit the form
+
+            }
+            if ($("#Country").val() == "global") {
+                alert("Country should not be Global!!");
+                return false;
+
+            }
+            var result = true;
+            //result = validateAddedtags();
+
+            if (result == false) {
+                return false;
+            }
+
+            if (confirm("Are you sure you want to save the changes?")) {
+                ShowLoading();
+                setTimeout(function () {
+                    //in between i have a huge code that takes time to run
+                    //UpdateCaseData();
+                    HideLoading();
+                }, 100);
+
+            }
+            else {
+                $("#cancel").click();
+                //return false;
+            }
+
+            //return true;
+            if ($("#Country").val() == "US" || $("#Country").val() == "MX") {
+                var accountNumber = pad($("#NewAccountNumber").val(), 12);
+                //document .querySelector("#ddlAccountNumber_chosen > a > span"). innerHTML = accountNumber;
+                //$("#AccountNumber") .val(accountNumber) ;
+                $("#NewAccountNumber").val(accountNumber);
+                $('#AccountDropdown option').attr('selected', false).find('[value=' + accountNumber + ']').attr('selected', 'selected');
+            }
+
+        }
+        else {
+            return false;
+        }
+    }
+
+    function pad(str, max) {
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
+    }
+
+    //Added to validate special character and space in account number
+    function CheckValidAccountNumber() {
+        debugger;
+        var validAccount = true;
+        var caseCountry = $("#Country").val();
+        var AccountNumber = $("#NewAccountNumber").val();
+        $("#lblError").html("");
+        //Regex for invalid characters like blank spaces,comma.
+        var regex = /['",;:#!?_\=\[\]{}&%$*()/\ ]/;
+        debugger;
+        //Validate TextBox value against the Regex.
+        var accValidate = regex.test(AccountNumber);
+        if (accValidate) {
+            $("#lblError").css("color", "Red");
+            $("#lblError").html("No spaces or special characters allowed.");
+
+            $(window).scrol1Top(0);
+            validAccount = false;
+        }
+        else {
+            if (AccountNumber != '') {
+
+                $("#NewAccountNumber").val(AccountNumber.trim());
+                // AddAccountDetails(AccountNumber.trim(), caseCountry) ;
+                $("#OtherCountryClient").html("");
+                //updateotherCountryClient();
+            }
+
+            else {
+                $("#NewAccountNumber").val('');
+                //$("#NewAccountNumber").val('');
+                //$("#CIN") .val("")5
+                //$("#CLientName").val("');
+            }
+        }
+        return validaccount;
+    }
+
+    var isEditClicked = false; //so when dynamic drpdownlists are added, they are enabled by default.
+
+    $('#edit').click(function () {
+        debugger;
+        isEditClicked = true;
+
+        if ($('#Category1D').val() != '0') {
+            //$('#CategoryID' ) .removeClass("sidepanel") ;
+            //$('#SubCategoryID' ).removeClass("sidepanel") ;
+
+        }
+        $(".sidepanel").attr('disabled', false);
+
+        var caseCountry = $("#hdCaseCountry").val();
+
+        //if (caseCountry.includes(';') == "global")
+        if (caseCountry.includes(';') || caseCountry.toLowerCase() == "global") {
+            if ($('select#Country option: selected').val() == "0") {
+                $('#Category1D').attr("disabled", "disabled");
+                $("#SubCategoryID").attr('disabled', "disabled");
+            }
+
+        }
+        else {
+            $("#Country").attr("disabled", "disabled");
+        }
+        debugger;
+        var isMLRecommended = $("#IsMLRecommended").val();
+        if ($('select#CategoryID option:selected').val() != "0" && isMLRecommended == "false") {
+            $("#caseAttachTodrp").attr("disabled", "disabled");
+        }
+        $("#close").attr("disabled", "disabled");
+
+        $("#KeepWithMe").attr('disabled', false);
+        $("#casecommentbox").attr('disabled', false);
+
+        $("#edit").attr("type", "hidden");
+        $("#save").attr("type", "submit");
+        $("#save2").attr("type", "submit");
+        $("#cancel").attr("type", "button");
+
+        //BindClientDetailsFromCoRo();//Bind Client Details From CoRo/Existing Model
+
+        updateIscomplaintradio();
+
+        $('#successmsgcase').empty();
+        $('#Classifiers').hide();
+        $('#Classifiers').hide();
+
+
+    });
+
+    $('#cancel').click(function () {
+        debugger;
+        isEditClicked = false;
+
+        $(".sidepanel").attr('disabled', true);
+        $("#NewAccountNumber").attr('disabled', true);
+
+        $("#edit").attr("type", "button");
+        $("#save").attr("type", "hidden");
+        $("#save2").attr("type", "hidden");
+        $("#close").removeAttr("disabled");
+        $("#casecommentbox").attr('disabled', true);
+
+        $("#cancel").attr("type", "hidden");
+        $('#Classifiers').show();
+        $('#Classifier6').show();
+        var caseCountry = $("#hdCaseCountry").val();
+
+        if (caseCountry.toLowerCase() == "global" || caseCountry.includes(';')) {
+            $('#CategoryID').attr("disabled", "disabled");
+            $("#SubCategoryID").attr('disabled', "disabled");
+        }
+
+        else {
+            $("#Country").attr("disabled", "disabled");
+        }
+
+        debugger;
+        var isMLRecommended = $("#IsMLRecommended").val();
+
+        if ($('select#CategoryID option: selected').val() != "0" && isMLRecommended == "false") {
+            $("#caseAttachTodrp").attr("disabled", "disabled");
+
+        }
+    });
+
+
+
+    $(document).ready(function () {
+
+        // alert('Hello From document.ready!')
+        //$("#CaseID").val() = 0;
+        //caseid = $("#CaseID").val();
+        //$("#Country").val() = 'US';
+
+        GetCategory('US');
+        GetDropdownValues("PendingStatus");
+    });
+
+    function GetDropdownValues(ManagedLookupName) {
+        debugger;
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:44321/api/GetLookupValuesByLookupNameCQCMS/" + ManagedLookupName + "/" + userCountry,
+            async: false,
+            success: function (data) {
+                var s = '<option value="0">--Select--</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                }
+                $("#" + ManagedLookupName).html(s);
+
+            },
+            error: function (data) {
+                debugger;
+                alert("error : " + data.msg);
+            }
+        });
+    }
+
+    function GetCategory(CaseCountry) {
+        debugger;
+        $.ajax({
+            url: "https://localhost:44321/api/GetCategoryDataForCountry/US",
+            cache: false,
+            type: "GET",
+            async: false,
+            success: function (data) {
+                $("#CategoryID").empty();
+                var markup = "<option value='0'>--Select Case Type--</option>";
+
+                for (var x = 0; x < data.length; x++) {
+                    if (data.length == 1) {
+                        markup += "<option selected value=" + data[x].CategoryID + ">" + data[x].CategoryName + "</option>";
+                    }
+                    else {
+                        markup += "<option value=" + data[x].CategoryID + ">" + data[x].CategoryName + "</option>";
+                    }
+                }
+                $("#CategoryID").html(markup).show();
+            },
+            error: function (data) {
+                alert("error : " + data.msg);
+            }
+        });
+    }
+
+    $(document).on("change", '[id*="CategoryID"]', function () { //if you select *CategoryID, it will fetch SubCategoryID as well. Now its fetching all category1D*
+        debugger;
+        //alert('Category Dropdown selected');
+        var currentdrpID = this.id;
+        currentdrpID = '';
+        // ($("#Country").val() == "" || $("#Country").val() == "0") ? "US" : $("#Country").val();
+
+        if ($(this).val() != "0") {
+            $.ajax({
+                url: "https://localhost:44321/api/GetSubCategoryData/" + $(this).val() + "/" + caseid + "/" + country,
+                type: "GET", //should be get, won't work with post
+                success: function (data) {
+                    var markup = "<option value='0'>--Select Case Sub-Type--</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        if (data.length == 1) {
+                            markup += "<option selected value=" + data[x].SubCategoryID + ">" + data[x].SubCategoryName + "</option>";
+                        }
+                        else {
+                            markup += "<option value=" + data[x].SubCategoryID + ">" + data[x].SubCategoryName + "</option>";
+                        }
+                    }
+                    $("#SubCategoryID" + currentdrpID).html(markup).show();
+                    if (data.length == 1) {
+                        GetTagsBasedonSubCategory(data[0].SubCategoryID);
+                    }
+                },
+                error: function (data) {
+                    debugger;
+                    alert("error : " + data.msg);
+                }
+            });
+        }
+        else {
+            $("#SubCategoryID").empty().html('<option value="0">--Select Case Sub-Type--</option>');
+        }
+    });
+
+</script>

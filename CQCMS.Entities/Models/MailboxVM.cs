@@ -49,10 +49,9 @@ namespace CQCMS.Entities.Models
 
         public virtual string[] Countrys { get; set; }
 
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
-        [StringLength(50)]
-
+        
         public string LastActedBy { get; set; }
 
         public DateTime? BotLockedon { get; set; }
@@ -73,8 +72,8 @@ namespace CQCMS.Entities.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MailboxAccess> MailboxAccesses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Signature> Signatures { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<Signature> Signatures { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MailboxAccess> MailboxAccesses1 { get; set; }

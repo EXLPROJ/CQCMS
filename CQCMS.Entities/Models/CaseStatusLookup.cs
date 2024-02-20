@@ -35,7 +35,7 @@ namespace CQCMS.Entities.Models
         public bool IsActive { get; set; }
         public int? Sortorder { get; set; }
 
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
         [StringLength(50)]
         public string LastActedBy

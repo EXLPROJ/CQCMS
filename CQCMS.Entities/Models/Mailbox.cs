@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 
 namespace CQCMS.Entities.Models
 {
-
-
-
     [Table("Mailbox")]
     public partial class Mailbox
     {
@@ -21,7 +18,7 @@ namespace CQCMS.Entities.Models
             CaseDetails = new HashSet<CaseDetail>();
             Emails = new HashSet<Email>();
             MailboxAccesses = new HashSet<MailboxAccess>();
-            Signatures = new HashSet<Signature>();
+            //Signatures = new HashSet<Signature>();
             MailboxAccesses1 = new HashSet<MailboxAccess>();
             MailboxAccesses2 = new HashSet<MailboxAccess>();
 
@@ -62,9 +59,8 @@ namespace CQCMS.Entities.Models
 
         public virtual string[] Countrys { get; set; }
 
-        public DateTime? LastActedon { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
-        [StringLength(50)]
 
         public string LastActedBy { get; set; }
 
@@ -86,8 +82,8 @@ namespace CQCMS.Entities.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MailboxAccess> MailboxAccesses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Signature> Signatures { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<Signature> Signatures { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft Usage", "CA2227;CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MailboxAccess> MailboxAccesses1 { get; set; }

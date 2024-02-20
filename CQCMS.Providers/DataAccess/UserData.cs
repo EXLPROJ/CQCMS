@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using CQCMS.EmailApp.Models;
 using CQCMS.Entities.Models;
 using NLog;
 
@@ -30,7 +29,7 @@ namespace CQCMS.Providers.DataAccess
                     sqlEmployeeId.Value = DBNull.Value;
                 }
 
-                return db.Database.SqlQuery<UserDetailVM>("exec [dbo]. [GetUserInfoByEmployeeIDCountry] @Employeeld, @country", sqlEmployeeId, new SqlParameter("@country", userCountry)).FirstOrDefault();
+                return db.Database.SqlQuery<UserDetailVM>("exec [dbo].[GetUserInfoByEmployeeIDCountry] @Employeeld, @country", sqlEmployeeId, new SqlParameter("@country", userCountry)).FirstOrDefault();
 
             }
         }
@@ -44,14 +43,12 @@ namespace CQCMS.Providers.DataAccess
             try
             {
                 using (CQCMSDbContext db = new CQCMSDbContext())
-                    db.Database.ExecuteSqlCommand("exec [dbo] .[SetAllUsersCapacityAndUtilization]");
-                //db.Database.SqlQuery<UserDetailVM>("exec [dbo] . [SetAl1UsersCapacityAndUtilization]").ToList()5
+                    db.Database.ExecuteSqlCommand("exec [dbo].[SetAllUsersCapacityAndUtilization]");
+                //db.Database.SqlQuery<UserDetailVM>("exec [dbo].[SetAl1UsersCapacityAndUtilization]").ToList()5
 
             }
 
-
             catch (Exception ex)
-
             {
                 logger.Error("Exception Message in CapacityUpdateForAllUsers()");
                 logger.Error(ex.Message);
@@ -63,17 +60,14 @@ namespace CQCMS.Providers.DataAccess
         public UserDetailVM GetUserDetailsByID(int? userID, string userCountry)
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
-
             {
                 return db.Database.SqlQuery<UserDetailVM>("exec [dbo].[getUserInfoByID] @ID, @country", new SqlParameter("@ID", userID), new SqlParameter("@country", userCountry)).FirstOrDefault();
-
             }
         }
 
         public UserDetailVM GetUserbyIDFirstOrDefault(string Country, int? userID)
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
-
             {
                 return db.Database.SqlQuery<UserDetailVM>("exec [dbo].[getUserInfoByID] @ID, @country", new SqlParameter("@ID", userID), new SqlParameter("@country", Country)).FirstOrDefault();
 
@@ -85,8 +79,6 @@ namespace CQCMS.Providers.DataAccess
             {
                 using (CQCMSDbContext db = new CQCMSDbContext())
                     return db.Database.SqlQuery<int>("exec [dbo].[FindUserByHashtagsIds] @ID, @country", new SqlParameter("@CaseId", caseID)).FirstOrDefault();
-
-
             }
             catch (Exception ex)
             {
@@ -118,18 +110,17 @@ namespace CQCMS.Providers.DataAccess
 
             }
         }
-            
+
         public List<UserDetailVM> GetMailboxUsers(int mailboxId)
         {
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
-                return db.Database.SqlQuery<UserDetailVM>("exec[dbo]. [GetMailboxUsers] @MailboxId", new SqlParameter("@MailboxId", mailboxId)).ToList();
+                return db.Database.SqlQuery<UserDetailVM>("exec[dbo].[GetMailboxUsers] @MailboxId", new SqlParameter("@MailboxId", mailboxId)).ToList();
             }
         }
-                    public UserDetailVM GetUserInfoByEmployeeID(string userCountry, string currentuserid)
+        public UserDetailVM GetUserInfoByEmployeeID(string userCountry, string currentuserid)
         {
             var allUsers = GetAllUserDetails(userCountry);
-
             return allUsers.FirstOrDefault(u => u.EmployeeID == currentuserid);
         }
 
@@ -139,31 +130,22 @@ namespace CQCMS.Providers.DataAccess
             if (HttpContext.Current != null && HttpContext.Current.Cache["AllUsers_" + userCountry] != null)
                 return (List<UserDetailVM>)HttpContext.Current.Cache["AllUsers_" + userCountry];
 
-
-
             if (HttpContext.Current == null || HttpContext.Current.Cache["AllUsers_" + userCountry] == null)
             {
-
-
-
                 SqlParameter country = new SqlParameter("@Country", userCountry);
 
                 if (userCountry == null)
                 {
-
                     country.Value = DBNull.Value;
                 }
 
                 using (CQCMSDbContext db = new CQCMSDbContext())
-                    users = db.Database.SqlQuery<UserDetailVM>("exec [dbo]. [GetAllUserDetails] @country", country).ToList();
+                    users = db.Database.SqlQuery<UserDetailVM>("exec [dbo].[GetAllUserDetails] @country", country).ToList();
                 SetUserDataToCache(userCountry, users);
 
             }
             return users;
         }
-
-
-
         private void SetUserDataToCache(string userCountry, List<UserDetailVM> users, string CacheKeyPrefix = "AllUsers_")
         {
 

@@ -2,20 +2,66 @@
 
 @{
     ViewBag.Title = "Create";
+    int EmailID = (int)ViewData["ViewMailEmailID"];
+    int CaseID = (int)ViewData["ViewMailCaseID"];
+
+    bool isForceAcknowledgedCase = false;
 }
 
-
-
+<script src="~/Scripts/tinymce/tinymce.min.js"></script>
 <div>
     <h2>Create Email</h2>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<style type="text/css">
+    .gg-trash {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 10px;
+        height: 12px;
+        border: 2px solid transparent;
+        box-shadow: 0 0 0 2px, inset -2px 0 0, inset 2px 0 0;
+        border-bottom-left-radius: 1px;
+        border-bottom-right-radius: 1px;
+        margin-top: 4px
+    }
 
+        .gg-trash::after,
+        .gg-trash::before {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            position: absolute
+        }
 
-@using (Html.BeginForm())
+        .gg-trash::after {
+            background: currentColor;
+            border-radius: 3px;
+            width: 16px;
+            height: 2px;
+            top: -4px;
+            left: -5px
+        }
+
+        .gg-trash::before {
+            width: 10px;
+            height: 4px;
+            border: 2px solid;
+            border-bottom: transparent;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+            top: -7px;
+            left: -2px
+        }
+</style>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ViewMailForm" + EmailID }))
 {
     @Html.AntiForgeryToken()
-
+    @Html.Hidden("CaseID", CaseID, new { @class = "allCaseIds" })
+    @Html.Hidden("EmailID", EmailID)
     <div class="form">
         <hr />
         <table width="100%" border="1">
@@ -93,13 +139,13 @@
                             @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                   
+
                 </td>
                 <td style="vertical-align: top; padding: 10px">
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmailSubject, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.EmailSubject, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.EmailSubject, new { htmlAttributes = new { @class = "form-control" , id = "EmailSubject" + EmailID } })
                             @Html.ValidationMessageFor(model => model.EmailSubject, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -107,14 +153,14 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmailFrom, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.EmailFrom, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.EmailFrom, new { htmlAttributes = new { @class = "form-control", id = "EmailFrom" + EmailID } })
                             @Html.ValidationMessageFor(model => model.EmailFrom, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmailTo, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.EmailTo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.EmailTo, new { htmlAttributes = new { @class = "form-control", id = "EmailTo" + EmailID } })
                             @Html.ValidationMessageFor(model => model.EmailTo, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -122,7 +168,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmailCC, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.EmailCC, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.EmailCC, new { htmlAttributes = new { @class = "form-control", id = "EmailCC" + EmailID } })
                             @Html.ValidationMessageFor(model => model.EmailCC, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -130,7 +176,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmailBCC, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.EmailBCC, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.EmailBCC, new { htmlAttributes = new { @class = "form-control", id = "EmailBCC" + EmailID } })
                             @Html.ValidationMessageFor(model => model.EmailBCC, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -170,8 +216,8 @@
 
                 </td>
                 <td style="vertical-align: top; padding: 10px">
-                   
-                    <div class="form-group">
+
+                    @*<div class="form-group">
                         @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
@@ -222,9 +268,9 @@
                                 @Html.ValidationMessageFor(model => model.IsEmailComplaintIntegrated, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
-                    <div class="form-group">
+                    @*<div class="form-group">
                         @Html.LabelFor(model => model.EmailTrimmedSubject, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.EmailTrimmedSubject, new { htmlAttributes = new { @class = "form-control" } })
@@ -245,13 +291,34 @@
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.EmailHash, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.EmailHash, "", new { @class = "text-danger" })
-                        </div>                                       
-                    </div>
+                        </div>
+                    </div>*@
                     <div class="form-group">
                         @Html.Label("EmailBody", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("EmailBody", new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessage("EmailBody", "", new { @class = "text-danger" })
+                            @Html.Raw(@Html.TextArea("EmailBody"+EmailID, "", htmlAttributes: new
+                            {
+                                @id = "EmailBody",
+                                @class = "form-control allTextHtmlArea",
+                            @style = "Nax-width:100%; line-height:1",
+                                rows = "25"
+                            }))
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="Attachments@(EmailID)" class="largebox">
+                        <div class="largebox">
+                            <input type="hidden" id="ListExistingFilesToRemoveForward@(EmailID)" name="ListExistingFilesToRemoveForward" />
+                            <input type="file" id="FileUpload@(EmailID)" name="FileUpload" class="form-control" style="max-width:38%;float:left" multiple />
+                            <input type="button" id="attachFilesTemporary" onclick="attachFiles({id:'0'.replace(0,@(EmailID))})"
+                                   value="Attach Files" class="form-controlbtn btn-warning" style="max-width:125px; margin-left:4px;display:inline-block;float:left" />
+                            <input type="hidden" id="tempAttachFolderGuid@(EmailID)" name="tempAttachFolderGuid" />
+                        </div>
+                        <br /><br />
+                        <div class="tempFileList">
                         </div>
                     </div>
                 </td>
@@ -260,12 +327,261 @@
         <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-info" />
+                <input type="button" value="Create" id="btnSubmit" class="btn btn-info" />
             </div>
         </div>
     </div>
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        browser_spellcheck: true,
+        paste_data_image: true,
+        paste_enable_default_filters: false,
+        remove_linebreak: false,
+        forced_root_block: false,
+        statusbar: false,
+        selector: 'textarea#EmailBody',
+        height: 500,
+        menubar: false,
+        branding: false,
+        fontsize_formats: "8pt 10pt 12pt 14pt l6pt 18pt 20pt 24pt 28pt",
+        contextmenu_never_use_native: false,
+        contextmenu: true,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount',
+            'textcolor colorpicker',
+            'contextmenu'
+        ],
+        setup: function (editor) {
+            editor.on('PreInit', function (event) {
+                var editor = event.target, dom = editor.dom;
+                //dom.setattrib(editor.getBody(), 'contenteditable', 'false');
 
+            });
+            editor.on('init', function (event) {
+                console.log("this is Case History");
+                var iframe = document.getElementById('EmailBody_ifr');
+                //var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                //innerDoc.getElementById("dynamicSign").style.display = "none";
+                //dynamicthreadheader = innerDoc.getElementByld("dynamicthreadheader");
+                //if (dynamicthreadheader) {
+                //    dynamicthreadheader.style.display = "none";
+                //}
+            });
+        },
+        toolbar: 'undo redo | formatselect | ' +
+            ' bold italic underline fontsizeselect forecolor | backcolor | alignleft aligncenter ' +
+            ' alignright alignjustify | bullist numlist outdent indent | ' +
+            ' removeformat',
+        content_css: '/Content/googleapifont.css',
+        content_style: "body(padding - left: 12px)",
+
+    });
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            if (confirm("Are you sure you want to ingest an email?")) {
+                submitmailform(@(EmailID));
+            }
+            return false;
+        });
+    });
+
+    function test(){
+         $.ajax({
+             url: "@Session["APIUrl"]api/TestAPI/",
+             type: "GET",
+             success: function (data) {
+                 alert('done');
+             },
+             error: function (data) {
+                 alert("error in getTempFileNames : " + data.msg);
+             }
+        });
+    }
+    function attachFiles(id) {
+        if ($('#FileUpload' + id.id).val() == "") {
+            return confirm("Please select a file to upload.");
+        }
+        var datafile = new FormData($("#ViewMailForm" + id.id)[0]);
+        var urlquestionDeal = "@Session["APIUrl"]api/AttachFilesTemporarily/";
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener("load", attachFilesreqListener);
+        oReq.open("Post", urlquestionDeal);
+        oReq.send(datafile);
+
+    }
+    function attachFilesreqListener(test) {
+        var res = JSON.parse(test.target.response);
+        var curremailid = res.curremailid;
+        var tempguid = res.tempfolder;
+        $('#tempAttachFolderGuid' + curremailid).val(tempguid);
+        $('#FileUpload' + curremailid).val("");
+        getTempFileNames(curremailid); //calls to show the temp file links
+    }
+    function getTempFileNames(curremailid) {
+        var tempguid = $('#tempAttachFolderGuid' + curremailid).val();
+        $.ajax({
+            url: "@Session["APIUrl"]api/GetTempFileNames/" + tempguid,
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<a target='_blank' id = 'tempFile' class='EmailAttachment" + curremailid + "' href=" + data[x][1] + ">" + " " + data[x][0] + "</a>" +
+                        "<a id='tempFile' onclick='deleteTempFile(\"" + data[x][0] + "\", " + curremailid + ")' style='max-width:20px' class='gg-trash'></a>";
+                }
+                $('#Attachments' + curremailid + ' > .tempFileList > #tempFile').remove();
+                $('#Attachments' + curremailid + ' > .tempFileList').append(markup);
+            },
+            error: function (data) {
+                alert("error in getTempFileNames : " + data.msg);
+            }
+        });
+    }
+    function deleteTempFile(filename, emailid) {
+            var tempguid = $('#tempAttachFolderGuid' + emailid).val();
+            filename = (encodeURIComponent(filename)).replace('.', '2EDOT');
+            $.ajax({
+                method: "GET",
+                url: "@Session["APIUrl"]api/RemoveTempFiles/" + tempguid + "/" + filename,
+                success: function(result) {
+                            getTempFileNames(emailid);
+                        },
+                error: function(data) {
+                            alert("error in deleteTempFile : " + data.msg);
+                        }
+
+            });
+    }
+    function submitmailform(EmailID) {
+        SaveNewEmailAndCreateNewCase(EmailID);
+    }
+
+    function SaveNewEmailAndCreateNewCase(EmailID) {
+        var emailID = EmailID;
+        var date = new Date();
+
+        var caseMailBoxId = 0;
+
+        var allAttachmentPath = '';
+
+        $('a.EmailAttachment' + emailID + '').each(function () {
+            allAttachmentPath = $(this).attr("href") + ';' + allAttachmentPath;
+        });
+
+        if (parseInt($('#CaseID').val()) == 0) {
+            //savetags();
+
+            var CustomData = "";
+
+            var UpdateEmail = {
+                CaseID: parseInt($('#CaseID').val()) == '0' ? null : parseInt($('#CaseID').val()),
+                MailBoxId: caseMailBoxId,
+                Country: (($("#Country").val() == '0' || $("#Country").val() == '') ? '@Session["UserCountry"]' : $("#Country").val()),
+                CaseStatus: null,
+                Emailsubject: $('#EmailSubject' + emailID + '').val(),
+                EmailBody: tinyMCE.activeEditor.getContent(), //EmailHtmlBody: $("#EmailBody' + emailID + '") .xah(),
+                EmailFolder: "Sent Items", //For new
+                ReceivedOn: date.toJSON(),
+                SentOn: date.toJSON(),
+                AttachmentPath: allAttachmentPath,
+                EmailFrom: $("#EmailFrom" + emailID).val(),
+                EmailTo: $("#EmailTo" + emailID).val(), //ToReceipients: $("#ToReceipient" + emailID) .yal(),
+                EmailCC: $("#EmailCC" + emailID).val(), //CcReceipients: $("#£mailCC" + emailID) -val(),
+                EmailBCC: $("#EmailBCC" + emailID).val(), //BccReceipients: $("#EmailBCC" + emailID) val),
+                AttachmentTempFolder: $('#tempAttachFolderGuid' + emailID).val(), //only GUID need to send
+                SaveAsDraft: false,
+                SendAndClose: false,
+                Priority: "Normal",//keep the same
+                Direction: "Outgoing",
+                EmailDirection: ($('.emaildirection').val()), //Pass button value
+                IsCaseEscalated: false,
+                LastActedOn: date.toJSON(),
+                LastActedBy: '@Session["EmployeeId"]',
+                AutoReplyinfo: null,
+                orginalEmailid: emailID,
+                ListExistingFilesToRemoveForward: $('#ListExistingFilesToRemoveForward' + emailID).val(),
+                CurrentUserId: '@Session["EmployeeId"]',
+                UserName: '@Session["UserName"]',
+                EmailClassificationLookup: $('#EmailClassificationLookup').val()
+
+
+
+            };
+
+            var UpdateCase = {
+
+                CaseID: parseInt($('#CaseID').val()),
+                LastActedBy: '@Session["EmployeeId"]',
+                LastActedOn: date.toJSON(),
+                Comments: $("#Comments").val(),
+                AdditionalClientinfo: null,
+                IsComplaint: Boolean($("input[name=IsComplaint]:checked").val() == 'True'),
+                IsPhoneCall: Boolean($("input[name=IsPhoneCal1]:checked").val() == 'True'),
+                CategoryID: parseInt($("#CategoryID").val()),
+                SubCategoryID: parseInt($("#SubCategoryID").val()),
+                CIN: $("#CIN").val(),
+                ClientName: $("#ClientName").val(),
+                AccountNumber: $("#NewAccountNumber").val(),
+                BusinessSegmentCoro: $("#BusinessSegmentCoro").val(),
+                BusinessLineCode: $("#BusinessLineCode").val(),
+                PendingStatus: $("#PendingStatus").val(),
+                CaseAdditionalDetail: $("#CaseAdditionalDetail").val(),
+                LastEmailID: parseInt(emailID),
+                FirstEmailID: null,
+                IsFlagged: ($('#usercaseflagselectiontoupdate').val()),
+                Priority: null,//"Normal",
+                FollowUpDate: $("#caseFollowUpDate").val(),
+                IsFeeReversal: Boolean($("input[name=IsFeeReversal]:checked").val() == 'True'),
+                FeeReversalAmount: parseFloat($("#FeeReversalAmount").val()),
+                FeeReversalReason: $("#FeeReversalReason").val(),
+                Country: (($("#Country").val() == '0' || $("#Country").val() == '') ? '@Session["UserCountry"]' : $("#Country").val()),
+                KeepWithMe: $('#KeepWithMe').is(":checked"),
+                NoOfQueries: parseInt($("#NoOfQueries").val()),
+                //EscalationRootCauseID: parseInt($("#EscalationRootCauseID").val()),
+                //EscalationOriginatorID: parseInt($("#EscalationOriginatorID").val()),
+                //EscalationOriginatorName: $("#EscalationOriginatorName").val(),
+                CaseIdIdentifier: $("#CaseIdIdentifier").val(),
+                IsCaseAcknowledged: '@isForceAcknowledgedCase'
+            };
+
+            CustomData = $("#CustomData").val();
+
+            var updatedClassifierModel = {};
+
+            var updateDTO = {
+                "UpdateCase": UpdateCase,
+                "updatedClassifierModel": updatedClassifierModel,
+                CurrentUserId: '@Session["EmployeeId"]',
+                CustomData: CustomData,
+                "UpdateEmail": UpdateEmail
+            };
+
+            $.ajax({
+                method: "POST",
+                url: "@Session["APIUrl"]api/SaveNewEmailAndCreateCase/",
+                data: $.param(updateDTO),
+                successs: function (data) {
+
+                    if (data.ErrorMessage == null || data.ErrorMessage == '') {
+
+                    }
+                    else {
+                        alert(data.ErrorMessage);
+                    }
+                },
+                error: function (data) {
+                    alert(data.ErrorMessage);
+                }
+            });
+        }
+    }
+</script>
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")    
 }

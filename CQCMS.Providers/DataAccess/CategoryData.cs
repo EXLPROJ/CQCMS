@@ -1,5 +1,4 @@
-﻿using CQCMS.EmailApp.Models;
-using CQCMS.Entities.Models;
+﻿using CQCMS.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -12,62 +11,108 @@ namespace CQCMS.Providers.DataAccess
 {
     public class CategoryData
     {
-        public async Task<CategoryVM> GetCategorybyCategoryID(string userCountry, int? categoryID)
+        public async Task<List<CategoryVM>> GetAllCategoryAsync(string userCountry)
         {
+            List<CategoryVM> categories = null;
+            if (HttpContext.Current != null && HttpContext.Current.Cache["AllCategories_" + userCountry] != null)
 
             {
+                categories = (List<CategoryVM>)HttpContext.Current.Cache["AllCategories_" + userCountry];
+            }
+            else
+            {
+                using (CQCMSDbContext db = new CQCMSDbContext())
+                {
+                    categories = db.Database.SqlQuery<CategoryVM>("exec [dbo].[getAllCategoryByCountry] @country", new SqlParameter("@country", userCountry)).ToList();
+                }
+                if (HttpContext.Current != null)
+                    HttpContext.Current.Cache["AllCategories_" + userCountry] = categories.ToList();
+            }
+            return categories;
 
+        }
+
+        public async Task<List<SubCategoryDisplayVM>> GetSubCategoryByCategoryID(string userCountry, int? categoryID = 0)
+        {
+
+            using (CQCMSDbContext db = new CQCMSDbContext())
+
+            {
+                SqlParameter sqlcategoryID = new SqlParameter("@categoryID", categoryID);
+                return await db.Database.SqlQuery<SubCategoryDisplayVM>("exec [dbo].[GetSubCategoryByCategoryID] @country, @categoryID", new SqlParameter("@country", userCountry), sqlcategoryID).ToListAsync();
+
+            }
+        }
+
+        public async Task<CategoryVM> GetCategorybyCategoryID(string userCountry, int? categoryID)
+        {
+            {
                 return GetCategorybyCategoryIDBabyCase(userCountry, categoryID);
             }
+        }
+        public List<CategoryVM> GetAllCategory(string userCountry)
+        {
+
+            List<CategoryVM> categories = null;
+
+            if (HttpContext.Current != null && HttpContext.Current.Cache["AllCategories_" + userCountry] != null)
+            {
+                categories = (List<CategoryVM>)HttpContext.Current.Cache["AllCategories_" + userCountry];
+            }
+            else
+            {
+                using (CQCMSDbContext db = new CQCMSDbContext())
+                {
+                    categories = db.Database.SqlQuery<CategoryVM>("exec [dbo].[getAllCategoryByCountry] @country", new SqlParameter("@country",
+                    userCountry)).ToList();
+                }
+                if (HttpContext.Current != null)
+                    HttpContext.Current.Cache["AllCategories_" + userCountry] = categories;
+
+            }
+            return categories;
+        }
+        public async Task<CategoryVM> GetCategorybyCategoryIDAsync(string userCountry, int? categoryID)
+        {
+            return GetCategorybyCategoryIDBabyCase(userCountry, categoryID);
         }
         public static CategoryVM GetCategorybyCategoryIDBabyCase(string userCountry, int? categoryID)
         {
             if (HttpContext.Current != null)
             {
-                if (HttpContext.Current.Cache["AllCategories_" + userCountry] != null)
+                if (HttpContext.Current.Cache["AllCategories_" + userCountry] == null)
                 {
-
                     return ((List<CategoryVM>)HttpContext.Current.Cache["AllCategories_" + userCountry]).FirstOrDefault(x => x.CategoryID == categoryID);
                 }
             }
-
             SqlParameter sqlcategoryID = new SqlParameter("@categoryID", categoryID);
             if (categoryID == null)
-
             {
                 sqlcategoryID.Value = DBNull.Value;
-
             }
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
-                return db.Database.SqlQuery<CategoryVM>("exec [dbo].[getCategorybyCategoryID] @country ,@categoryID", new SqlParameter("@country", userCountry), sqlcategoryID).FirstOrDefault();
-
+                return db.Database.SqlQuery<CategoryVM>("exec [dbo].[getCategorybyCategoryID] @country , @categoryID",
+                new SqlParameter("@country", userCountry), sqlcategoryID).FirstOrDefault();
             }
         }
 
         public SubCategoryVM GetSubCategorybySubCategoryID(string userCountry, int? subCategoryID)
         {
 
-
-
             return GetSubCategorybySubCategoryIDBabyCase(userCountry, subCategoryID);
         }
-
         public async Task<SubCategoryVM> GetSubCategorybySubCategoryIDAsync(string userCountry, int? subCategoryID)
         {
-
             return GetSubCategorybySubCategoryIDBabyCase(userCountry, subCategoryID);
         }
-
-
-
         public static SubCategoryVM GetSubCategorybySubCategoryIDBabyCase(string userCountry, int? subCategoryID)
         {
             if (HttpContext.Current != null)
             {
-                if (HttpContext.Current.Cache["Al1SubCategories_" + userCountry] != null)
+                if (HttpContext.Current.Cache["AllsubCategories_" + userCountry] != null)
                 {
-                    return ((List<SubCategoryVM>)HttpContext.Current.Cache["Al1SubCategories_" + userCountry]).FirstOrDefault(x => x.SubCategoryID == subCategoryID);
+                    return ((List<SubCategoryVM>)HttpContext.Current.Cache["AllSubCategories_" + userCountry]).FirstOrDefault(x => x.SubCategoryID == subCategoryID);
                 }
             }
             SqlParameter sqlsubCategoryID = new SqlParameter("@subCategoryID", subCategoryID);
@@ -77,11 +122,9 @@ namespace CQCMS.Providers.DataAccess
             }
             using (CQCMSDbContext db = new CQCMSDbContext())
             {
-                return db.Database.SqlQuery<SubCategoryVM>("exec [dbo].[GetSubCategorybySubCategoryID] @country,@subCategoryID", new SqlParameter("@country", userCountry), sqlsubCategoryID).FirstOrDefault();
+                return db.Database.SqlQuery<SubCategoryVM>("exec [dbo].[GetSubCategorybySubCategoryID] @country, @subCategoryID",
+                new SqlParameter("@country", userCountry), sqlsubCategoryID).FirstOrDefault();
             }
-           
         }
-             
-                    
     }
 }

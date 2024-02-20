@@ -11,7 +11,7 @@ namespace CQCMS.Entities.Models
     public class EmailAttachmentVM
     {
         [Key]
-        public int EmailFilerp { get; set; }
+        public int EmailFileID { get; set; }
         public int EmailID { get; set; }
 
         public int? CaseID { get; set; }
@@ -20,18 +20,18 @@ namespace CQCMS.Entities.Models
         public string EmailFileName { get; set; }
 
         [StringLength(500)]
-        public string EmailoriginalFileName { get; set; }
+        public string EmailOriginalFileName { get; set; }
 
         [Required]
         public string EmailFilePath { get; set; }
-        public bool IsInline { get; set; }
+
         public bool IsActive { get; set; }
         public DateTime? CreatedOn { get; set; }
 
-        public virtual CaseDetailVM CaseDetail { get; set; }
-        public virtual EmailVM Email { get; set; }
-        string Country { get; set; }
-       
+        public CaseDetailVM CaseDetail { get; set; }
+        public EmailVM Email { get; set; }
+        public string Country { get; set; }
+        public bool IsInline { get; set; }
     }
 }
 

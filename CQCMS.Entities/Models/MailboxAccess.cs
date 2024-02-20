@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace CQCMS.Entities.Models
 {
-
     [Table("MailboxAccess")]
-
     public partial class MailboxAccess
     {
 
