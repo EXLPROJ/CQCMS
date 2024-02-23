@@ -45,7 +45,7 @@ using System.Runtime.Remoting.Lifetime;
 
 namespace CQCMS.API.Controllers
 {
-    public class CaseAPIController : Controller
+    public class CaseAPIController : ApiController
     {
         // GET: CaseAPI
         private static Logger logger = LogManager.GetLogger("EmailTransformation");
