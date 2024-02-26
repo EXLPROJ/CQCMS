@@ -388,7 +388,7 @@
       <Name>CQCMS.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\CQCMS.Providers\CQCMS.Providers.csproj">
-      <Project>{CBBC7999-8D61-47D9-B078-CD357BBD0F14}</Project>
+      <Project>{cbbc7999-8d61-47d9-b078-cd357bbd0f14}</Project>
       <Name>CQCMS.Providers</Name>
     </ProjectReference>
   </ItemGroup>

@@ -42,14 +42,14 @@ using System.Web.UI.WebControls;
 
 namespace CQCMS.API.Controllers
 {
-    public class EmailAPIController : Controller
+    public class EmailAPIController : ApiController
     {
         private static Logger logger = LogManager.GetLogger("EmailTransformation");
         // GET: EmailAPI
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.HttpPost]
