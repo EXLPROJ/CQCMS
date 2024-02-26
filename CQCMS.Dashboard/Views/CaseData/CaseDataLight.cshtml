@@ -145,7 +145,7 @@ name = "clientname"
                                 {
                                     @class = "sidepanel radio-inline",
                                 @disabled = "disabled",
-                                onchange = "UpdateComplainDiv()",
+                                //onchange = "UpdateComplainDiv()",
 id = "Complaintyesradio"
 })
                             <label class="control-label">No</label>
@@ -168,7 +168,7 @@ id = "Complaintyesradio"
                                 Flag:
                             </b>
 
-                            <a id="caseflagselected" class="glyphicon glyphicon-flag" style="color:redj;margin-right:120px;"
+                            <a id="caseflagselected" class="glyphicon glyphicon-flag" style="color:red;margin-right:120px;"
                                onclick="toggleCaseFlag(1)">
                             </a>
                             <a id="caseflagnotselected" class="glyphicon glyphicon-flag" style="margin-right:120px;"
@@ -188,18 +188,18 @@ id = "Complaintyesradio"
                         <td>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <a onclick="EchoDetails()" href="javascript:void(0);" style="color:blue">
-                                <b>
-                                    <u>
-                                        Echo Details <i class="fa fa-angle-up fa-lg" id="EchoArrow">
-                                        </i>
-                                    </u>
-                                </b>
-                            </a>
-                        </td>
-                    </tr>
+                    @*<tr>
+                            <td>
+                                <a onclick="EchoDetails()" href="javascript:void(0);" style="color:blue">
+                                    <b>
+                                        <u>
+                                            Echo Details <i class="fa fa-angle-up fa-lg" id="EchoArrow">
+                                            </i>
+                                        </u>
+                                    </b>
+                                </a>
+                            </td>
+                        </tr>*@
                     <tr id="catList1" style="">
                         <td>
                             <b>
@@ -439,6 +439,41 @@ id = "Complaintyesradio"
     var country = 'US';
     $("#hdCaseCountry").val('US');
 
+
+    function toggleCaseFlag(value) {
+        debugger;
+
+        if (isEditClicked == true) {
+            if (value == 0) //means currently not selected
+            {
+                $('#caseflagnotselected').css('display', 'none');
+                $('#caseflagselected').css('display', '')
+                $('#usercaseflagselectiontoupdate').val("Yes");
+            }
+
+            if (value == 1) {
+                $('#caseflagnotselected').css('display', '');
+                $('#caseflagselected').css('display', 'none');
+                $('#usercaseflagselectiontoupdate').val("No");
+
+            }
+        }
+
+        else {
+            // flag is not enabled if edit button is not clicked
+        }
+    }
+
+    $.urlParam = function (name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results == null) {
+            return null;
+        }
+        return decodeURI(results[1]) || 0;
+    }
+
+    var lastEmailId = ($.urlParam('LastEmailID') == null ? 0 : $.urlParam('LastEmailID'));
+
     function UpdateCaseData() {
         ShowLoading();
         debugger;
@@ -448,27 +483,27 @@ id = "Complaintyesradio"
 
         var updateCase = {
             CaseID: parseInt(caseid),
-            EchoCaseNumber: $('#EchoCaseNumber').val(),
+            //EchoCaseNumber: $('#EchoCaseNumber').val(),
             LastActedBy: CurrentUserId,
-            Comments: $("#Comments").val(),
+            Comments: "Test", //$("#Comments").val(),
             AdditionalClientInfo: null,
-            IsComplaint: Boolean($("input[name=IsComplaint]:checked").val() == 'True'),            
+            IsComplaint: Boolean($("input[name=IsComplaint]:checked").val() == 'True'),
             CategoryID: parseInt($("#CategoryID").val()),
             SubCategoryID: parseInt($("#SubCategoryID").val()),
             CIN: $("#CIN").val(),
             ClientName: $("#ClientName").val(),
             AccountNumber: $("#NewAccountNumber").val(),
-            BusinessSegmentCoro: $("#BusinessSegmentCoro").val(),
+            //BusinessSegmentCoro: $("#BusinessSegmentCoro").val(),
             BusinessLineCode: $("#BusinessLineCodetxt").val(),
             PendingStatus: $("#PendingStatus").val(),
             //CaseAdditionalbetail: $("#CaseAdditionalDetail").val(),
-            LastemailID: parseInt(lastEmailid),
-            FirstemailID: null,
+            LastEmailID: parseInt(lastEmailId),
+            FirstEmailID: null,
             IsFlagged: ($('#usercaseflagselectiontoupdate').val() == 'Yes' ? true : false),
             Priority: null,//"Normal",
             FollowUpDate: $("#caseFollowUpDate").val(),
-            Country: parseInt(caseid) == 0 ? $("#Country").val() : caseCountry,
-            SelectedCaseCountry: $("#Country").val(),
+            Country: caseCountry, //parseInt(caseid) == 0 ? $("#Country").val() : caseCountry,
+            SelectedCaseCountry: caseCountry, //$("#Country").val(),
             KeepWithMe: $('#KeepWithMe').is(":checked"),
             //NoOfQueries: parseInt($("#NoOfQueries").val()),
             //EscalationRootCauseID: parseInt($("#EscalationRootCauseID").val()),
@@ -516,54 +551,48 @@ id = "Complaintyesradio"
         //    var updatedClassifiermodel = {};
         //}
 
+        var updatedClassifiermodel = {};
+
         var caseUpdateDTO = {
             "updateCase": updateCase,
             "updatedClassifierModel": updatedClassifiermodel,
             CurrentUserId: CurrentUserId,
-            "HashTagDTO": HashTagDTO,
-            CustomData: CustomData,
-            "GPIDataList": GPIDataList
+            CustomData: CustomData
         }
         debugger;
         console.log($.param(caseUpdateDTO));
 
         $.ajax({
             method: "POST",
-            url: "@Session["APIUr1" ]api/SaveCaseDetails/",
+            url: "@Session["APIUrl"]api/SaveCaseDetails/",
             data: $.param(caseUpdateDTO),
             async: false,
             success: function (data) {
                 debugger;
-
                 $('#successmsgcase').html('<p>Case saved Successfully!</p>');
                 var employeeid = "@Session["Employeetd"]";
 
                 var isExternalClient = $("#IsexternalClient").val();
 
-                //Do it everytime as when tab do not closed automatically with window.top.close()5
+                //Do it everytime as when tab do not closed automatically with window.top.close();
                 if ($("#SubCategoryID").val() != 0 && ($("#errormsg").text().trim() == 'Manual categorization !!!')) {
                     $('#errormsg').empty();
                     $("#Proceed").removeAttr("disabled");
                     $("#ProceedClose").removeAttr("disabled");
                     $("#ProceedFile").removeAttr("disabled");
-
                 }
 
                 $("#cancel").click();
                 $('#Mailboxdrp').hide();
 
                 if (data.UpdateCase.ParentcaseId == null && data.UpdateCase.CaseIdIdentifer.indexof('#') <= 0) {
-
                     debugger;
-
                     if ((isExternalClient != null && isExternalClient != undefined && isExternalClient == "true")) {
                         //$(#successmsgcase') .html('<p>This is a Pass Through case !</p>');
                         alert('This is an external case, email has been sent and case is closed!');
                         window.top.close();
                     }
                     else if (data.UpdateCase.CurrentlyAssignedTo != null && data.UpdateCase.CurrentlyAssignedTo != "") {
-
-
                         if (data.UpdateCase.CurrentlyAssignedTo != employeeid) {
                             alert('Case is assigned to user [' + data.UpdateCase.EmployeeName + '], this tab will close now .\n if not please close it manually .');
                             //HideLoading();
@@ -572,7 +601,6 @@ id = "Complaintyesradio"
                         }
                         else if ($("#hdcaseCountry").val() == "global" || $("#hdcasecountry").val().includes(';') == true) {
                             window.location.reload();
-
                         }
                     }
                     else {
@@ -652,12 +680,10 @@ id = "Complaintyesradio"
             if ($('#CategoryID').val() == 0 || $('#SubCategoryID').val() == 0) {
                 alert("Please select Category/Sub-Category.");
                 return false; //won't submit the form
-
             }
             if ($("#Country").val() == "global") {
                 alert("Country should not be Global!!");
                 return false;
-
             }
             var result = true;
             //result = validateAddedtags();
@@ -670,7 +696,7 @@ id = "Complaintyesradio"
                 ShowLoading();
                 setTimeout(function () {
                     //in between i have a huge code that takes time to run
-                    //UpdateCaseData();
+                    UpdateCaseData();
                     HideLoading();
                 }, 100);
 
@@ -688,7 +714,6 @@ id = "Complaintyesradio"
                 $("#NewAccountNumber").val(accountNumber);
                 $('#AccountDropdown option').attr('selected', false).find('[value=' + accountNumber + ']').attr('selected', 'selected');
             }
-
         }
         else {
             return false;
@@ -727,7 +752,6 @@ id = "Complaintyesradio"
                 $("#OtherCountryClient").html("");
                 //updateotherCountryClient();
             }
-
             else {
                 $("#NewAccountNumber").val('');
                 //$("#NewAccountNumber").val('');
@@ -735,7 +759,7 @@ id = "Complaintyesradio"
                 //$("#CLientName").val("');
             }
         }
-        return validaccount;
+        return validAccount;
     }
 
     var isEditClicked = false; //so when dynamic drpdownlists are added, they are enabled by default.
@@ -759,7 +783,6 @@ id = "Complaintyesradio"
                 $('#Category1D').attr("disabled", "disabled");
                 $("#SubCategoryID").attr('disabled', "disabled");
             }
-
         }
         else {
             $("#Country").attr("disabled", "disabled");
@@ -781,7 +804,7 @@ id = "Complaintyesradio"
 
         //BindClientDetailsFromCoRo();//Bind Client Details From CoRo/Existing Model
 
-        updateIscomplaintradio();
+        //updateIscomplaintradio();
 
         $('#successmsgcase').empty();
         $('#Classifiers').hide();
@@ -812,7 +835,6 @@ id = "Complaintyesradio"
             $('#CategoryID').attr("disabled", "disabled");
             $("#SubCategoryID").attr('disabled', "disabled");
         }
-
         else {
             $("#Country").attr("disabled", "disabled");
         }
@@ -825,7 +847,6 @@ id = "Complaintyesradio"
 
         }
     });
-
 
 
     $(document).ready(function () {
@@ -843,7 +864,7 @@ id = "Complaintyesradio"
         debugger;
         $.ajax({
             type: "GET",
-            url: "https://localhost:44321/api/GetLookupValuesByLookupNameCQCMS/" + ManagedLookupName + "/" + userCountry,
+            url: "@Session["APIUrl"]api/GetLookupValuesByLookupNameCQCMS/" + ManagedLookupName + "/" + userCountry,
             async: false,
             success: function (data) {
                 var s = '<option value="0">--Select--</option>';
@@ -863,7 +884,7 @@ id = "Complaintyesradio"
     function GetCategory(CaseCountry) {
         debugger;
         $.ajax({
-            url: "https://localhost:44321/api/GetCategoryDataForCountry/US",
+            url: "@Session["APIUrl"]api/GetCategoryDataForCountry/US",
             cache: false,
             type: "GET",
             async: false,
@@ -887,7 +908,7 @@ id = "Complaintyesradio"
         });
     }
 
-    $(document).on("change", '[id*="CategoryID"]', function () { //if you select *CategoryID, it will fetch SubCategoryID as well. Now its fetching all category1D*
+    $(document).on("change", '[id="CategoryID"]', function () { //if you select *CategoryID, it will fetch SubCategoryID as well. Now its fetching all category1D*
         debugger;
         //alert('Category Dropdown selected');
         var currentdrpID = this.id;
@@ -896,7 +917,7 @@ id = "Complaintyesradio"
 
         if ($(this).val() != "0") {
             $.ajax({
-                url: "https://localhost:44321/api/GetSubCategoryData/" + $(this).val() + "/" + caseid + "/" + country,
+                url: "@Session["APIUrl"]api/GetSubCategoryData/" + $(this).val() + "/" + caseid + "/" + country,
                 type: "GET", //should be get, won't work with post
                 success: function (data) {
                     var markup = "<option value='0'>--Select Case Sub-Type--</option>";
