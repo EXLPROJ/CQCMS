@@ -100,7 +100,7 @@ namespace CQCMS.Providers.DataAccess
                 {
                     sqlEmailId.Value = DBNull.Value;
                 }
-                var attachments = db.Database.SqlQuery<EmailAttachmentVM>("exec [dbo].[GetEmailAttachemntByFmailId] @Country, @EmailId",
+                var attachments = db.Database.SqlQuery<EmailAttachmentVM>("exec [dbo].[GetEmailAttachemntByEmailId] @Country, @EmailId",
                 new SqlParameter("@Country", userCountry), sqlEmailId).ToList();
                 return attachments;
             }

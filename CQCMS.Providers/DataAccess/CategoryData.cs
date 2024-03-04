@@ -82,7 +82,7 @@ namespace CQCMS.Providers.DataAccess
             {
                 if (HttpContext.Current.Cache["AllCategories_" + userCountry] == null)
                 {
-                    return ((List<CategoryVM>)HttpContext.Current.Cache["AllCategories_" + userCountry]).FirstOrDefault(x => x.CategoryID == categoryID);
+                    //return ((List<CategoryVM>)HttpContext.Current.Cache["AllCategories_" + userCountry]).FirstOrDefault(x => x.CategoryID == categoryID);
                 }
             }
             SqlParameter sqlcategoryID = new SqlParameter("@categoryID", categoryID);

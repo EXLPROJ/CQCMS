@@ -27,14 +27,14 @@ namespace CQCMS.Entities.Models
         public string PreviouslyAssignedTo { get; set; }
         public bool IsAssigned { get; set; }
 
-        public DateTime AssignedTime { get; set; }
+        public DateTime? AssignedTime { get; set; }
         public int CaseStatusID { get; set; }
         public DateTime Createdon { get; set; }
 
         [StringLength(100)]
         public string CreatedBy { get; set; }
 
-        public DateTime LastActedOn { get; set; }
+        public DateTime? LastActedOn { get; set; }
 
         [StringLength(50)]
         public string LastActedBy { get; set; }
@@ -42,13 +42,13 @@ namespace CQCMS.Entities.Models
         public string OversightComments { get; set; }
         public string AdditionalClientInfo { get; set; }
         public bool IsCaseClosed { get; set; }
-        public DateTime Closedon { get; set; }
+        public DateTime? Closedon { get; set; }
 
         [StringLength(100)]
         public string ClosedBy { get; set; }
 
-        public bool IsComplaint { get; set; }
-        public bool IsPhoneCall { get; set; }
+        public bool? IsComplaint { get; set; }
+        public bool? IsPhoneCall { get; set; }
         public int? CategoryID { get; set; }
         public int? SubCategoryID { get; set; }
         [StringLength(50)]
@@ -77,14 +77,14 @@ namespace CQCMS.Entities.Models
 
         public int? FirstEmailID { get; set; }
 
-        public bool IsFlagged { get; set; }
+        public bool? IsFlagged { get; set; }
 
         [StringLength(10)]
 
         public string Priority { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0;yyyy-MM-dd}")]
-        public DateTime FollowUpDate { get; set; }
+        public DateTime? FollowUpDate { get; set; }
 
         public DateTime? SLADueDate { get; set; }
 
@@ -98,7 +98,7 @@ namespace CQCMS.Entities.Models
 
         // {RegularExpression (@"*-;\d+\ .\d{0,25")]
 
-        public decimal FeeReversalamount { get; set; }
+        public decimal? FeeReversalamount { get; set; }
 
         public string FeeReversalReason { get; set; }
 
@@ -115,12 +115,12 @@ namespace CQCMS.Entities.Models
         [StringLength(200)]
 
         public string CaseIdIdentifier { get; set; }
-        public int LastViewedEmailID { get; set; }
-        public int NewEmailcount { get; set; }
+        public int? LastViewedEmailID { get; set; }
+        public int? NewEmailcount { get; set; }
 
-        public int EacalationRootCauseID { get; set; }
+        public int? EacalationRootCauseID { get; set; }
 
-        public int EacalationOriginatorID { get; set; }
+        public int? EacalationOriginatorID { get; set; }
 
         public string EscalationOziginatorName { get; set; }
 
@@ -145,13 +145,13 @@ namespace CQCMS.Entities.Models
 
         public string SelectedCaseCountry { get; set; }
 
-        public bool IsParentCase { get; set; }
+        public bool? IsParentCase { get; set; }
 
         public int ? ParentCaseID { get; set; }
 
         public bool HasCloneCases { get; set; }
 
-        public int CloneFronCaseID { get; set; }
+        public int? CloneFronCaseID { get; set; }
 
         public string EmailFailureToken { get; set; }
 

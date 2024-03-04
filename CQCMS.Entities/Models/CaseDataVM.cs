@@ -77,7 +77,7 @@ namespace CQCMS.Entities.Models
         public string FeeReversalReason { get; set; }
 
         [StringLength(102)]
-        public string CaseIdIdentifer { get; set; }
+        public string CaseIdIdentifier { get; set; }
 
         public bool? DoesPartialSubjectMatch { get; set; }
         public string MatchedPartialCases { get; set; }

@@ -168,14 +168,14 @@ namespace CQCMS.Providers.DataAccess
             {
                 CaseDetailVM updatedCase = new CaseDetailVM();
                 var param = HelperFunctions.CreateParameterListfromModelWithoutIdout(updateCase);
-                string execQuery = "exec [dbo].[updateCaseUIDataByCaseID] @CaseID, @MailboxID, @EchoCaseNumber,@CurrentlyAssignedTo, @PreviouslyAssignedTo," +
+                string execQuery = "exec [dbo].[updateCaseUIDataByCaseID] @CaseID, @MailboxID,@CurrentlyAssignedTo, @PreviouslyAssignedTo," +
                 "@IsAssigned, @AssignedTime, @CaseStatusID, @CreatedOn, @CreatedBy, @LastActedOn,@lastActedBy, @Comments, @AdditionalClientInfo, @IsCaseClosed," +
                 "@ClosedOn, @ClosedBy, @IsComplaint, @IsPhoneCall, @CategoryID, @SubCategoryID, @CIN,@ClientName, @AccountNumber, @BusinessSegment, @BusinessLineCode," +
-                "@PendingStatus, @CaseAdditionalDetail, @lastEmailID, @FirstEmailID, @IsFlagged,@Priority, @FollowpDate, @SLADueDate, @TouchDueDate, @CaseReOpenedOn," +
-                "@ComplaintOn, @ComplaintProductorService, @ComplaintRootCause, @CompleintAreaofOccurence,@ComplaintOutcome, @ImpactToClient, @ComplaintErrorCode," +
-                "@ComplaintContactChannel, @IsFeeReversal, @FeeReversalAmount, @FeeReversalReason,@CaseAssignAttempts, @DoesPartialSubjectMatch, @IsCaseComplaintIntegrated," +
-                "@latchedPartialCases, @country, @KeepWithMe, @NoOFQueries ,@EscalationRootCauseID,@EscalationOriginatorID, @EscalationOriginatorName," +
-                "@IsMLClassified, @MLClassifiedCategoryID, @MLClassifiedSubCategoryID,pReClassificationTriggeredBy ,@ForceReclassificationBy ,@MLReclassificationCounter";
+                "@PendingStatus, @CaseAdditionalDetail, @lastEmailID, @FirstEmailID, @IsFlagged,@Priority, @FollowUpDate, @SLADueDate, @TouchDueDate, @CaseReOpenedOn," +
+                "@ComplaintOn, @ComplaintProductorService, @ComplaintRootCause, @ComplaintAreaOfOccurence,@ComplaintOutcome, @ImpactToClient, @ComplaintErrorCode," +
+                "@ComplaintContactChannel,@CaseAssignAttempts, @DoesPartialSubjectMatch, @IsCaseComplaintIntegrated," +
+                "@MatchedPartialCases, @country, @KeepWithMe, @NoOFQueries ,@EscalationRootCauseID,@EscalationOriginatorID, @EscalationOriginatorName";// +
+                //"@IsMLClassified, @MLClassifiedCategoryID, @MLClassifiedSubCategoryID,pReClassificationTriggeredBy ,@ForceReclassificationBy ,@MLReclassificationCounter";
                 updatedCase = await db.Database.SqlQuery<CaseDetailVM>(execQuery, param.ToArray()).SingleOrDefaultAsync();
                 var returnUpdatedCase = new List<CaseDetailVM>() { updatedCase };
                 await PopulateCaseVirtualFieldsAsync(returnUpdatedCase);
@@ -338,7 +338,7 @@ namespace CQCMS.Providers.DataAccess
             {
                 if (HttpContext.Current == null)
                 {
-                    return await db.Database.SqlQuery<CaseStatusLookup>("exec [dbo].[GetCaseStatushookUpByID] @CaseStatusTD, @country",
+                    return await db.Database.SqlQuery<CaseStatusLookup>("exec [dbo].[GetCaseStatuslookUpByID] @CaseStatusID, @country",
                     new SqlParameter("@CaseStatusID", casestatusid), new SqlParameter("@country", userCountry)).SingleOrDefaultAsync();
                 }
                 else
@@ -352,7 +352,7 @@ namespace CQCMS.Providers.DataAccess
                 if (HttpContext.Current == null)
                 {
 
-                    var caseStatusLookup = db.Database.SqlQuery<CaseStatusLookup>("exec [dbo] - [GetCaseStatushookUpByID] @CaseStatusID, @country",
+                    var caseStatusLookup = db.Database.SqlQuery<CaseStatusLookup>("exec [dbo].[GetCaseStatushookUpByID] @CaseStatusID, @country",
                     new SqlParameter("@CaseStatusID", casestatusid), new SqlParameter("@country", userCountry)).FirstOrDefault();
                     return caseStatusLookup;
 

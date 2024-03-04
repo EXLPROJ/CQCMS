@@ -76,7 +76,6 @@ namespace CQCMS.API.Controllers
                         {
 
                             newCase = new CaseDetail
-
                             {
                                 MailboxID = caseUpdateDTO.UpdateCase.MailboxID,
                                 IsAssigned = false,
@@ -84,7 +83,7 @@ namespace CQCMS.API.Controllers
                                 Createdon = DateTime.Now,
                                 CreatedBy = caseUpdateDTO.UpdateCase.CreatedBy,
                                 IsCaseClosed = false,
-                                UniqueldentifierGUID = Token.ToString(),
+                                //UniqueldentifierGUID = Token.ToString(),
                                 Priority = caseUpdateDTO.UpdateCase.Priority,  //this is mail priority (high or normal)
                                 IsComplaint = false,
                                 IsPhoneCall = false,
@@ -101,7 +100,7 @@ namespace CQCMS.API.Controllers
                                 CIN = caseUpdateDTO.UpdateCase.CIN,
                                 ClientName = caseUpdateDTO.UpdateCase.ClientName,
                                 KeepWithMe = caseUpdateDTO.UpdateCase.KeepWithMe,
-                                CaseIdIdentifer = caseUpdateDTO.UpdateCase.CaseIdIdentifier,
+                                CaseIdIdentifier = caseUpdateDTO.UpdateCase.CaseIdIdentifier,
                                 MultiAccountNumber = caseUpdateDTO.UpdateCase.MultiAccountNumber,
                             };
 
@@ -474,7 +473,7 @@ namespace CQCMS.API.Controllers
             catch (Exception ex) { }
         }
 
-        public void FindChangedValue(CaseDetailVM existingcase, CaseDetailVM UpdatedCasedetails, bool MLCategorization, string currentUserID, bool isCloneCase, bool isBabyCase, string CaseIdIdentifer)
+        public void FindChangedValue(CaseDetailVM existingcase, CaseDetailVM UpdatedCasedetails, bool MLCategorization, string currentUserID, bool isCloneCase, bool isBabyCase, string CaseIdIdentifier)
         {
             try
             {
@@ -513,10 +512,10 @@ namespace CQCMS.API.Controllers
                         if (UpdatedCasedetails.NoOfQueries != null && UpdatedCasedetails.NoOfQueries != 1 && UpdatedCasedetails.NoOfQueries != 0) {
                             changedfields += "; No OF Queries : " + UpdatedCasedetails.NoOfQueries;
                         }
-                        //if (UpdatedCasedetails.IsComplaint != null && UpdatedCasedetails.IsComplaint = true)
-                        //{
-                        //    changedfields += "; Is Complaint : " + UpdatedCasedetails.IsComplaint;
-                        //}
+                        if (UpdatedCasedetails.IsComplaint != null && UpdatedCasedetails.IsComplaint == true)
+                        {
+                            changedfields += "; Is Complaint : " + UpdatedCasedetails.IsComplaint;
+                        }
                         if (UpdatedCasedetails.IsFeeReversal != null && UpdatedCasedetails.IsFeeReversal == true) {
                             changedfields += "; Is FeeReversal : " + UpdatedCasedetails.IsFeeReversal;
                         }
@@ -553,7 +552,7 @@ namespace CQCMS.API.Controllers
                         else
                         {
 
-                            new CaseAllData().InsertIntoCaseAuditTrailTable("A " + (isCloneCase == true ? "clone" : "baby") + " case has been created from " + CaseIdIdentifer + (changedfields != "" ? " with following details " + changedfields : ""), UpdatedCasedetails.CaseID, currentUserID, "Create");
+                            new CaseAllData().InsertIntoCaseAuditTrailTable("A " + (isCloneCase == true ? "clone" : "baby") + " case has been created from " + CaseIdIdentifier + (changedfields != "" ? " with following details " + changedfields : ""), UpdatedCasedetails.CaseID, currentUserID, "Create");
                         }
                     }
                     else {

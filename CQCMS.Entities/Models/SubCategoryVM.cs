@@ -32,12 +32,10 @@ namespace CQCMS.Entities.Models
         [StringLength(200)]
 
         public string SubCategoryKeywords { get; set; }
-        [StringLength(500)]
-
-        public string EchoQuickLookup { get; set; }
+        
         [StringLength(50)]
 
-        public string QNCode { get; set; }
+        public string ENCode { get; set; }
         [StringLength(100)]
 
         public string SLA { get; set; }

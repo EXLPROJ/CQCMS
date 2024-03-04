@@ -9,7 +9,7 @@
     @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "CaseDataForm" }))
     {
         @Html.Hidden("CaseID", "", new { @class = "allcaseIDs" })
-        @Html.Hidden("CaseIdIdentifer")
+        @Html.Hidden("CaseIdIdentifier")
 
         @Html.Hidden("Country", "", new { @id = "hdCaseCountry" })
 
@@ -544,7 +544,7 @@ id = "Complaintyesradio"
         //        AccountNumber: $("#NewAccountNumber").val(),
         //        CaseNumber: parseInt(caseid),
 
-        //        ReferenceID: $("#CaseIdIdentifer").val()
+        //        ReferenceID: $("#CaseIdIdentifier").val()
         //    };
         //}
         //else {
@@ -585,7 +585,7 @@ id = "Complaintyesradio"
                 $("#cancel").click();
                 $('#Mailboxdrp').hide();
 
-                if (data.UpdateCase.ParentcaseId == null && data.UpdateCase.CaseIdIdentifer.indexof('#') <= 0) {
+                if (data.UpdateCase.ParentcaseId == null && data.UpdateCase.CaseIdIdentifier.indexof('#') <= 0) {
                     debugger;
                     if ((isExternalClient != null && isExternalClient != undefined && isExternalClient == "true")) {
                         //$(#successmsgcase') .html('<p>This is a Pass Through case !</p>');

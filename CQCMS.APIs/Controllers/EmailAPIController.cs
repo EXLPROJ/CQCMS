@@ -129,7 +129,7 @@ namespace CQCMS.API.Controllers
                         CasedetailsUpdate.LastEmailID = email.EmailID;
                         CasedetailsUpdate.LastViewedEmailID = email.EmailID;
                         CasedetailsUpdate.CaseStatusID = (CasedetailsUpdate.CaseStatusID == (int)CaseStatus.NewCase ? (int)CaseStatus.CaseAssigned : CasedetailsUpdate.CaseStatusID);// changing from new case to assigned
-                        CasedetailsUpdate.NewEmailCount = ((CasedetailsUpdate.CaseIdIdentifer.Contains('#') == true || CasedetailsUpdate.CurrentlyAssignedTo != updateDTO.CurrentUserId) && updateDTO.UpdateEmail.EmailDirection.ToLower().Contains("close") == false ? (CasedetailsUpdate.NewEmailCount + 1) : 0);
+                        CasedetailsUpdate.NewEmailCount = ((CasedetailsUpdate.CaseIdIdentifier.Contains('#') == true || CasedetailsUpdate.CurrentlyAssignedTo != updateDTO.CurrentUserId) && updateDTO.UpdateEmail.EmailDirection.ToLower().Contains("close") == false ? (CasedetailsUpdate.NewEmailCount + 1) : 0);
                         CasedetailsUpdate.LastActedBy = updateDTO.UpdateEmail.CurrentUserId;
                         CasedetailsUpdate.LastActedOn = DateTime.Now;
 
@@ -305,7 +305,7 @@ namespace CQCMS.API.Controllers
         //                CasedetailsUpdate.LastViewedEmailID = email.EmailID;
         //                CasedetailsUpdate.CaseStatusID = (CasedetailsUpdate.CaseStatusID == (int)CaseStatus.NewCase ? (int)CaseStatus.CaseAssigned : CasedetailsUpdate.CaseStatusID);// changing from new case to assigned
 
-        //                CasedetailsUpdate.NewEmailCount = ((CasedetailsUpdate.CaseIdIdentifer.Contains("#") == true || CasedetailsUpdate.CurrentlyAssignedTo != updateDTO.CurrentUserId) && updateDTO.UpdateEmail.EmailDirection.ToLower().Contains("close") == false ? (CasedetailsUpdate.NewEmailCount + 1) : 0);
+        //                CasedetailsUpdate.NewEmailCount = ((CasedetailsUpdate.CaseIdIdentifier.Contains("#") == true || CasedetailsUpdate.CurrentlyAssignedTo != updateDTO.CurrentUserId) && updateDTO.UpdateEmail.EmailDirection.ToLower().Contains("close") == false ? (CasedetailsUpdate.NewEmailCount + 1) : 0);
         //                CasedetailsUpdate.LastActedBy = updateDTO.UpdateEmail.CurrentUserId;
 
         //                CasedetailsUpdate.LastActedOn = DateTime.Now;
@@ -720,7 +720,7 @@ namespace CQCMS.API.Controllers
                             Priority = UpdateEmail.Priority,
                             Country = UpdateEmail.Country,
                             EmailTrimmedSubject = new EmailData().CleanEmailSubject(UpdateEmail.EmailSubject.Replace("'", "''")),
-                            EmailHash = mailHash
+                            //EmailHash = mailHash
                         };
                         if (UpdateEmail.EmailBody != "" && UpdateEmail.EmailBody.Contains("BEGIN VOLTAGE SECURE BLOCK") && UpdateEmail.EmailBody.Contains("END VOLTAGE SECURE BLOCK"))
                         {
@@ -1109,9 +1109,9 @@ namespace CQCMS.API.Controllers
                 var caseDetail = db.CaseDetails.First(x => x.CaseID == CaseId);
                 Email updateEmail = db.Emails.Where(x => x.EmailID == EmailId).FirstOrDefault(); //update email with caseID created above
                 if (!updateEmail.EmailSubject.Contains("|CaseID:") && !updateEmail.EmailSubject.Contains("|ID:"))
-                    updateEmail.EmailSubject = updateEmail.EmailSubject + " |ID:" + caseDetail.CaseIdIdentifer + "| ";
+                    updateEmail.EmailSubject = updateEmail.EmailSubject + " |ID:" + caseDetail.CaseIdIdentifier + "| ";
                 else
-                    updateEmail.EmailSubject = Regex.Replace(updateEmail.EmailSubject, @"\|ID:\s*.*2(?=\|)\|", " |ID:" + caseDetail.CaseIdIdentifer + "|");
+                    updateEmail.EmailSubject = Regex.Replace(updateEmail.EmailSubject, @"\|ID:\s*.*2(?=\|)\|", " |ID:" + caseDetail.CaseIdIdentifier + "|");
                 updateEmail.Country = caseDetail.Country;
                 updateEmail.CaseID = CaseId;
                 db.Entry(updateEmail).State = System.Data.Entity.EntityState.Modified;

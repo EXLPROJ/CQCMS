@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CQCMS.Entities.Models
 {
 
-    [Table("EmailBase")]
+    [Table("Email")]
     public partial class Email
     {
 
@@ -73,12 +73,12 @@ namespace CQCMS.Entities.Models
 
         public bool ReviewerEdited { get; set; }
 
-        public bool? IsEmailComplaintIntegrated { get; set; }
+        //public bool? IsEmailComplaintIntegrated { get; set; }
 
         public string EmailTrimmedSubject { get; set; }
 
         public string Country { get; set; }
 
-        public string EmailHash { get; set; }
+        //public string EmailHash { get; set; }
     }
 }

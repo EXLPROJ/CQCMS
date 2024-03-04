@@ -24,8 +24,8 @@ namespace CQCMS.Entities.Models
         public int CaseID { get; set; }
         public int MailboxID { get; set; }
 
-        [StringLength(100)]
-        public string EchoCaseNumber { get; set; }
+        //[StringLength(100)]
+        //public string EchoCaseNumber { get; set; }
 
         [StringLength(100)]
         public string CurrentlyAssignedTo { get; set; }
@@ -46,10 +46,10 @@ namespace CQCMS.Entities.Models
         [StringLength(50)]
         public string LastActedBy { get; set; }
         public string Comments { get; set; }
-        public string OversightComments { get; set; }
+        //public string OversightComments { get; set; }
         public string AdditionalClientInfo { get; set; }
         public bool IsCaseClosed { get; set; }
-        public DateTime Closedon { get; set; }
+        public DateTime? Closedon { get; set; }
 
         [StringLength(100)]
         public string ClosedBy { get; set; }
@@ -134,23 +134,24 @@ namespace CQCMS.Entities.Models
 
         public string ComplaintContactChannel { get; set; }
 
-        public bool? IsFeeReversal { get; set; }
+        //public bool? IsFeeReversal { get; set; }
         
         // (RegalarExpression (@"*-?\d+\ .\d(0,25")]
-        public decimal? FeeReversalamount { get; set; }
-        public string FeeReversalReason { get; set; }
+        //public decimal? FeeReversalamount { get; set; }
+        //public string FeeReversalReason { get; set; }
         public int? CaseAssignAttempts { get; set; }
         public bool? DoesPartialSubjectMatch { get; set; }
         public bool? IsCaseComplaintIntegrated { get; set; }
         
         public string MatchedPartialCases { get; set; }
 
-        public string UniqueldentifierGUID { get; set; }
+        //public string UniqueldentifierGUID { get; set; }
 
         [StringLength(100)]
 
-        public string CaseIdIdentifer { get; set; }
-    
+        public string CaseIdIdentifier { get; set; }
+
+        
 
         public int? LastViewedEmailID { get; set; }
         
@@ -160,7 +161,7 @@ namespace CQCMS.Entities.Models
 
         public string EmailFailureToken { get; set; }
         
-        public string InternationalAssignedTo { get; set; }
+        //public string InternationalAssignedTo { get; set; }
         
         public bool KeepWithMe { get; set; }
         
